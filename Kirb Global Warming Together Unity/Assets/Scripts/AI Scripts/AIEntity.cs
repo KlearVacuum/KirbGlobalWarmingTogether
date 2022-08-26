@@ -20,6 +20,7 @@ public class AIEntity : MonoBehaviour
     public float mPanicDuration;
 
     public float mAvoidanceStrength;
+    public float mVisionAvoidanceStrength;
 
     private float mCurrentMoveSpeed;
     private float mCurrentRotateSpeed;
@@ -39,6 +40,16 @@ public class AIEntity : MonoBehaviour
     public List<GameObject> foundTrashList;
     [HideInInspector]
     public List<GameObject> foundDepoList;
+
+
+    // final 2 vision lines will be this angle away from forward
+    [SerializeField]
+    float maxSteerAngle = 90f;
+    // number of vision lines beside the main middle one
+    [SerializeField]
+    int visionLines = 2;
+    float visionRange = 1f;
+    private List<Vector3> visionCheckList = new List<Vector3>();
 
     //protected Animator mAnimator;
     //public Animator animator
@@ -60,6 +71,8 @@ public class AIEntity : MonoBehaviour
     private float mCurrentMoveForce;
     private Vector3 mCurrentMoveDir;
     private Vector3 mAvoidanceDir;
+    private Vector3 mVisionAvoidanceDir;
+    private float visionAngleStep;
 
     protected virtual void Awake()
     {
@@ -73,6 +86,7 @@ public class AIEntity : MonoBehaviour
         GlobalGameData.AddAiEntity(this);
         mCurrentMoveSpeed = mMoveSpeed;
         mCurrentRotateSpeed = mRotateSpeed;
+        visionAngleStep = maxSteerAngle / (float)visionLines * Mathf.Deg2Rad;
     }
     protected virtual void Update()
     {
@@ -104,14 +118,36 @@ public class AIEntity : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        // Avoidance effector: go away from other kirbs!
-        mCurrentMoveDir += mAvoidanceDir * mAvoidanceStrength;
-        mCurrentMoveDir.Normalize();
-
         rb.AddForce(mCurrentMoveDir * mCurrentMoveForce);
-
-        mAvoidanceDir = Vector3.zero;
         mCurrentMoveForce = 0;
+    }
+
+    private void InitializeVision()
+    {
+        visionCheckList.Clear();
+        visionCheckList.Add(transform.right);
+        //Debug.DrawLine(transform.position, transform.position + transform.right, Color.magenta, Time.deltaTime);
+
+        float relativeAngleToRight = Vector2.Angle(transform.right, Vector2.right) * Mathf.Deg2Rad;
+        if (Vector2.Dot(transform.right, Vector2.up) < 0) relativeAngleToRight *= -1;
+
+        for (int i = 1; i <= visionLines; ++i)
+        {
+            float leftVisionX = Mathf.Cos(visionAngleStep * i + relativeAngleToRight);
+            float leftVisionY = Mathf.Sin(visionAngleStep * i + relativeAngleToRight);
+
+            float rightVisionX = Mathf.Cos(-visionAngleStep * i + relativeAngleToRight);
+            float rightVisionY = Mathf.Sin(-visionAngleStep * i + relativeAngleToRight);
+
+            Vector3 leftVision = new Vector3(leftVisionX, leftVisionY, 0).normalized;
+            Vector3 rightVision = new Vector3(rightVisionX, rightVisionY, 0).normalized;
+
+            visionCheckList.Add(leftVision);
+            visionCheckList.Add(rightVision);
+
+            // Debug.DrawLine(transform.position, transform.position + leftVision, Color.cyan, Time.deltaTime);
+            // Debug.DrawLine(transform.position, transform.position + rightVision, Color.red, Time.deltaTime);
+        }
     }
 
     public GameObject GetNearestTrash(float searchRadius)
@@ -177,22 +213,31 @@ public class AIEntity : MonoBehaviour
 
     public void MoveTowardPos(Vector3 pos)
     {
-        RotateTowardTarget(pos);
-        mCurrentMoveDir = (pos - transform.position).normalized;
-        mCurrentMoveForce += mCurrentMoveSpeed * Time.deltaTime;
+        RotateTowardTarget((Vector2)transform.position + rb.velocity);
+
         Avoidance();
+        VisionAvoidanceByTag(gameObject.tag);
+
+        mCurrentMoveDir = (pos - transform.position).normalized;
+        // mCurrentMoveDir = transform.right;
+        mCurrentMoveForce += mCurrentMoveSpeed * Time.deltaTime;
+
+        // Avoidance effector: go away from other kirbs!
+        mCurrentMoveDir += mAvoidanceDir * mAvoidanceStrength;
+        mCurrentMoveDir += mVisionAvoidanceDir * mVisionAvoidanceStrength;
+        mCurrentMoveDir.Normalize();
     }
 
     public void MoveTowardTarget()
     {
-        RotateTowardTarget(moveToTarget.position);
+        RotateTowardTarget((Vector2)transform.position + rb.velocity);
         MoveTowardPos(moveToTarget.position);
     }
 
     private void Avoidance()
     {
-        const float avoidanceDist = 1.5f;
-        const float avoidanceAngleDeg = 120;
+        const float avoidanceDist = 2f;
+        const float avoidanceAngleDeg = 135f;
         // Basic avoidance so kirbs dont queue up like poops
         // NOTE: THIS SCUFFED THINGY IS NOT SCALABLE, COME BACK AND RE-WRITE IF KIRBS ARE NO LONGER 1:1 SCALE
         List<AIEntity> nearbyKirbs = GlobalGameData.NearbyAiEntities(transform.position, avoidanceDist);
@@ -202,13 +247,59 @@ public class AIEntity : MonoBehaviour
             {
                 float dist = Vector2.Distance(kirb.transform.position, transform.position);
                 Vector3 dir = (transform.position - kirb.transform.position).normalized;
-                if (Vector2.Angle(transform.forward, dir)*Mathf.Rad2Deg <= avoidanceAngleDeg)
+                if (Vector2.Angle(transform.forward, dir) * Mathf.Rad2Deg <= avoidanceAngleDeg)
                 {
-                    mAvoidanceDir += dir * dist;
+                    // Debug.DrawLine(transform.position, kirb.transform.position, Color.red);
+                    mAvoidanceDir += dir * (1 - dist);
                 }
             }
             mAvoidanceDir.Normalize();
         }
+    }
+
+    private void VisionAvoidanceByTag(string tag)
+    {
+        InitializeVision();
+
+        float longestDist = 0;
+        Vector3 bestDir = Vector3.zero;
+
+        for (int i = 0; i < visionCheckList.Count; ++i)
+        {
+            RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.3f, visionCheckList[i], visionRange);
+
+            if (hit.collider != null)
+            {
+                // I see it!
+                if (hit.transform.gameObject.CompareTag(tag) || hit.transform.gameObject.CompareTag("Wall"))
+                {
+                    float dist = Vector2.Distance(transform.position, hit.point);
+
+                    Debug.DrawLine(transform.position, transform.position + (visionCheckList[i] * dist), Color.red);
+                    if (dist > longestDist)
+                    {
+                        // longest dist = best dist
+                        longestDist = dist;
+                        bestDir = visionCheckList[i];
+                    }
+                }
+                else
+                {
+                    if (i > 0) bestDir = visionCheckList[i];
+                    break;
+                }
+            }
+            // I see nothing here, means nothing is blocking my way for this direction
+            // affects nothing if my forward path is clear
+            else
+            {
+                if (i > 0) bestDir = visionCheckList[i];
+                break;
+            }
+        }
+
+        Debug.DrawLine(transform.position, transform.position + bestDir, Color.green);
+        mVisionAvoidanceDir = bestDir.normalized;
     }
 
     public void RotateTowardTarget(Vector3 target)

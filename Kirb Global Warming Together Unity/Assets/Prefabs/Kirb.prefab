@@ -231,11 +231,14 @@ MonoBehaviour:
   mPanicRotateSpeed: 400
   mPanicDuration: 5
   mAvoidanceStrength: 0.5
+  mVisionAvoidanceStrength: 1
   trashTag: Trash
   moveToTarget: {fileID: 0}
   trashCash: 0
   foundTrashList: []
   foundDepoList: []
+  maxSteerAngle: 135
+  visionLines: 3
 --- !u!114 &1311995916887444272
 MonoBehaviour:
   m_ObjectHideFlags: 0
