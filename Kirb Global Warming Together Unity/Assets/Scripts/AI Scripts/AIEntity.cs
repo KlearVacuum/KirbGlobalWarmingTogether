@@ -186,24 +186,26 @@ public class AIEntity : MonoBehaviour
     public void MoveTowardTarget()
     {
         RotateTowardTarget(moveToTarget.position);
-
-        mCurrentMoveDir = (moveToTarget.position - transform.position).normalized;
-        mCurrentMoveForce += mCurrentMoveSpeed * Time.deltaTime;
-
-        Avoidance();
+        MoveTowardPos(moveToTarget.position);
     }
 
     private void Avoidance()
     {
+        const float avoidanceDist = 1.5f;
+        const float avoidanceAngleDeg = 120;
         // Basic avoidance so kirbs dont queue up like poops
         // NOTE: THIS SCUFFED THINGY IS NOT SCALABLE, COME BACK AND RE-WRITE IF KIRBS ARE NO LONGER 1:1 SCALE
-        List<AIEntity> nearbyKirbs = GlobalGameData.NearbyAiEntities(transform.position, 1f);
+        List<AIEntity> nearbyKirbs = GlobalGameData.NearbyAiEntities(transform.position, avoidanceDist);
         if (nearbyKirbs.Count > 0)
         {
             foreach (var kirb in nearbyKirbs)
             {
                 float dist = Vector2.Distance(kirb.transform.position, transform.position);
-                mAvoidanceDir += (transform.position - kirb.transform.position).normalized * dist;
+                Vector3 dir = (transform.position - kirb.transform.position).normalized;
+                if (Vector2.Angle(transform.forward, dir)*Mathf.Rad2Deg <= avoidanceAngleDeg)
+                {
+                    mAvoidanceDir += dir * dist;
+                }
             }
             mAvoidanceDir.Normalize();
         }

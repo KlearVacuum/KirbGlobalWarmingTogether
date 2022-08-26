@@ -230,7 +230,7 @@ MonoBehaviour:
   mPanicMoveSpeed: 1000
   mPanicRotateSpeed: 400
   mPanicDuration: 5
-  mAvoidanceStrength: 1
+  mAvoidanceStrength: 0.5
   trashTag: Trash
   moveToTarget: {fileID: 0}
   trashCash: 0
