@@ -41,6 +41,10 @@ public class AIEntity : MonoBehaviour
     [HideInInspector]
     public List<GameObject> foundDepoList;
 
+    [SerializeField]
+    float avoidanceDist = 2f;
+    [SerializeField]
+    float avoidanceAngleDeg = 135f;
 
     // final 2 vision lines will be this angle away from forward
     [SerializeField]
@@ -48,7 +52,10 @@ public class AIEntity : MonoBehaviour
     // number of vision lines beside the main middle one
     [SerializeField]
     int visionLines = 2;
+    [SerializeField]
     float visionRange = 1f;
+    [SerializeField]
+    float visionCircleRadius;
     private List<Vector3> visionCheckList = new List<Vector3>();
 
     //protected Animator mAnimator;
@@ -73,6 +80,7 @@ public class AIEntity : MonoBehaviour
     private Vector3 mAvoidanceDir;
     private Vector3 mVisionAvoidanceDir;
     private float visionAngleStep;
+    private float visionWeightStep;
 
     protected virtual void Awake()
     {
@@ -87,9 +95,18 @@ public class AIEntity : MonoBehaviour
         mCurrentMoveSpeed = mMoveSpeed;
         mCurrentRotateSpeed = mRotateSpeed;
         visionAngleStep = maxSteerAngle / (float)visionLines * Mathf.Deg2Rad;
+        visionWeightStep = 1 / visionLines;
     }
     protected virtual void Update()
     {
+        if (returnToDepo)
+        {
+            GetComponent<SpriteRenderer>().color = Color.green;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().color = Color.red;
+        }
         if (!mPanicTriggered)
         {
             // panic button pressed!
@@ -118,8 +135,9 @@ public class AIEntity : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        rb.AddForce(mCurrentMoveDir * mCurrentMoveForce);
-        mCurrentMoveForce = 0;
+        rb.AddForce(desiredVelocity);
+        desiredVelocity = Vector3.zero;
+        // mCurrentMoveForce = 0;
     }
 
     private void InitializeVision()
@@ -211,14 +229,16 @@ public class AIEntity : MonoBehaviour
         MoveTowardPos(panicDestination);
     }
 
+    [SerializeField]
+    Vector3 desiredVelocity;
     public void MoveTowardPos(Vector3 pos)
     {
         RotateTowardTarget((Vector2)transform.position + rb.velocity);
 
         Avoidance();
-        VisionAvoidanceByTag(gameObject.tag);
+        VisionAvoidanceOtherKirbsAndWalls();
 
-        mCurrentMoveDir = (pos - transform.position).normalized;
+        mCurrentMoveDir = (pos - transform.position).normalized * mCurrentMoveSpeed;
         // mCurrentMoveDir = transform.right;
         mCurrentMoveForce += mCurrentMoveSpeed * Time.deltaTime;
 
@@ -226,6 +246,14 @@ public class AIEntity : MonoBehaviour
         mCurrentMoveDir += mAvoidanceDir * mAvoidanceStrength;
         mCurrentMoveDir += mVisionAvoidanceDir * mVisionAvoidanceStrength;
         mCurrentMoveDir.Normalize();
+
+        desiredVelocity = (pos - transform.position).normalized * mCurrentMoveSpeed;
+        desiredVelocity += mVisionAvoidanceDir * mVisionAvoidanceStrength;
+        if (desiredVelocity.magnitude > mCurrentMoveSpeed)
+        {
+            desiredVelocity = desiredVelocity.normalized * mCurrentMoveSpeed;
+        }
+        Debug.DrawLine(transform.position, transform.position + desiredVelocity, Color.magenta);
     }
 
     public void MoveTowardTarget()
@@ -236,8 +264,6 @@ public class AIEntity : MonoBehaviour
 
     private void Avoidance()
     {
-        const float avoidanceDist = 2f;
-        const float avoidanceAngleDeg = 135f;
         // Basic avoidance so kirbs dont queue up like poops
         // NOTE: THIS SCUFFED THINGY IS NOT SCALABLE, COME BACK AND RE-WRITE IF KIRBS ARE NO LONGER 1:1 SCALE
         List<AIEntity> nearbyKirbs = GlobalGameData.NearbyAiEntities(transform.position, avoidanceDist);
@@ -257,49 +283,132 @@ public class AIEntity : MonoBehaviour
         }
     }
 
-    private void VisionAvoidanceByTag(string tag)
+    // Solving very specific problems made this function abit of a monster opps
+    private void VisionAvoidanceOtherKirbsAndWalls()
     {
-        InitializeVision();
+        Vector3 avoidanceVector = Vector3.zero;
 
-        float longestDist = 0;
-        Vector3 bestDir = Vector3.zero;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, visionRange);
 
-        for (int i = 0; i < visionCheckList.Count; ++i)
+        for (int i = 0; i < colliders.Length; ++i)
         {
-            RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.3f, visionCheckList[i], visionRange);
+            var collider = colliders[i];
 
-            if (hit.collider != null)
+            // I see it!
+            if (collider.transform.gameObject.CompareTag(gameObject.tag))
             {
-                // I see it!
-                if (hit.transform.gameObject.CompareTag(tag) || hit.transform.gameObject.CompareTag("Wall"))
-                {
-                    float dist = Vector2.Distance(transform.position, hit.point);
+                // my current direction's weight
+                float weight = (int)(i / 2) * visionWeightStep;
+                // get the other kirb's intended direction
+                Vector3 otherPos = collider.transform.position;
+                Vector3 otherDir = (transform.position - otherPos).normalized;
 
-                    Debug.DrawLine(transform.position, transform.position + (visionCheckList[i] * dist), Color.red);
-                    if (dist > longestDist)
-                    {
-                        // longest dist = best dist
-                        longestDist = dist;
-                        bestDir = visionCheckList[i];
-                    }
-                }
-                else
-                {
-                    if (i > 0) bestDir = visionCheckList[i];
-                    break;
-                }
+                weight *= Vector2.Distance(transform.position, otherPos);
+
+                avoidanceVector += weight * otherDir;
+                // Debug.DrawLine(transform.position, transform.position + avoidanceVector, Color.red);
             }
-            // I see nothing here, means nothing is blocking my way for this direction
-            // affects nothing if my forward path is clear
-            else
+
+            // wall
+            else if (collider.transform.gameObject.CompareTag("Wall"))
             {
-                if (i > 0) bestDir = visionCheckList[i];
-                break;
+                RaycastHit2D hit = Physics2D.Raycast(transform.position,
+                                    (collider.transform.position - transform.position).normalized,
+                                    visionRange, gameObject.layer);
+                avoidanceVector += (Vector3)hit.normal;
             }
         }
 
-        Debug.DrawLine(transform.position, transform.position + bestDir, Color.green);
-        mVisionAvoidanceDir = bestDir.normalized;
+        // Debug.DrawLine(transform.position, transform.position + avoidanceVector, Color.green);
+        mVisionAvoidanceDir = avoidanceVector;
+
+        #region AVOIDANCE VERSION 2
+        //InitializeVision();
+
+        //Vector3 avoidanceVector = Vector3.zero;
+
+        //for (int i = 0; i < visionCheckList.Count; ++i)
+        //{
+        //    RaycastHit2D hit = Physics2D.CircleCast(transform.position, visionCircleRadius, visionCheckList[i], visionRange, gameObject.layer);
+
+        //    if (hit.collider != null)
+        //    {
+        //        // I see it!
+        //        if (hit.transform.gameObject.CompareTag(gameObject.tag))
+        //        {
+        //            // my current direction's weight
+        //            float weight = (int)(i / 2) * visionWeightStep;
+        //            // get the other kirb's intended direction
+        //            Vector3 otherDir = hit.transform.right;
+        //            Vector3 otherPos = hit.transform.position;
+
+        //            // if dot product <= 0, affect the weight
+        //            float dotProduct = Vector2.Dot(visionCheckList[i], transform.position - otherPos);
+        //            if (dotProduct < 0)
+        //            {
+        //                dotProduct = Mathf.Abs(dotProduct);
+        //                weight *= dotProduct;
+        //            }
+
+        //            avoidanceVector += weight * otherDir;
+        //            Debug.DrawLine(transform.position, transform.position + visionCheckList[i], Color.red);
+        //        }
+        //        // wall
+        //        else if (hit.transform.gameObject.CompareTag("Wall"))
+        //        {
+        //            avoidanceVector += (Vector3)hit.normal;
+        //        }
+        //    }
+        //}
+        //Debug.DrawLine(transform.position, transform.position + avoidanceVector, Color.green);
+        //mVisionAvoidanceDir = avoidanceVector;
+        #endregion
+
+        #region BEST PATH IS LONGEST PATH: OLD
+        //float longestDist = 0;
+        //Vector3 bestDir = Vector3.zero;
+
+        //for (int i = 0; i < visionCheckList.Count; ++i)
+        //{
+        //    RaycastHit2D hit = Physics2D.CircleCast(transform.position, 0.3f, visionCheckList[i], visionRange);
+
+        //    if (hit.collider != null)
+        //    {
+        //        // I see it!
+        //        if (hit.transform.gameObject.CompareTag(gameObject.tag))
+        //        {
+        //            float dist = Vector2.Distance(transform.position, hit.point);
+
+        //            Debug.DrawLine(transform.position, transform.position + (visionCheckList[i] * dist), Color.red);
+        //            if (dist > longestDist)
+        //            {
+        //                // longest dist = best dist
+        //                longestDist = dist;
+        //                bestDir = visionCheckList[i];
+        //            }
+        //        }
+        //        else if (hit.transform.gameObject.CompareTag("Wall"))
+        //        {
+
+        //        }
+        //        else
+        //        {
+        //            if (i > 0) bestDir = visionCheckList[i];
+        //            break;
+        //        }
+        //    }
+        //    // I see nothing here, means nothing is blocking my way for this direction
+        //    // affects nothing if my forward path is clear
+        //    else
+        //    {
+        //        if (i > 0) bestDir = visionCheckList[i];
+        //        break;
+        //    }
+        //}
+
+        //Debug.DrawLine(transform.position, transform.position + bestDir, Color.green);
+        //mVisionAvoidanceDir = bestDir.normalized;
+        #endregion
     }
 
     public void RotateTowardTarget(Vector3 target)

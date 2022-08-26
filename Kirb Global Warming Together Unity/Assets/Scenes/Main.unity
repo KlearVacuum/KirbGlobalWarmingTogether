@@ -279,7 +279,7 @@ GameObject:
   - component: {fileID: 410211266}
   - component: {fileID: 410211265}
   - component: {fileID: 410211264}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall (1)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 651604544}
   - component: {fileID: 651604543}
   - component: {fileID: 651604542}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -700,7 +700,7 @@ GameObject:
   - component: {fileID: 1179794082}
   - component: {fileID: 1179794081}
   - component: {fileID: 1179794080}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall (2)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -861,6 +861,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c93849c881d5a954b9f7d273550552b2, type: 3}
+--- !u!1001 &1314460035
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3115804531108714309, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_Name
+      value: Kirb (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711505208548092528, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711505208548092528, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711505208548092528, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711505208548092528, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711505208548092528, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711505208548092528, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711505208548092528, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711505208548092528, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711505208548092528, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711505208548092528, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3711505208548092528, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 180
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
 --- !u!1001 &1584484872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -964,7 +1021,7 @@ GameObject:
   - component: {fileID: 1632333932}
   - component: {fileID: 1632333931}
   - component: {fileID: 1632333930}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Wall (3)
   m_TagString: Wall
   m_Icon: {fileID: 0}

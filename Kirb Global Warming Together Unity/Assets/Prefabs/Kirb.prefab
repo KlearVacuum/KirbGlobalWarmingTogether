@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 1311995916887444269}
   - component: {fileID: 1311995916887444271}
   - component: {fileID: 1311995916887444272}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Kirb
   m_TagString: Kirb
   m_Icon: {fileID: 0}
@@ -225,20 +225,24 @@ MonoBehaviour:
   panic: 0
   collectTrash: 1
   returnToDepo: 0
-  mMoveSpeed: 500
+  mMoveSpeed: 20
   mRotateSpeed: 250
-  mPanicMoveSpeed: 1000
+  mPanicMoveSpeed: 30
   mPanicRotateSpeed: 400
   mPanicDuration: 5
-  mAvoidanceStrength: 0.5
-  mVisionAvoidanceStrength: 1
+  mAvoidanceStrength: 0
+  mVisionAvoidanceStrength: 0.7
   trashTag: Trash
   moveToTarget: {fileID: 0}
   trashCash: 0
   foundTrashList: []
   foundDepoList: []
-  maxSteerAngle: 135
+  avoidanceDist: 3
+  avoidanceAngleDeg: 90
+  maxSteerAngle: 90
   visionLines: 3
+  visionRange: 4
+  visionCircleRadius: 0.45
 --- !u!114 &1311995916887444272
 MonoBehaviour:
   m_ObjectHideFlags: 0
