@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8027665847568490149}
-  - component: {fileID: 8027665847568490150}
   - component: {fileID: 8027665847568490151}
+  - component: {fileID: 8027665847568490150}
   m_Layer: 0
   m_Name: TrashSpawner
   m_TagString: Untagged
@@ -33,6 +33,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8027665847568490151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8027665847568490152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad04b3308beea27449acc14fa7895ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trashToSpawn:
+  - {fileID: 7045076144644805235, guid: 9e47f9cf2c279684e91b2225792e071f, type: 3}
+  quantity: 50
+  spawnAtStart: 0
 --- !u!212 &8027665847568490150
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -85,18 +101,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8027665847568490151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8027665847568490152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad04b3308beea27449acc14fa7895ec0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trashToSpawn:
-  - {fileID: 7045076144644805235, guid: 9e47f9cf2c279684e91b2225792e071f, type: 3}
-  quantity: 50

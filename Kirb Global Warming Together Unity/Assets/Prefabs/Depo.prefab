@@ -57,8 +57,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1136047951219644276}
-  - component: {fileID: 5419362586021148469}
   - component: {fileID: 3986293758354432740}
+  - component: {fileID: 5419362586021148469}
   - component: {fileID: 726634734011894901}
   m_Layer: 0
   m_Name: Depo
@@ -83,6 +83,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3986293758354432740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5824838531169053872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b770f3387165b244bbca581a8696cd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &5419362586021148469
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -135,18 +147,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3986293758354432740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5824838531169053872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b770f3387165b244bbca581a8696cd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &726634734011894901
 CircleCollider2D:
   m_ObjectHideFlags: 0

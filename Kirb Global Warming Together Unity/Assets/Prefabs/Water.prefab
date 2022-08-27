@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4714521564832009641}
+  - component: {fileID: 4714521564832009646}
   - component: {fileID: 4714521564832009640}
   - component: {fileID: 4714521564832009643}
-  - component: {fileID: 4714521564832009646}
   m_Layer: 0
   m_Name: Water
   m_TagString: Wave
@@ -34,6 +34,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4714521564832009646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4714521564832009642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca797ad4b9b69964a8be4830a71c20ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTransform: {fileID: 0}
+  endTransform: {fileID: 0}
+  trashManager: {fileID: 0}
+  trashSpawnNum: 0
+  startWave: 0
+  travelPeriod: 0
 --- !u!212 &4714521564832009640
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -112,20 +130,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4714521564832009646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4714521564832009642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca797ad4b9b69964a8be4830a71c20ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTransform: {fileID: 0}
-  endTransform: {fileID: 0}
-  moveWave: 0
-  travelPeriod: 0
-  currentTravelTime: 0

@@ -93,11 +93,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3711505208548092528}
+  - component: {fileID: 1311995916887444271}
+  - component: {fileID: 1311995916887444272}
   - component: {fileID: 7386468305135423971}
   - component: {fileID: 1311995916887444270}
   - component: {fileID: 1311995916887444269}
-  - component: {fileID: 1311995916887444271}
-  - component: {fileID: 1311995916887444272}
   m_Layer: 3
   m_Name: Kirb
   m_TagString: Kirb
@@ -122,6 +122,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1311995916887444271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3115804531108714309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c5a635f1e37b2947976aa458aedbba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceStateTransition: 0
+  panic: 0
+  collectTrash: 1
+  returnToDepo: 0
+  dead: 0
+  mMoveSpeed: 8
+  mRotateSpeed: 500
+  mPanicMoveSpeed: 15
+  mPanicRotateSpeed: 1000
+  mPanicDuration: 5
+  velocityVariance: {x: 0, y: 0, z: 0}
+  velocityVarStrength: {x: 1, y: 1}
+  velocityVarTimeRange: {x: 2, y: 5}
+  depoOverlap: 0
+  mAvoidanceStrength: 0
+  mVisionAvoidanceStrength: 1
+  forwardDir: {fileID: 1019694501864213864}
+  trashTag: Trash
+  depoTag: Depo
+  maxTravelTime: 5
+  moveToTarget: {fileID: 0}
+  trashCash: 0
+  foundTrashList: []
+  foundDepoList: []
+  deathType: 0
+  waterOverlap: 0
+  timeToDrown: 0.7
+  trashTypeWeakness: 01000000
+--- !u!114 &1311995916887444272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3115804531108714309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 487d5b4d1c06d254ab73ea4eb2b00e26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentStateName: 
+  allAIStates:
+  - {fileID: 11400000, guid: 15efa1427d936d94b9285290612392f0, type: 2}
+  - {fileID: 11400000, guid: eb37aeb68329285438d37c75f9df882c, type: 2}
+  - {fileID: 11400000, guid: 749ceaa93488a2e40904ca60339f7a3b, type: 2}
+  - {fileID: 11400000, guid: 529f51ca01fc3e045bc41f8317619b33, type: 2}
+  - {fileID: 11400000, guid: 3c315d517ae623c41b507945385bde45, type: 2}
+  - {fileID: 11400000, guid: 73a98c5d16562fb43b1d7a7562104682, type: 2}
+  - {fileID: 11400000, guid: 9abb32e90c3acf64e8db2e1e04614eee, type: 2}
 --- !u!212 &7386468305135423971
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -211,66 +272,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &1311995916887444271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3115804531108714309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c5a635f1e37b2947976aa458aedbba1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panic: 0
-  collectTrash: 1
-  returnToDepo: 0
-  dead: 0
-  mMoveSpeed: 8
-  mRotateSpeed: 500
-  mPanicMoveSpeed: 15
-  mPanicRotateSpeed: 1000
-  mPanicDuration: 5
-  velocityVariance: {x: 0, y: 0, z: 0}
-  velocityVarStrength: {x: 1, y: 1}
-  velocityVarTimeRange: {x: 2, y: 5}
-  depoOverlap: 0
-  mAvoidanceStrength: 0
-  mVisionAvoidanceStrength: 1
-  forwardDir: {fileID: 1019694501864213864}
-  trashTag: Trash
-  depoTag: Depo
-  maxTravelTime: 5
-  moveToTarget: {fileID: 0}
-  trashCash: 0
-  foundTrashList: []
-  foundDepoList: []
-  deathType: 0
-  waterOverlap: 0
-  timeToDrown: 0.7
-  trashTypeWeakness: 01000000
---- !u!114 &1311995916887444272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3115804531108714309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 487d5b4d1c06d254ab73ea4eb2b00e26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentStateName: 
-  allAIStates:
-  - {fileID: 11400000, guid: 15efa1427d936d94b9285290612392f0, type: 2}
-  - {fileID: 11400000, guid: eb37aeb68329285438d37c75f9df882c, type: 2}
-  - {fileID: 11400000, guid: 749ceaa93488a2e40904ca60339f7a3b, type: 2}
-  - {fileID: 11400000, guid: 529f51ca01fc3e045bc41f8317619b33, type: 2}
-  - {fileID: 11400000, guid: 3c315d517ae623c41b507945385bde45, type: 2}
-  - {fileID: 11400000, guid: 73a98c5d16562fb43b1d7a7562104682, type: 2}
-  - {fileID: 11400000, guid: 9abb32e90c3acf64e8db2e1e04614eee, type: 2}
 --- !u!1 &8008054268695629500
 GameObject:
   m_ObjectHideFlags: 0
