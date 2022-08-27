@@ -186,7 +186,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 5
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -226,9 +226,9 @@ MonoBehaviour:
   panic: 0
   collectTrash: 1
   returnToDepo: 0
-  mMoveSpeed: 10
+  mMoveSpeed: 8
   mRotateSpeed: 500
-  mPanicMoveSpeed: 20
+  mPanicMoveSpeed: 15
   mPanicRotateSpeed: 1000
   mPanicDuration: 5
   velocityVariance: {x: 0, y: 0, z: 0}
@@ -240,16 +240,11 @@ MonoBehaviour:
   forwardDir: {fileID: 1019694501864213864}
   trashTag: Trash
   depoTag: Depo
+  maxTravelTime: 5
   moveToTarget: {fileID: 0}
   trashCash: 0
   foundTrashList: []
   foundDepoList: []
-  avoidanceDist: 2
-  avoidanceAngleDeg: 90
-  maxSteerAngle: 90
-  visionLines: 3
-  visionRange: 2
-  visionCircleRadius: 0.45
 --- !u!114 &1311995916887444272
 MonoBehaviour:
   m_ObjectHideFlags: 0

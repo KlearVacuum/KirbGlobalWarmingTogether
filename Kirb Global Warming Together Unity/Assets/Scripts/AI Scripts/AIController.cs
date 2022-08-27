@@ -43,6 +43,12 @@ public class AIController : MonoBehaviour
             if (currentState.canTransit)
             {
                 EvaluateStates();
+
+                if (currentState.restartOnEvaluate && nextState == currentState)
+                {
+                    currentState.EndState(this);
+                    nextState.StartState(this);
+                }
             }
         }
         else
@@ -56,7 +62,10 @@ public class AIController : MonoBehaviour
 
     public virtual void InitializeStates()
     {
-
+        foreach (AIState state in allAIStates)
+        {
+            state.Initialize(this);
+        }
     }
 
     public void EvaluateStates()

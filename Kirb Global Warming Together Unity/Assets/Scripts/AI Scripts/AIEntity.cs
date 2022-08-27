@@ -29,6 +29,7 @@ public class AIEntity : MonoBehaviour
     [HideInInspector]
     public bool depoOverlap;
 
+    [HideInInspector]
     public float mAvoidanceStrength;
     public float mVisionAvoidanceStrength;
 
@@ -43,6 +44,9 @@ public class AIEntity : MonoBehaviour
     public string trashTag;
     public string depoTag;
 
+    public float maxTravelTime;
+    private float currentTravelTime;
+
     [HideInInspector]
     public Transform moveToTarget;
     [HideInInspector]
@@ -53,20 +57,14 @@ public class AIEntity : MonoBehaviour
     [HideInInspector]
     public List<GameObject> foundDepoList;
 
-    [SerializeField]
     float avoidanceDist = 2f;
-    [SerializeField]
     float avoidanceAngleDeg = 135f;
 
     // final 2 vision lines will be this angle away from forward
-    [SerializeField]
     float maxSteerAngle = 90f;
     // number of vision lines beside the main middle one
-    [SerializeField]
     int visionLines = 2;
-    [SerializeField]
     float visionRange = 1f;
-    [SerializeField]
     float visionCircleRadius;
     private List<Vector3> visionCheckList = new List<Vector3>();
 
@@ -112,9 +110,12 @@ public class AIEntity : MonoBehaviour
         velVar = NewVelocityVariance(velocityVarTimeRange);
         StartCoroutine(velVar);
         enableVelocityVar = false;
+
+        ResetTravelTime();
     }
     protected virtual void Update()
     {
+        currentTravelTime -= Time.deltaTime;
         if (returnToDepo)
         {
             GetComponent<SpriteRenderer>().color = Color.green;
@@ -151,7 +152,7 @@ public class AIEntity : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        rb.AddForce(desiredVelocity);
+        rb.AddForce(desiredVelocity * rb.mass);
         desiredVelocity = Vector3.zero;
         // mCurrentMoveForce = 0;
     }
@@ -197,7 +198,7 @@ public class AIEntity : MonoBehaviour
         {
             float dist = Vector2.Distance(transform.position, trash.transform.position);
             RaycastHit2D hit = Physics2D.Raycast(transform.position, trash.transform.position - transform.position, searchRadius);
-            if (hit && !hit.transform.gameObject.CompareTag(gameObject.tag))
+            if (hit && hit.transform.gameObject == trash)
             {
                 if (dist < shortestDist)
                 {
@@ -207,6 +208,16 @@ public class AIEntity : MonoBehaviour
             }
         }
         return nearestTrash;
+    }
+
+    public void ResetTravelTime()
+    {
+        currentTravelTime = maxTravelTime;
+    }
+
+    public bool TravelTimeExceeded()
+    {
+        return currentTravelTime <= 0;
     }
 
     public GameObject GetNearestVisibleDepo(float searchRadius)
@@ -220,7 +231,7 @@ public class AIEntity : MonoBehaviour
         {
             float dist = Vector2.Distance(transform.position, depo.transform.position);
             RaycastHit2D hit = Physics2D.Raycast(transform.position, depo.transform.position - transform.position, searchRadius);
-            if (hit && !hit.transform.gameObject.CompareTag(gameObject.tag))
+            if (hit && hit.transform.gameObject == depo)
             {
                 if (dist < shortestDist)
                 {
@@ -280,7 +291,7 @@ public class AIEntity : MonoBehaviour
 
         RotateTowardTarget(transform.position + desiredVelocity);
 
-        Debug.DrawLine(transform.position, transform.position + desiredVelocity, Color.magenta);
+        // Debug.DrawLine(transform.position, transform.position + desiredVelocity, Color.magenta);
     }
 
     public void EnableVelVar(bool enable)
@@ -460,6 +471,19 @@ public class AIEntity : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (moveToTarget != null &&
+            collision.transform == moveToTarget &&
+            collision.gameObject.CompareTag(trashTag))
+        {
+            var trash = collision.gameObject.GetComponent<TrashScript>();
+            trashCash = trash.trashCash;
+            trash.RemoveTrash();
+            returnToDepo = true;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (moveToTarget != null &&
             collision.transform == moveToTarget &&

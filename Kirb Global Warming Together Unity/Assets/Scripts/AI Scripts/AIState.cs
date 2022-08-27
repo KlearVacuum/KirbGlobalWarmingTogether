@@ -11,9 +11,16 @@ public class AIState : ScriptableObject
     [HideInInspector]
     public bool canTransit;
 
+    public bool restartOnEvaluate = false;
+
     public AIState(string _name)
     {
         name = _name;
+    }
+
+    public virtual void Initialize(AIController aiController)
+    {
+
     }
 
     public virtual bool EvaluateConditions(AIController aiController) { return true; }
