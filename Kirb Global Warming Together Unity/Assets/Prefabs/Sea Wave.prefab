@@ -80,6 +80,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca797ad4b9b69964a8be4830a71c20ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onWaveEnd:
+    m_PersistentCalls:
+      m_Calls: []
   startTransform: {fileID: 1773305003489025158}
   endTransform: {fileID: 2040433994660755635}
   waveSprite: {fileID: 3436085554910734557}
@@ -170,6 +173,7 @@ GameObject:
   - component: {fileID: 3436085554910734558}
   - component: {fileID: 3436085554910734559}
   - component: {fileID: 3436085554910734556}
+  - component: {fileID: 1859366654595090345}
   m_Layer: 0
   m_Name: Water
   m_TagString: Wave
@@ -270,6 +274,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1859366654595090345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3436085554910734557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4aaeefafd1165540a23ce104ad19a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7746087212735670329
 GameObject:
   m_ObjectHideFlags: 0
