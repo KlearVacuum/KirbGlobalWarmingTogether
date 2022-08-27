@@ -9,10 +9,12 @@ public class TrashScript : MonoBehaviour
 
     public List<Sprite> sprites = new List<Sprite>();
 
-    public bool _isYumisTrash;
+    public bool _isYumisTrash, _isHeld;
 
-    private Vector3 _current, _target, velocity;
-    [SerializeField] private float _dampRatio = 1.0f, _angular = 0.3f, _timeStep = 0.5f;
+    private Transform _targetTransform;
+    public Vector3 _target;
+    private Vector3 _current, velocity;
+    [SerializeField] private float _dampRatio = 0.5f, _angular = 0.5f;
 
     void Start()
     {
@@ -25,18 +27,38 @@ public class TrashScript : MonoBehaviour
     {
         if (_isYumisTrash)
         {
-            _current = transform.position;
-            _target = GameObject.FindObjectOfType<AIEntity>().transform.position;
-            SpringMath.Lerp(ref _current, ref velocity, _target, _dampRatio, _angular, _timeStep);
+            if (_isHeld && _targetTransform != null)
+            {
+                _target = _targetTransform.position;
+            }
+            // _current = transform.position;
+            // _target = GameObject.FindObjectOfType<AIEntity>().transform.position;
+            SpringMath.Lerp(ref _current, ref velocity, _target, _dampRatio, _angular, 0.1f);
             transform.position = _current;
         }
     }
 
-    public void RemoveTrash()
+    public void RemoveTrash(Transform holder)
     {
-        // Debug.Log("trash is gone");
+        Debug.Log("trash is picked up");
         GlobalGameData.RemoveTrash(gameObject);
-        Destroy(gameObject);
+
+        GetComponent<Collider2D>().enabled = false;
+        GetComponent<Rigidbody2D>().freezeRotation = true;
+        // _target = newTarget;
+        _isYumisTrash = true;
+        _isHeld = true;
+        _targetTransform = holder;
+        _current = transform.position;
+        // Destroy(gameObject);
+    }
+
+    public void DoBeDeposited(Vector3 newTarget)
+    {
+        _isHeld = false;
+        _targetTransform = null;
+        _target = newTarget;
+        _current = transform.position;
     }
 }
 

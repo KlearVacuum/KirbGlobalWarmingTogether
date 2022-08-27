@@ -49,6 +49,8 @@ public class AIEntity : MonoBehaviour
     public string trashTag;
     public string depoTag;
 
+    private TrashScript _heldTrash;
+
     public float maxTravelTime;
     private float currentTravelTime;
 
@@ -269,10 +271,18 @@ public class AIEntity : MonoBehaviour
     {
         returnToDepo = false;
         GlobalGameData.cash += trashCash;
+
+        _heldTrash.DoBeDeposited(moveToTarget.position);
+        _heldTrash = null;
     }
 
     public void Die()
     {
+        if (_heldTrash != null)
+        {
+            GameObject.Destroy(_heldTrash.gameObject);
+            _heldTrash = null;
+        }
         col.enabled = false;
         GlobalGameData.RemoveAiEntity(this);
     }
@@ -539,8 +549,9 @@ public class AIEntity : MonoBehaviour
                     }
                 }
             }
-
-            trash.RemoveTrash();
+            
+            _heldTrash = trash;
+            trash.RemoveTrash(transform);
             returnToDepo = true;
         }
     }
@@ -553,7 +564,9 @@ public class AIEntity : MonoBehaviour
         {
             var trash = collision.gameObject.GetComponent<TrashScript>();
             trashCash = trash.trashCash;
-            trash.RemoveTrash();
+
+            _heldTrash = trash;
+            trash.RemoveTrash(transform);
             returnToDepo = true;
         }
     }
