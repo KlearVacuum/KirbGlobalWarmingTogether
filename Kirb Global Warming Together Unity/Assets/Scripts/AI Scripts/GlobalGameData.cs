@@ -17,6 +17,7 @@ public static class GlobalGameData
         allTrash.Clear();
         allDepo.Clear();
     }
+
     public static void AddTrash(GameObject trash)
     {
         if (allTrash.Contains(trash)) return;

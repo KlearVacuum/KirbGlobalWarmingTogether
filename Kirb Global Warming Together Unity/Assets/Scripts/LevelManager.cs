@@ -42,6 +42,10 @@ public class LevelManager : MonoBehaviour
 
             if (areAllKirbsDead) 
             {
+                if (mIsDebug) 
+                {
+                    Debug.Log("On lose");
+                }
                 onLose.Invoke();
                 return;
             }
