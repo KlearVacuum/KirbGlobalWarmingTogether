@@ -7,6 +7,8 @@ public class TrashScript : MonoBehaviour
     public eTrashType trashType;
     public int trashCash;
 
+    public List<Sprite> sprites = new List<Sprite>();
+
     public bool _isYumisTrash;
 
     private Vector3 _current, _target, velocity;
@@ -15,6 +17,8 @@ public class TrashScript : MonoBehaviour
     void Start()
     {
         GlobalGameData.AddTrash(gameObject);
+        GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, 1000) % sprites.Count];
+        transform.rotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(-179f, 179f)));
     }
 
     void Update()
