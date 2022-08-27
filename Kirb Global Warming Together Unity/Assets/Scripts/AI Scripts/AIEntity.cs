@@ -368,7 +368,7 @@ public class AIEntity : MonoBehaviour
         if (desiredVelocity.magnitude > mCurrentMoveSpeed) desiredVelocity = desiredVelocity.normalized * mCurrentMoveSpeed;
 
         // RotateTowardTarget(transform.position + desiredVelocity);
-
+        GetComponent<SpriteRenderer>().flipX = desiredVelocity.x < 1;
         // Debug.DrawLine(transform.position, transform.position + desiredVelocity, Color.magenta);
     }
 
