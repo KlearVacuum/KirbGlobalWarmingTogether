@@ -25,6 +25,7 @@ public class AIEntity : MonoBehaviour
     public float mPanicMoveSpeed;
     public float mPanicRotateSpeed;
     public float mPanicDuration;
+    public float mStopCollectingTrashDuration;
 
     Vector3 desiredVelocity;
     [HideInInspector]
@@ -46,8 +47,12 @@ public class AIEntity : MonoBehaviour
     private bool mPanicTriggered;
     private float panicMoveTime;
     private Vector2 panicDestination;
+    private bool mStopCollectingTrashTriggered;
+    private float mCurrentStopCollectingTrashDuration;
 
     public Transform forwardDir;
+    public GameObject stopCollectTrashIndicator;
+    public GameObject panicIndicator;
     public string trashTag;
     public string depoTag;
 
@@ -95,6 +100,8 @@ public class AIEntity : MonoBehaviour
     {
         get { return mRB; }
     }
+    protected SpriteRenderer mSpriteRenderer;
+    private float lookOtherWayTime;
 
     private float mCurrentMoveForce;
     private Vector3 mCurrentMoveDir;
@@ -124,6 +131,7 @@ public class AIEntity : MonoBehaviour
         mCol = GetComponent<Collider2D>();
         mRB = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        mSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     protected virtual void Start()
@@ -140,15 +148,20 @@ public class AIEntity : MonoBehaviour
 
         ResetTravelTime();
         forceStateTransition = false;
+
+        _animator.Play("kirb_run");
+
+        stopCollectTrashIndicator.SetActive(false);
+        panicIndicator.SetActive(false);
     }
     protected virtual void Update()
     {
         currentTravelTime -= Time.deltaTime;
 
         // TEMP: colors to show feedback on kirb's current state
-        if (dead) GetComponent<SpriteRenderer>().color = Color.gray;
-        else if (returnToDepo) GetComponent<SpriteRenderer>().color = Color.green;
-        else GetComponent<SpriteRenderer>().color = Color.blue;
+        //if (dead) GetComponent<SpriteRenderer>().color = Color.gray;
+        //else if (returnToDepo) GetComponent<SpriteRenderer>().color = Color.green;
+        //else GetComponent<SpriteRenderer>().color = Color.blue;
 
         if (!mPanicTriggered)
         {
@@ -158,7 +171,7 @@ public class AIEntity : MonoBehaviour
                 mCurrentPanicDuration = mPanicDuration;
                 mCurrentMoveSpeed = mPanicMoveSpeed;
                 mCurrentRotateSpeed = mPanicRotateSpeed;
-
+                panicIndicator.SetActive(true);
                 mPanicTriggered = true;
             }
         }
@@ -168,10 +181,30 @@ public class AIEntity : MonoBehaviour
             mCurrentPanicDuration -= Time.deltaTime;
             if (mCurrentPanicDuration <= 0)
             {
+                panicIndicator.SetActive(false);
                 mCurrentMoveSpeed = mMoveSpeed;
                 mCurrentRotateSpeed = mRotateSpeed;
                 panic = false;
                 mPanicTriggered = false;
+            }
+        }
+
+        if (!collectTrash)
+        {
+            if (!mStopCollectingTrashTriggered)
+            {
+                mCurrentStopCollectingTrashDuration = mStopCollectingTrashDuration;
+                forceStateTransition = true;
+                mStopCollectingTrashTriggered = true;
+                stopCollectTrashIndicator.SetActive(true);
+            }
+            mCurrentStopCollectingTrashDuration -= Time.deltaTime;
+
+            if (mCurrentStopCollectingTrashDuration <= 0)
+            {
+                stopCollectTrashIndicator.SetActive(false);
+                mStopCollectingTrashTriggered = false;
+                collectTrash = true;
             }
         }
 
@@ -292,19 +325,22 @@ public class AIEntity : MonoBehaviour
                 _animator.CrossFade("kirb_kaboom", 0, 0);
                 if (_heldTrash != null)
                 {
-                    GameObject.Destroy(_heldTrash.gameObject);
+                    Destroy(_heldTrash.gameObject);
                     _heldTrash = null;
                 }
                 break;
             case eDeathType.DROWN:
                 _animator.CrossFade("kirb_drowned", 0, 0);
+                if (_heldTrash != null)
+                {
+                    Destroy(_heldTrash.gameObject);
+                    _heldTrash = null;
+                }
                 break;
             default:
                 break;
         }
         col.enabled = false;
-        GameObject deadGO = Instantiate(deadKirb, transform.position, Quaternion.identity);
-        deadGO.GetComponent<TrashScript>().randomRotate = false;
         GlobalGameData.RemoveAiEntity(this);
     }
 
@@ -368,7 +404,43 @@ public class AIEntity : MonoBehaviour
         if (desiredVelocity.magnitude > mCurrentMoveSpeed) desiredVelocity = desiredVelocity.normalized * mCurrentMoveSpeed;
 
         // RotateTowardTarget(transform.position + desiredVelocity);
-        GetComponent<SpriteRenderer>().flipX = desiredVelocity.x < 1;
+        // mSpriteRenderer.flipX = desiredVelocity.x < 1;
+
+        // looking left
+        if (mSpriteRenderer.flipX)
+        {
+            if (rb.velocity.x > 0.05f)
+            {
+                lookOtherWayTime += Time.deltaTime;
+            }
+            else
+            {
+                lookOtherWayTime = 0;
+            }
+            if (lookOtherWayTime > 0.2f)
+            {
+                lookOtherWayTime = 0;
+                mSpriteRenderer.flipX = false;
+            }
+        }
+
+        // looking right
+        if (!mSpriteRenderer.flipX)
+        {
+            if (rb.velocity.x < -0.05f)
+            {
+                lookOtherWayTime += Time.deltaTime;
+            }
+            else
+            {
+                lookOtherWayTime = 0;
+            }
+            if (lookOtherWayTime > 0.2f)
+            {
+                lookOtherWayTime = 0;
+                mSpriteRenderer.flipX = true;
+            }
+        }
         // Debug.DrawLine(transform.position, transform.position + desiredVelocity, Color.magenta);
     }
 
@@ -411,6 +483,13 @@ public class AIEntity : MonoBehaviour
             }
             mAvoidanceDir.Normalize();
         }
+    }
+
+    private void SpawnDeadBodyTrash()
+    {
+        GameObject deadGO = Instantiate(deadKirb, transform.position, Quaternion.identity);
+        deadGO.GetComponent<TrashScript>().randomRotate = false;
+        deadGO.GetComponent<SpriteRenderer>().color = mSpriteRenderer.color;
     }
 
     // Solving very specific problems made this function abit of a monster opps

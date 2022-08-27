@@ -48,16 +48,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trashType: 1
-  trashCash: 3
+  trashCash: 4
   sprites:
   - {fileID: -1968960145, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
   - {fileID: -781091027, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
   - {fileID: -620584681, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
   - {fileID: -1371549272, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
   _isYumisTrash: 0
+  _isHeld: 0
+  randomRotate: 1
+  _target: {x: 0, y: 0, z: 0}
   _dampRatio: 1
   _angular: 0.3
-  _timeStep: 0.5
 --- !u!212 &1441704605584933559
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -130,7 +132,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &8386963862584222677
 BoxCollider2D:
   m_ObjectHideFlags: 0

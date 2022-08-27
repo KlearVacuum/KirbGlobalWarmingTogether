@@ -12,8 +12,6 @@ public class KirbSelectionManager : MonoBehaviour
     GameObject buttonParent;
     TabGroupScript tabGroup;
 
-    public List<WeaknessSprite> weaknessSprites; 
-
     private void Start()
     {
         buttonParent = gameObject;
