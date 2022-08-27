@@ -26,6 +26,7 @@ public class MoveToTrashState : MoveToState
     {
         GameObject nearestTrash = aiController.ai.GetNearestVisibleTrash(searchRange);
         if (nearestTrash == null) return false;
+        // aiController.ai._animator.CrossFade("kirb_suck", 0, 0);
         aiController.ai.moveToTarget = nearestTrash.transform;
         return true;
     }

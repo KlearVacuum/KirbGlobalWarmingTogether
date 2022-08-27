@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 7386468305135423971}
   - component: {fileID: 1311995916887444270}
   - component: {fileID: 1311995916887444269}
+  - component: {fileID: -382291981547231935}
   m_Layer: 3
   m_Name: Basic Kirb
   m_TagString: Kirb
@@ -139,6 +140,7 @@ MonoBehaviour:
   collectTrash: 1
   returnToDepo: 0
   dead: 0
+  _animator: {fileID: 0}
   mMoveSpeed: 10
   mRotateSpeed: 500
   mPanicMoveSpeed: 15
@@ -225,7 +227,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 903400657, guid: c66f74063e474b046be3eb2d3b624553, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -273,6 +275,26 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!95 &-382291981547231935
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3115804531108714309}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1236085929e6a2f438c65140f4ca09dc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8008054268695629500
 GameObject:
   m_ObjectHideFlags: 0

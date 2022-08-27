@@ -18,6 +18,8 @@ public class AIEntity : MonoBehaviour
     [Tooltip("DIEDED")]
     public bool dead;
 
+    public Animator _animator;
+
     public float mMoveSpeed;
     public float mRotateSpeed;
     public float mPanicMoveSpeed;
@@ -121,6 +123,7 @@ public class AIEntity : MonoBehaviour
         // mAnimator = GetComponentInChildren<Animator>();
         mCol = GetComponent<Collider2D>();
         mRB = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
     }
 
     protected virtual void Start()
@@ -276,6 +279,9 @@ public class AIEntity : MonoBehaviour
 
         _heldTrash.DoBeDeposited(moveToTarget.position);
         _heldTrash = null;
+
+        _animator.CrossFade("kirb_deposit", 0, 0);
+        StartCoroutine(SwitchAnimationAfterDelay("kirb_run", 0.5f));
     }
 
     public void Die()
@@ -284,6 +290,8 @@ public class AIEntity : MonoBehaviour
         {
             GameObject.Destroy(_heldTrash.gameObject);
             _heldTrash = null;
+
+            _animator.CrossFade("kirb_kaboom", 0, 0);
         }
         col.enabled = false;
         GameObject deadGO = Instantiate(deadKirb, transform.position, Quaternion.identity);
@@ -554,6 +562,9 @@ public class AIEntity : MonoBehaviour
                 }
             }
             
+            _animator.CrossFade("kirb_suck", 0, 0);
+            StartCoroutine(SwitchAnimationAfterDelay("kirb_suck_run", 1.0f));
+
             _heldTrash = trash;
             trash.RemoveTrash(transform);
             returnToDepo = true;
@@ -569,9 +580,21 @@ public class AIEntity : MonoBehaviour
             var trash = collision.gameObject.GetComponent<TrashScript>();
             trashCash = trash.trashCash;
 
+            _animator.CrossFade("kirb_suck", 0, 0);
+            StartCoroutine(SwitchAnimationAfterDelay("kirb_suck_run", 1.0f));
+
             _heldTrash = trash;
             trash.RemoveTrash(transform);
             returnToDepo = true;
+        }
+    }
+
+    IEnumerator SwitchAnimationAfterDelay(string clipName, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (!dead)
+        {
+            _animator.CrossFade(clipName, 0, 0);
         }
     }
 }

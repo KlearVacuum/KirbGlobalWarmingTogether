@@ -55,6 +55,7 @@ public class TrashScript : MonoBehaviour
         _isHeld = true;
         _targetTransform = holder;
         _current = transform.position;
+        transform.localScale = Vector3.zero;
         // Destroy(gameObject);
     }
 
@@ -64,6 +65,7 @@ public class TrashScript : MonoBehaviour
         _targetTransform = null;
         _target = newTarget;
         _current = transform.position;
+        transform.localScale = Vector3.one;
     }
 }
 
