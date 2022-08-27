@@ -34,6 +34,6 @@ public class DepoScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        GameManager.Instance.SpawnKirb();
+        GameManager._instance.SpawnKirb();
     }
 }
