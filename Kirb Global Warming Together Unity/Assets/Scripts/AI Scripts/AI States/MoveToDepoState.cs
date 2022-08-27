@@ -51,7 +51,7 @@ public class MoveToDepoState : MoveToState
             aiController.ai.MoveTowardTarget();
 
             // arrived at depo
-            if (aiController.ai.depoOverlap)
+            if (aiController.ai.depoOverlap > 0)
             {
                 aiController.ai.Deposit();
                 canTransit = true;
@@ -59,7 +59,6 @@ public class MoveToDepoState : MoveToState
         }
         else
         {
-            Debug.Log("here");
             canTransit = true;
         }
     }

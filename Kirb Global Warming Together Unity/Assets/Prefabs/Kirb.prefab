@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
   m_Color: {r: 0.8301887, g: 0.246707, b: 0.45264164, a: 1}
   m_FlipX: 0
@@ -162,7 +162,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 0.4669811, b: 0.6540534, a: 1}
   m_FlipX: 0
@@ -226,6 +226,7 @@ MonoBehaviour:
   panic: 0
   collectTrash: 1
   returnToDepo: 0
+  dead: 0
   mMoveSpeed: 8
   mRotateSpeed: 500
   mPanicMoveSpeed: 15
@@ -245,6 +246,10 @@ MonoBehaviour:
   trashCash: 0
   foundTrashList: []
   foundDepoList: []
+  deathType: 0
+  waterOverlap: 0
+  timeToDrown: 0.7
+  trashTypeWeakness: 01000000
 --- !u!114 &1311995916887444272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,6 +269,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 749ceaa93488a2e40904ca60339f7a3b, type: 2}
   - {fileID: 11400000, guid: 529f51ca01fc3e045bc41f8317619b33, type: 2}
   - {fileID: 11400000, guid: 3c315d517ae623c41b507945385bde45, type: 2}
+  - {fileID: 11400000, guid: 73a98c5d16562fb43b1d7a7562104682, type: 2}
+  - {fileID: 11400000, guid: 9abb32e90c3acf64e8db2e1e04614eee, type: 2}
 --- !u!1 &8008054268695629500
 GameObject:
   m_ObjectHideFlags: 0

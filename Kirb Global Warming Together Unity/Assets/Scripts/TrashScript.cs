@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TrashScript : MonoBehaviour
 {
+    public eTrashType trashType;
     public int trashCash;
     void Start()
     {
@@ -16,4 +17,14 @@ public class TrashScript : MonoBehaviour
         GlobalGameData.RemoveTrash(gameObject);
         Destroy(gameObject);
     }
+}
+
+public enum eTrashType
+{
+    General,
+    Plastic,
+    Metal,
+    Glass,
+
+    None
 }

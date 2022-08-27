@@ -813,11 +813,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8027665847568490149, guid: c93849c881d5a954b9f7d273550552b2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.14
+      value: -4.95
       objectReference: {fileID: 0}
     - target: {fileID: 8027665847568490149, guid: c93849c881d5a954b9f7d273550552b2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.13
+      value: -0.91
       objectReference: {fileID: 0}
     - target: {fileID: 8027665847568490149, guid: c93849c881d5a954b9f7d273550552b2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1528,6 +1528,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3bf8094c8e6cd54a860433ad3b1e26f, type: 3}
+--- !u!1001 &4714521563284920690
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4714521564832009641, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714521564832009641, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714521564832009641, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714521564832009641, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714521564832009641, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714521564832009641, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714521564832009641, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714521564832009641, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714521564832009641, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714521564832009641, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714521564832009641, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4714521564832009642, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
+      propertyPath: m_Name
+      value: Sea Wave
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2dd379e3bbedb5f4a8a6dd9170c1cda5, type: 3}
 --- !u!1001 &8027665846687200959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1583,6 +1640,18 @@ PrefabInstance:
       propertyPath: quantity
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 8027665847568490151, guid: c93849c881d5a954b9f7d273550552b2, type: 3}
+      propertyPath: trashToSpawn.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027665847568490151, guid: c93849c881d5a954b9f7d273550552b2, type: 3}
+      propertyPath: trashToSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 7045076144644805235, guid: 9e47f9cf2c279684e91b2225792e071f, type: 3}
+    - target: {fileID: 8027665847568490151, guid: c93849c881d5a954b9f7d273550552b2, type: 3}
+      propertyPath: trashToSpawn.Array.data[2]
+      value: 
+      objectReference: {fileID: 2558371590487056003, guid: 40633c10d0baf7f48ac46048182a77bc, type: 3}
     - target: {fileID: 8027665847568490152, guid: c93849c881d5a954b9f7d273550552b2, type: 3}
       propertyPath: m_Name
       value: TrashSpawner

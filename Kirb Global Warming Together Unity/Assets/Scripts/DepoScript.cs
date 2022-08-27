@@ -20,7 +20,7 @@ public class DepoScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Kirb"))
         {
-            collision.gameObject.GetComponent<AIEntity>().depoOverlap = true;
+            collision.gameObject.GetComponent<AIEntity>().depoOverlap++;
         }
     }
 
@@ -28,7 +28,7 @@ public class DepoScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Kirb"))
         {
-            collision.gameObject.GetComponent<AIEntity>().depoOverlap = false;
+            collision.gameObject.GetComponent<AIEntity>().depoOverlap--;
         }
     }
 }

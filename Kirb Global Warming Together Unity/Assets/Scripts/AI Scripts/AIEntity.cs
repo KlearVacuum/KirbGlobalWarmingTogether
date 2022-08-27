@@ -12,6 +12,8 @@ public class AIEntity : MonoBehaviour
     public bool collectTrash;
     [Tooltip("Tells ai to return to depo. True after collecting a trash, false when out looking for trash.")]
     public bool returnToDepo;
+    [Tooltip("DIEDED")]
+    public bool dead;
 
     public float mMoveSpeed;
     public float mRotateSpeed;
@@ -27,7 +29,7 @@ public class AIEntity : MonoBehaviour
     private bool enableVelocityVar;
     IEnumerator velVar;
     [HideInInspector]
-    public bool depoOverlap;
+    public int depoOverlap;
 
     [HideInInspector]
     public float mAvoidanceStrength;
@@ -73,8 +75,8 @@ public class AIEntity : MonoBehaviour
     //{
     //    get { return mAnimator; }
     //}
-    protected Collider mCol;
-    public Collider col
+    protected Collider2D mCol;
+    public Collider2D col
     {
         get { return mCol; }
     }
@@ -92,10 +94,25 @@ public class AIEntity : MonoBehaviour
     private float visionAngleStep;
     private float visionWeightStep;
 
+    // death stuff
+    [HideInInspector]
+    public eDeathType deathType;
+    [HideInInspector]
+    public int waterOverlap;
+    public float timeToDrown;
+    private float mCurrentWaterOverlapTime;
+    private float currentWaterOverlapTime
+    {
+        get { return mCurrentWaterOverlapTime; }
+        set { mCurrentWaterOverlapTime = Mathf.Clamp(value, 0, mCurrentWaterOverlapTime + 1); }
+    }
+
+    public List<eTrashType> trashTypeWeakness;
+
     protected virtual void Awake()
     {
         // mAnimator = GetComponentInChildren<Animator>();
-        mCol = GetComponent<Collider>();
+        mCol = GetComponent<Collider2D>();
         mRB = GetComponent<Rigidbody2D>();
     }
 
@@ -116,14 +133,12 @@ public class AIEntity : MonoBehaviour
     protected virtual void Update()
     {
         currentTravelTime -= Time.deltaTime;
-        if (returnToDepo)
-        {
-            GetComponent<SpriteRenderer>().color = Color.green;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().color = Color.red;
-        }
+
+        // TEMP: colors to show feedback on kirb's current state
+        if (dead) GetComponent<SpriteRenderer>().color = Color.gray;
+        else if (returnToDepo) GetComponent<SpriteRenderer>().color = Color.green;
+        else GetComponent<SpriteRenderer>().color = Color.blue;
+
         if (!mPanicTriggered)
         {
             // panic button pressed!
@@ -148,6 +163,8 @@ public class AIEntity : MonoBehaviour
                 mPanicTriggered = false;
             }
         }
+
+        DrownCheck();
     }
 
     protected virtual void FixedUpdate()
@@ -249,6 +266,24 @@ public class AIEntity : MonoBehaviour
         returnToDepo = false;
         GlobalGameData.cash += trashCash;
     }
+
+    public void Die()
+    {
+        col.enabled = false;
+        GlobalGameData.RemoveAiEntity(this);
+    }
+
+    private void DrownCheck()
+    {
+        if (waterOverlap > 0) currentWaterOverlapTime += Time.deltaTime;
+        else currentWaterOverlapTime -= Time.deltaTime;
+
+        if (currentWaterOverlapTime >= timeToDrown)
+        {
+            deathType = eDeathType.DROWN;
+            dead = true;
+        }
+    }    
 
     public void PanicRandomMoveToTargets(Vector2 minMaxMoveRange, Vector2 minMaxTime)
     {
@@ -478,6 +513,21 @@ public class AIEntity : MonoBehaviour
         {
             var trash = collision.gameObject.GetComponent<TrashScript>();
             trashCash = trash.trashCash;
+
+            if (trashTypeWeakness != null && trashTypeWeakness.Count != 0)
+            {
+                foreach (eTrashType trashType in trashTypeWeakness)
+                {
+                    if (trash.trashType == trashType)
+                    {
+                        Debug.Log("plastic picked");
+                        deathType = eDeathType.NASTYFOOD;
+                        dead = true;
+                        break;
+                    }
+                }
+            }
+
             trash.RemoveTrash();
             returnToDepo = true;
         }

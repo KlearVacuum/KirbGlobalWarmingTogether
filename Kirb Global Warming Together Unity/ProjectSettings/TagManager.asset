@@ -8,6 +8,7 @@ TagManager:
   - Kirb
   - Depo
   - Wall
+  - Wave
   layers:
   - Default
   - TransparentFX
