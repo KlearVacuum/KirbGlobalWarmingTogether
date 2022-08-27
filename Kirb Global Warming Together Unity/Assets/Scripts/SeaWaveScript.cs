@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SeaWaveScript : MonoBehaviour
 {
+    public UnityEvent onWaveEnd;
+
     public Transform startTransform;
     public Transform endTransform;
     public GameObject waveSprite;
@@ -20,6 +23,8 @@ public class SeaWaveScript : MonoBehaviour
     private Vector2 travelPath;
     private float currentTravelTime;
     private bool trashSpawned;
+    
+    public bool IsWaveMoving { get { return moveWave; } }
 
     private void Start()
     {
@@ -61,6 +66,8 @@ public class SeaWaveScript : MonoBehaviour
             {
                 currentTravelTime = 0;
                 moveWave = false;
+
+                onWaveEnd.Invoke();
             }
             else if (currentTravelTime > travelPeriod)
             {
