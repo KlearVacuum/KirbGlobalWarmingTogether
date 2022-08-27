@@ -161,6 +161,7 @@ GameObject:
   - component: {fileID: 3856265709959399924}
   - component: {fileID: 3856265709959399927}
   - component: {fileID: 3856265709959399926}
+  - component: {fileID: 828775806571246946}
   m_Layer: 5
   m_Name: Win Button
   m_TagString: Untagged
@@ -271,9 +272,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: KirbSpawnScript, Assembly-CSharp
-        m_MethodName: SetKirbType
+      - m_Target: {fileID: 828775806571246946}
+        m_TargetAssemblyTypeName: WinScript, Assembly-CSharp
+        m_MethodName: BuyWin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -297,3 +298,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mTabGroup: {fileID: 0}
   mTabImageBackground: {fileID: 3856265709959399924}
+--- !u!114 &828775806571246946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3856265709959399912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 507f896ad86505e4ca8b11c0bbe1efc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winCost: 1
+  timesInvestedToWin: 4
