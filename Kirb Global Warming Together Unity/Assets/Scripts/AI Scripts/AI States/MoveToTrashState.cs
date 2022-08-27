@@ -15,7 +15,7 @@ public class MoveToTrashState : MoveToState
         if (!aiController.ai.collectTrash) return false;
         if (aiController.ai.returnToDepo) return false;
 
-        GameObject nearestTrash = aiController.ai.GetNearestTrash(searchRange);
+        GameObject nearestTrash = aiController.ai.GetNearestVisibleTrash(searchRange);
         if (nearestTrash == null) return false;
         aiController.ai.moveToTarget = nearestTrash.transform;
         return true;

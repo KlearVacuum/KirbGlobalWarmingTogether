@@ -118,6 +118,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7875360435281665803}
+  - {fileID: 1019694501864213864}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -225,23 +226,29 @@ MonoBehaviour:
   panic: 0
   collectTrash: 1
   returnToDepo: 0
-  mMoveSpeed: 20
-  mRotateSpeed: 250
-  mPanicMoveSpeed: 30
-  mPanicRotateSpeed: 400
+  mMoveSpeed: 10
+  mRotateSpeed: 500
+  mPanicMoveSpeed: 20
+  mPanicRotateSpeed: 1000
   mPanicDuration: 5
+  velocityVariance: {x: 0, y: 0, z: 0}
+  velocityVarStrength: {x: 1, y: 1}
+  velocityVarTimeRange: {x: 2, y: 5}
+  depoOverlap: 0
   mAvoidanceStrength: 0
-  mVisionAvoidanceStrength: 0.7
+  mVisionAvoidanceStrength: 1
+  forwardDir: {fileID: 1019694501864213864}
   trashTag: Trash
+  depoTag: Depo
   moveToTarget: {fileID: 0}
   trashCash: 0
   foundTrashList: []
   foundDepoList: []
-  avoidanceDist: 3
+  avoidanceDist: 2
   avoidanceAngleDeg: 90
   maxSteerAngle: 90
   visionLines: 3
-  visionRange: 4
+  visionRange: 2
   visionCircleRadius: 0.45
 --- !u!114 &1311995916887444272
 MonoBehaviour:
@@ -258,6 +265,38 @@ MonoBehaviour:
   currentStateName: 
   allAIStates:
   - {fileID: 11400000, guid: 15efa1427d936d94b9285290612392f0, type: 2}
+  - {fileID: 11400000, guid: eb37aeb68329285438d37c75f9df882c, type: 2}
   - {fileID: 11400000, guid: 749ceaa93488a2e40904ca60339f7a3b, type: 2}
   - {fileID: 11400000, guid: 529f51ca01fc3e045bc41f8317619b33, type: 2}
   - {fileID: 11400000, guid: 3c315d517ae623c41b507945385bde45, type: 2}
+--- !u!1 &8008054268695629500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1019694501864213864}
+  m_Layer: 0
+  m_Name: Forward Transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1019694501864213864
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8008054268695629500}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 3711505208548092528}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

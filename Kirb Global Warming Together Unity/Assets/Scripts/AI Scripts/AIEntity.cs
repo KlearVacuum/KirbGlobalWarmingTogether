@@ -19,6 +19,16 @@ public class AIEntity : MonoBehaviour
     public float mPanicRotateSpeed;
     public float mPanicDuration;
 
+    Vector3 desiredVelocity;
+    [HideInInspector]
+    public Vector3 velocityVariance;
+    public Vector2 velocityVarStrength;
+    public Vector2 velocityVarTimeRange;
+    private bool enableVelocityVar;
+    IEnumerator velVar;
+    [HideInInspector]
+    public bool depoOverlap;
+
     public float mAvoidanceStrength;
     public float mVisionAvoidanceStrength;
 
@@ -29,7 +39,9 @@ public class AIEntity : MonoBehaviour
     private float panicMoveTime;
     private Vector2 panicDestination;
 
+    public Transform forwardDir;
     public string trashTag;
+    public string depoTag;
 
     [HideInInspector]
     public Transform moveToTarget;
@@ -96,6 +108,10 @@ public class AIEntity : MonoBehaviour
         mCurrentRotateSpeed = mRotateSpeed;
         visionAngleStep = maxSteerAngle / (float)visionLines * Mathf.Deg2Rad;
         visionWeightStep = 1 / visionLines;
+
+        velVar = NewVelocityVariance(velocityVarTimeRange);
+        StartCoroutine(velVar);
+        enableVelocityVar = false;
     }
     protected virtual void Update()
     {
@@ -140,6 +156,7 @@ public class AIEntity : MonoBehaviour
         // mCurrentMoveForce = 0;
     }
 
+    #region UNUSED FUNCTION: VISION LINES
     private void InitializeVision()
     {
         visionCheckList.Clear();
@@ -167,8 +184,9 @@ public class AIEntity : MonoBehaviour
             // Debug.DrawLine(transform.position, transform.position + rightVision, Color.red, Time.deltaTime);
         }
     }
+    #endregion
 
-    public GameObject GetNearestTrash(float searchRadius)
+    public GameObject GetNearestVisibleTrash(float searchRadius)
     {
         foundTrashList = GlobalGameData.NearbyTrash(transform.position, searchRadius);
         if (foundTrashList.Count == 0) return null;
@@ -178,16 +196,20 @@ public class AIEntity : MonoBehaviour
         foreach (GameObject trash in foundTrashList)
         {
             float dist = Vector2.Distance(transform.position, trash.transform.position);
-            if (dist < shortestDist)
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, trash.transform.position - transform.position, searchRadius);
+            if (hit && !hit.transform.gameObject.CompareTag(gameObject.tag))
             {
-                shortestDist = dist;
-                nearestTrash = trash;
+                if (dist < shortestDist)
+                {
+                    shortestDist = dist;
+                    nearestTrash = trash;
+                }
             }
         }
         return nearestTrash;
     }
 
-    public GameObject GetNearestDepo(float searchRadius)
+    public GameObject GetNearestVisibleDepo(float searchRadius)
     {
         foundDepoList = GlobalGameData.NearbyDepos(transform.position, searchRadius);
         if (foundDepoList.Count == 0) return null;
@@ -197,10 +219,14 @@ public class AIEntity : MonoBehaviour
         foreach (GameObject depo in foundDepoList)
         {
             float dist = Vector2.Distance(transform.position, depo.transform.position);
-            if (dist < shortestDist)
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, depo.transform.position - transform.position, searchRadius);
+            if (hit && !hit.transform.gameObject.CompareTag(gameObject.tag))
             {
-                shortestDist = dist;
-                nearestDepo = depo;
+                if (dist < shortestDist)
+                {
+                    shortestDist = dist;
+                    nearestDepo = depo;
+                }
             }
         }
         return nearestDepo;
@@ -229,36 +255,51 @@ public class AIEntity : MonoBehaviour
         MoveTowardPos(panicDestination);
     }
 
-    [SerializeField]
-    Vector3 desiredVelocity;
     public void MoveTowardPos(Vector3 pos)
     {
-        RotateTowardTarget((Vector2)transform.position + rb.velocity);
 
         Avoidance();
         VisionAvoidanceOtherKirbsAndWalls();
 
-        mCurrentMoveDir = (pos - transform.position).normalized * mCurrentMoveSpeed;
+        //mCurrentMoveDir = (pos - transform.position).normalized * mCurrentMoveSpeed;
         // mCurrentMoveDir = transform.right;
-        mCurrentMoveForce += mCurrentMoveSpeed * Time.deltaTime;
+        //mCurrentMoveForce += mCurrentMoveSpeed * Time.deltaTime;
 
         // Avoidance effector: go away from other kirbs!
-        mCurrentMoveDir += mAvoidanceDir * mAvoidanceStrength;
-        mCurrentMoveDir += mVisionAvoidanceDir * mVisionAvoidanceStrength;
-        mCurrentMoveDir.Normalize();
+        //mCurrentMoveDir += mAvoidanceDir * mAvoidanceStrength;
+        //mCurrentMoveDir += mVisionAvoidanceDir * mVisionAvoidanceStrength;
+        //mCurrentMoveDir.Normalize();
 
-        desiredVelocity = (pos - transform.position).normalized * mCurrentMoveSpeed;
+        desiredVelocity = (pos - transform.position).normalized;
+        if (enableVelocityVar) desiredVelocity += velocityVariance;
+        desiredVelocity *= mCurrentMoveSpeed;
+        // avoidance
         desiredVelocity += mVisionAvoidanceDir * mVisionAvoidanceStrength;
-        if (desiredVelocity.magnitude > mCurrentMoveSpeed)
-        {
-            desiredVelocity = desiredVelocity.normalized * mCurrentMoveSpeed;
-        }
+
+        if (desiredVelocity.magnitude > mCurrentMoveSpeed) desiredVelocity = desiredVelocity.normalized * mCurrentMoveSpeed;
+
+        RotateTowardTarget(transform.position + desiredVelocity);
+
         Debug.DrawLine(transform.position, transform.position + desiredVelocity, Color.magenta);
+    }
+
+    public void EnableVelVar(bool enable)
+    {
+        enableVelocityVar = enable;
+    }
+
+    IEnumerator NewVelocityVariance(Vector2 timeRange)
+    {
+        yield return new WaitForSeconds(Random.Range(timeRange.x, timeRange.y));
+        velocityVariance = new Vector3(Random.Range(-velocityVarStrength.x, velocityVarStrength.x), 
+                                        Random.Range(-velocityVarStrength.y, velocityVarStrength.y), 0);
+        velVar = NewVelocityVariance(timeRange);
+        StartCoroutine(velVar);
     }
 
     public void MoveTowardTarget()
     {
-        RotateTowardTarget((Vector2)transform.position + rb.velocity);
+        // RotateTowardTarget(desiredVelocity);
         MoveTowardPos(moveToTarget.position);
     }
 
@@ -295,7 +336,7 @@ public class AIEntity : MonoBehaviour
             var collider = colliders[i];
 
             // I see it!
-            if (collider.transform.gameObject.CompareTag(gameObject.tag))
+            if (!returnToDepo && collider.transform.gameObject.CompareTag(gameObject.tag))
             {
                 // my current direction's weight
                 float weight = (int)(i / 2) * visionWeightStep;

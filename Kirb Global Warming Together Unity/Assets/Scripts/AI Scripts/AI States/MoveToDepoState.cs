@@ -6,7 +6,6 @@ using UnityEngine;
 public class MoveToDepoState : MoveToState
 {
     public float searchRange;
-    public float depositRange;
     public MoveToDepoState(string _name) : base(_name)
     {
 
@@ -15,7 +14,7 @@ public class MoveToDepoState : MoveToState
     {
         // Set condition to move towards object
         if (!aiController.ai.returnToDepo) return false;
-        GameObject nearestDepo = aiController.ai.GetNearestDepo(searchRange);
+        GameObject nearestDepo = aiController.ai.GetNearestVisibleDepo(searchRange);
         if (nearestDepo == null) return false;
         aiController.ai.moveToTarget = nearestDepo.transform;
         return true;
@@ -33,7 +32,7 @@ public class MoveToDepoState : MoveToState
             aiController.ai.MoveTowardTarget();
 
             // arrived at depo
-            if (Vector2.Distance(aiController.ai.moveToTarget.position, aiController.ai.transform.position) < depositRange)
+            if (aiController.ai.depoOverlap)
             {
                 aiController.ai.Deposit();
                 canTransit = true;

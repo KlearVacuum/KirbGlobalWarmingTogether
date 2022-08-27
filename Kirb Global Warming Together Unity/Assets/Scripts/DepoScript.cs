@@ -15,4 +15,20 @@ public class DepoScript : MonoBehaviour
         GlobalGameData.RemoveDepo(gameObject);
         Destroy(this);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Kirb"))
+        {
+            collision.gameObject.GetComponent<AIEntity>().depoOverlap = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Kirb"))
+        {
+            collision.gameObject.GetComponent<AIEntity>().depoOverlap = false;
+        }
+    }
 }
