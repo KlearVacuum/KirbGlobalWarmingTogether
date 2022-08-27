@@ -31,4 +31,9 @@ public class DepoScript : MonoBehaviour
             collision.gameObject.GetComponent<AIEntity>().depoOverlap--;
         }
     }
+
+    private void OnMouseDown()
+    {
+        GameManager.Instance.SpawnKirb();
+    }
 }

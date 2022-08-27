@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public GameObject kirb;
     public int kirbCost;
     public TextMeshProUGUI cashUI;
 
-    private void Awake()
+    private void Start()
     {
         GlobalGameData.ResetGameData();
         cashUI.text = "$" + GlobalGameData.cash;
@@ -17,13 +17,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && GlobalGameData.cash >= kirbCost)
-        {
-            GlobalGameData.cash -= kirbCost;
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            worldPos.z = 0;
-            Instantiate(kirb, worldPos, Quaternion.identity);
-        }
+        /* Moved to SpawnKirb() */
+        // if (Input.GetMouseButtonDown(0) && GlobalGameData.cash >= kirbCost)
+        // {
+        //     GlobalGameData.cash -= kirbCost;
+        //     Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //     worldPos.z = 0;
+        //     Instantiate(kirb, worldPos, Quaternion.identity);
+        // }
 
         // temp panic key
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -35,5 +36,16 @@ public class GameManager : MonoBehaviour
         }
 
         cashUI.text = "$" + GlobalGameData.cash;
+    }
+
+    public void SpawnKirb()
+    {
+        if (GlobalGameData.cash >= kirbCost)
+        {
+            GlobalGameData.cash -= kirbCost;
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPos.z = 0;
+            Instantiate(kirb, worldPos, Quaternion.identity);
+        }
     }
 }
