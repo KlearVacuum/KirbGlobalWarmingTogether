@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class LevelManager : MonoBehaviour
 {
     public UnityEvent onLevelAdvance;
+    public UnityEvent onLose;
 
     [SerializeField] private GameManager mGameManager = null;
     [SerializeField] private SeaWaveScript mSeaWave = null;
@@ -13,6 +14,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int mNextTrashToSpawn = 15;
     [SerializeField] private int mTrashCountIncrement = 3;
     [SerializeField] private float mCurrentLevelTimer = 0f;
+    [SerializeField] private GameState mGameState = GameState.Playing;
 
     [Header("Wave Control")]
     [SerializeField] private Transform mStartPt = null;
@@ -34,8 +36,33 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mCurrentLevelTimer += Time.deltaTime;
+        if (mGameState == GameState.Playing) 
+        {
+            bool areAllKirbsDead = AreAllKirbsDead();
 
+            if (areAllKirbsDead) 
+            {
+                onLose.Invoke();
+                return;
+            }
+
+            UpdateLevelTimer();
+        }
+    }
+
+    private bool AreAllKirbsDead()
+    {
+        foreach (var kirb in GlobalGameData.allAiEntities)
+        {
+            if (!kirb.dead) { return false; }
+        }
+
+        return true;
+    }
+
+    private void UpdateLevelTimer()
+    {
+        mCurrentLevelTimer += Time.deltaTime;
         if (mCurrentLevelTimer > mLevelDurationSec && !mIsWaitingWaveEnd)
         {
             StartLevelEndSequence();
@@ -88,11 +115,7 @@ public class LevelManager : MonoBehaviour
     private void OnGUI() 
     {
         if (!mIsDebug) { return; }
-
-        // Debug wave
-        if (GUI.Button(new Rect(10,10,50,50), "gibe wave")) 
-        {
-            mSeaWave.StartWave(0);
-        }
     }
 }
+
+public enum GameState { Playing, Lose, Win }
