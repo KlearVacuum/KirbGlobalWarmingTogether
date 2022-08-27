@@ -6,12 +6,16 @@ using UnityEngine.Events;
 public class LevelManager : MonoBehaviour
 {
     public UnityEvent onWaveWarning;
+    public UnityEvent onWaveStart;
     public UnityEvent onLevelAdvance;
     public UnityEvent onLose;
 
     [SerializeField] private GameManager mGameManager = null;
     [SerializeField] private SeaWaveScript mSeaWave = null;
     [SerializeField] private float mLevelDurationSec = 30f;
+    [SerializeField] private float mLevelDurationDecreasePerWave = 0.5f;
+    [SerializeField] private float mMinLevelDurationSec = 15f;
+    [SerializeField] private float mDurationOffset = 10f;
     [SerializeField] private int mNextTrashToSpawn = 15;
     [SerializeField] private int mTrashCountIncrement = 3;
     [SerializeField] private float mCurrentLevelTimer = 0f;
@@ -21,6 +25,8 @@ public class LevelManager : MonoBehaviour
     [Header("Wave Control")]
     [SerializeField] private Transform mStartPt = null;
     [SerializeField] private Transform mEndPt = null;
+    [SerializeField] private Transform mMinWave = null;
+    [SerializeField] private Transform mMaxWave = null;
     [SerializeField] private SeaWaveScript[] mWavePrefabs = null;
 
     [Header("Debug")]
@@ -29,11 +35,22 @@ public class LevelManager : MonoBehaviour
     private int mLevelCount = 0;
     private bool mIsWaitingWaveEnd = false;
     private bool mIsWarningTriggered = false;
+    private float mNextLevelDuration;
+
+    public void NotifyWin()
+    {
+        mGameState = GameState.Win;
+    }
 
     private void Awake() 
     {
         Debug.Assert(mGameManager != null, "mGameManager is not assigned!"); 
         Debug.Assert(mEndPt != null, "mEndPt is not assigned!");
+    }
+
+    private void Start() 
+    {
+        mNextLevelDuration = mLevelDurationSec;
     }
 
     // Update is called once per frame
@@ -75,14 +92,14 @@ public class LevelManager : MonoBehaviour
     {
         mCurrentLevelTimer += Time.deltaTime;
 
-        if (!mIsWarningTriggered && mCurrentLevelTimer >= mLevelDurationSec - mWaveWarning) 
+        if (!mIsWarningTriggered && mCurrentLevelTimer >= mNextLevelDuration - mWaveWarning) 
         {
             mIsWarningTriggered = true;
             Debug.Log("Wave incoming!");
             onWaveWarning.Invoke();
         }
 
-        if (mCurrentLevelTimer > mLevelDurationSec && !mIsWaitingWaveEnd)
+        if (mCurrentLevelTimer > mNextLevelDuration && !mIsWaitingWaveEnd)
         {
             StartLevelEndSequence();
         }
@@ -94,10 +111,15 @@ public class LevelManager : MonoBehaviour
 
         mSeaWave = SpawnWave();
 
-        // TODO: Set end point stuff.
+        float y = Random.Range(mMinWave.position.y, mMaxWave.position.y);
+        Vector3 newEndPos = mEndPt.transform.position;
+        newEndPos.y = y;
+        mEndPt.transform.position = newEndPos;
         mSeaWave.endTransform = mEndPt;
 
         mSeaWave.StartWave(mNextTrashToSpawn);
+
+        onWaveStart.Invoke();
     }
 
     private SeaWaveScript SpawnWave()
@@ -127,6 +149,10 @@ public class LevelManager : MonoBehaviour
         mNextTrashToSpawn += mTrashCountIncrement;
         onLevelAdvance.Invoke();
         mLevelCount++;
+
+        mLevelDurationSec -= mLevelDurationDecreasePerWave;
+        mLevelDurationSec = Mathf.Max(mLevelDurationSec, mMinLevelDurationSec);
+        mNextLevelDuration = mLevelDurationSec + Random.Range(-mDurationOffset, mDurationOffset);
 
         mSeaWave.onWaveEnd.RemoveListener(OnWaveEnd);
         Destroy(mSeaWave.gameObject);
