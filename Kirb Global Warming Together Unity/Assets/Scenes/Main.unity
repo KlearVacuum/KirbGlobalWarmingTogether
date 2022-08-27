@@ -1750,6 +1750,7 @@ MonoBehaviour:
   buttonPrefab: {fileID: 3856265709959399912, guid: 63a08ae3bb6ffc6458d2d74895feb61f, type: 3}
   winButton: {fileID: 3856265709959399912, guid: 5906c288477ad464aa2dda9148d0817e, type: 3}
   winButtonText: Win
+  weaknessSprites: []
 --- !u!1 &1616022074
 GameObject:
   m_ObjectHideFlags: 0
