@@ -45,7 +45,7 @@ public class TrashScript : MonoBehaviour
 
     public void RemoveTrash(Transform holder)
     {
-        Debug.Log("trash is picked up");
+        // Debug.Log("trash is picked up");
         GlobalGameData.RemoveTrash(gameObject);
 
         GetComponent<Collider2D>().enabled = false;
