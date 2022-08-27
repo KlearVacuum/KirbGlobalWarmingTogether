@@ -40,18 +40,22 @@ public class LevelManager : MonoBehaviour
         {
             bool areAllKirbsDead = AreAllKirbsDead();
 
-            if (areAllKirbsDead) 
+            if (areAllKirbsDead)
             {
-                if (mIsDebug) 
-                {
-                    Debug.Log("On lose");
-                }
-                onLose.Invoke();
+                OnLose();
                 return;
             }
 
             UpdateLevelTimer();
         }
+    }
+
+    private void OnLose()
+    {
+        if (mIsDebug) { Debug.Log("On lose"); }
+        mGameState = GameState.Lose;
+
+        onLose.Invoke();
     }
 
     private bool AreAllKirbsDead()
