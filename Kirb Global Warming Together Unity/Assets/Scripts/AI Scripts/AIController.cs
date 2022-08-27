@@ -31,6 +31,12 @@ public class AIController : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (mAI.forceStateTransition)
+        {
+            currentState.canTransit = true;
+            mAI.forceStateTransition = false;
+        }
+
         if (allAIStates.Count == 0)
         {
             Debug.LogError(gameObject.name + " AI Controller has no AI states!");

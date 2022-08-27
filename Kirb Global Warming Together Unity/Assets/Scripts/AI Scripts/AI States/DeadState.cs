@@ -18,7 +18,7 @@ public class DeadState : MoveToState
         aiController.ai.moveToTarget = null;
         canTransit = false;
         // can start death animation thingy here, then in animator can call kirb's death function
-
+        aiController.ai.DampenVelocity(0.5f);
         aiController.ai.Die();
     }
 

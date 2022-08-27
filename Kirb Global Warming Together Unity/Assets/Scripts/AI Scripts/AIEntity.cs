@@ -6,6 +6,9 @@ using UnityEngine.AI;
 // Contains all data and functions of this AI
 public class AIEntity : MonoBehaviour
 {
+    [HideInInspector]
+    public bool forceStateTransition;
+
     [Tooltip("When kirbs are conjested af, quick fix panic button doesn't hurt anyone... right?")]
     public bool panic;
     [Tooltip("Enables ai to continue looking for trash and bringing them to depo: if disabled, ai will not leave depo. Should be true until we start doing the recall horn thingy.")]
@@ -129,6 +132,7 @@ public class AIEntity : MonoBehaviour
         enableVelocityVar = false;
 
         ResetTravelTime();
+        forceStateTransition = false;
     }
     protected virtual void Update()
     {
@@ -273,6 +277,13 @@ public class AIEntity : MonoBehaviour
         GlobalGameData.RemoveAiEntity(this);
     }
 
+    // Dampen velocity: must be less than 1
+    public void DampenVelocity(float dampenAmount)
+    {
+        if (dampenAmount >= 1) return;
+        rb.velocity = rb.velocity * dampenAmount;
+    }
+
     private void DrownCheck()
     {
         if (waterOverlap > 0) currentWaterOverlapTime += Time.deltaTime;
@@ -280,6 +291,7 @@ public class AIEntity : MonoBehaviour
 
         if (currentWaterOverlapTime >= timeToDrown)
         {
+            forceStateTransition = true;
             deathType = eDeathType.DROWN;
             dead = true;
         }
@@ -520,7 +532,7 @@ public class AIEntity : MonoBehaviour
                 {
                     if (trash.trashType == trashType)
                     {
-                        Debug.Log("plastic picked");
+                        forceStateTransition = true;
                         deathType = eDeathType.NASTYFOOD;
                         dead = true;
                         break;
