@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public int kirbCost;
     public TextMeshProUGUI cashUI;
 
+    [HideInInspector]
+    public int selectedKirbButton;
+
     private void Awake()
     {
         _instance = this;
@@ -18,6 +21,7 @@ public class GameManager : MonoBehaviour
         GlobalGameData.ResetGameData();
         GlobalGameData.cash = startingCash;
         cashUI.text = "$" + GlobalGameData.cash;
+        selectedKirbButton = 0;
     }
 
     private void Update()

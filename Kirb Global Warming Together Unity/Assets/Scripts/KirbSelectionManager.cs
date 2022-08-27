@@ -27,6 +27,7 @@ public class KirbSelectionManager : MonoBehaviour
                 buttonScript.mTabGroup = tabGroup;
                 buttonScript.mTabImageBackground.sprite = kirbTypes[i].kirbSprite;
                 button.GetComponentInChildren<WriteTextUI>().WriteText(kirbTypes[i].name + "\n" + "$" + kirbTypes[i].cost);
+                button.GetComponent<KirbSpawnScript>().selectedKirbButtonNum = i;
 
                 AIEntity kirb = kirbTypes[i].kirb.GetComponent<AIEntity>();
                 var viewer = button.GetComponentInChildren<WeaknessSpriteViewer>();
