@@ -336,7 +336,7 @@ public class AIEntity : MonoBehaviour
 
         if (desiredVelocity.magnitude > mCurrentMoveSpeed) desiredVelocity = desiredVelocity.normalized * mCurrentMoveSpeed;
 
-        RotateTowardTarget(transform.position + desiredVelocity);
+        // RotateTowardTarget(transform.position + desiredVelocity);
 
         // Debug.DrawLine(transform.position, transform.position + desiredVelocity, Color.magenta);
     }

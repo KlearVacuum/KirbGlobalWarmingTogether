@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c560249cd808ab248b4693c0ab57f264, type: 3}
-  m_Name: PanicState
+  m_Name: Anxious Panic State
   m_EditorClassIdentifier: 
-  name: PANIC!!1!
-  canTransit: 1
+  name: Anxious Panic
+  canTransit: 0
   restartOnEvaluate: 0
-  minMaxMoveRange: {x: 2, y: 4}
-  minMaxTime: {x: 0.5, y: 1}
+  minMaxMoveRange: {x: 1, y: 5}
+  minMaxTime: {x: 0.2, y: 0.5}
