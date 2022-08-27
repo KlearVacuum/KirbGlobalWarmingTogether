@@ -12,6 +12,8 @@ public class KirbSelectionManager : MonoBehaviour
     GameObject buttonParent;
     TabGroupScript tabGroup;
 
+    public List<WeaknessSprite> weaknessSprites; 
+
     private void Awake()
     {
         buttonParent = gameObject;
@@ -24,7 +26,19 @@ public class KirbSelectionManager : MonoBehaviour
                 var buttonScript = button.GetComponent<TabButtonScript>();
                 buttonScript.mTabGroup = tabGroup;
                 buttonScript.mTabImageBackground.sprite = kirbTypes[i].kirbSprite;
-                button.GetComponentInChildren<WriteTextUI>().WriteText(kirbTypes[i].name);
+                button.GetComponentInChildren<WriteTextUI>().WriteText(kirbTypes[i].name + "\n" + "$" + kirbTypes[i].cost);
+
+                AIEntity kirb = kirbTypes[i].kirb.GetComponent<AIEntity>();
+                var viewer = button.GetComponentInChildren<WeaknessSpriteViewer>();
+
+                if (kirb.trashTypeWeakness != null && kirb.trashTypeWeakness.Count > 0)
+                {
+                    foreach (var weakness in kirb.trashTypeWeakness)
+                    {
+                        viewer.weaknessTypes.Add(weakness);
+                    }
+                }
+
                 button.GetComponent<KirbSpawnScript>().kirbType = kirbTypes[i];
             }
             else
@@ -37,7 +51,7 @@ public class KirbSelectionManager : MonoBehaviour
 
         GameObject win = Instantiate(winButton, buttonParent.transform);
         win.GetComponent<TabButtonScript>().mTabGroup = tabGroup;
-        win.GetComponentInChildren<WriteTextUI>().WriteText(winButtonText);
+        win.GetComponentInChildren<WriteTextUI>().WriteText(winButtonText + "\n" + "$" + win.GetComponent<WinScript>().winCost);
 
         gameObject.transform.GetChild(0).GetComponent<KirbSpawnScript>().SetKirbType();
     }
