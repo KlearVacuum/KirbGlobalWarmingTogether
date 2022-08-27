@@ -17,6 +17,7 @@ public class WaveWarning : MonoBehaviour
     {
         _levelManager.onWaveWarning.AddListener(OnWaveWarning);
         _levelManager.onWaveStart.AddListener(OnWaveStart);
+        _levelManager.onLose.AddListener(OnLose);
 
         _warningImage.gameObject.SetActive(false);
     }
@@ -27,6 +28,11 @@ public class WaveWarning : MonoBehaviour
     }
 
     private void OnWaveStart()
+    {
+        _warningImage.gameObject.SetActive(false);
+    }
+
+    private void OnLose()
     {
         _warningImage.gameObject.SetActive(false);
     }

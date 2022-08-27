@@ -14,9 +14,10 @@ public class WinScript : MonoBehaviour
         {
             GlobalGameData.cash -= winCost;
             timesInvested++;
+
             if (timesInvested >= timesInvestedToWin)
             {
-                // WIN
+                LevelManager.Instance.NotifyWin();
             }
         }
         else

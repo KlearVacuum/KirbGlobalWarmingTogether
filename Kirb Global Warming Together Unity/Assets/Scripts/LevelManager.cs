@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : Singleton<LevelManager>
 {
     public UnityEvent onWaveWarning;
     public UnityEvent onWaveStart;
     public UnityEvent onLevelAdvance;
     public UnityEvent onLose;
+    public UnityEvent onWin;
 
     [SerializeField] private GameManager mGameManager = null;
     [SerializeField] private SeaWaveScript mSeaWave = null;
@@ -39,7 +40,9 @@ public class LevelManager : MonoBehaviour
 
     public void NotifyWin()
     {
+        if (mGameState == GameState.Win) { return; }
         mGameState = GameState.Win;
+        onWin.Invoke();
     }
 
     private void Awake() 
