@@ -5,7 +5,7 @@ using UnityEngine;
 public class WinScript : MonoBehaviour
 {
     public int winCost;
-    public int timesInvested;
+    private int timesInvested;
     public int timesInvestedToWin;
 
     public void BuyWin()
