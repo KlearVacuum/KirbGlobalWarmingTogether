@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
+    public static GameManager _instance;
     public GameObject kirb;
     public int kirbCost;
     public TextMeshProUGUI cashUI;
 
-    private void Start()
+    private void Awake()
     {
+        _instance = this;
+
         GlobalGameData.ResetGameData();
         cashUI.text = "$" + GlobalGameData.cash;
     }
