@@ -14,7 +14,7 @@ public class KirbSelectionManager : MonoBehaviour
 
     public List<WeaknessSprite> weaknessSprites; 
 
-    private void Awake()
+    private void Start()
     {
         buttonParent = gameObject;
         tabGroup = buttonParent.GetComponent<TabGroupScript>();

@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
+    public UnityEvent onWaveWarning;
     public UnityEvent onLevelAdvance;
     public UnityEvent onLose;
 
@@ -14,6 +15,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int mNextTrashToSpawn = 15;
     [SerializeField] private int mTrashCountIncrement = 3;
     [SerializeField] private float mCurrentLevelTimer = 0f;
+    [SerializeField] private float mWaveWarning = 5.0f;
     [SerializeField] private GameState mGameState = GameState.Playing;
 
     [Header("Wave Control")]
@@ -26,6 +28,7 @@ public class LevelManager : MonoBehaviour
 
     private int mLevelCount = 0;
     private bool mIsWaitingWaveEnd = false;
+    private bool mIsWarningTriggered = false;
 
     private void Awake() 
     {
@@ -71,6 +74,14 @@ public class LevelManager : MonoBehaviour
     private void UpdateLevelTimer()
     {
         mCurrentLevelTimer += Time.deltaTime;
+
+        if (!mIsWarningTriggered && mCurrentLevelTimer >= mLevelDurationSec - mWaveWarning) 
+        {
+            mIsWarningTriggered = true;
+            Debug.Log("Wave incoming!");
+            onWaveWarning.Invoke();
+        }
+
         if (mCurrentLevelTimer > mLevelDurationSec && !mIsWaitingWaveEnd)
         {
             StartLevelEndSequence();
@@ -112,6 +123,7 @@ public class LevelManager : MonoBehaviour
     {
         mIsWaitingWaveEnd = false;
         mCurrentLevelTimer = 0;
+        mIsWarningTriggered = false;
         mNextTrashToSpawn += mTrashCountIncrement;
         onLevelAdvance.Invoke();
         mLevelCount++;

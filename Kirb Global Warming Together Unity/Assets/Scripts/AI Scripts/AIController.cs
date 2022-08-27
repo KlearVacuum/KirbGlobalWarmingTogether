@@ -43,7 +43,6 @@ public class AIController : MonoBehaviour
         }
         if (nextState == currentState)
         {
-            // Debug.Log("Current State: " + currentState.name);
             currentStateName = currentState.name;
             currentState.RunState(this);
             if (currentState.canTransit)
