@@ -50,9 +50,10 @@ MonoBehaviour:
   trashType: 0
   trashCash: 3
   sprites:
-  - {fileID: -1428003464, guid: 05435e926d407f445b8ff62fbe21c091, type: 3}
+  - {fileID: -1371549272, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
   _isYumisTrash: 0
   _isHeld: 0
+  randomRotate: 1
   _target: {x: 0, y: 0, z: 0}
   _dampRatio: 1
   _angular: 0.3

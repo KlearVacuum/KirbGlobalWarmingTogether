@@ -10,6 +10,7 @@ public class TrashScript : MonoBehaviour
     public List<Sprite> sprites = new List<Sprite>();
 
     public bool _isYumisTrash, _isHeld;
+    public bool randomRotate = true;
 
     private Transform _targetTransform;
     public Vector3 _target;
@@ -20,7 +21,11 @@ public class TrashScript : MonoBehaviour
     {
         GlobalGameData.AddTrash(gameObject);
         GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, 1000) % sprites.Count];
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(-179f, 179f)));
+
+        if (randomRotate)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, Random.Range(-179f, 179f)));
+        }
     }
 
     void Update()
