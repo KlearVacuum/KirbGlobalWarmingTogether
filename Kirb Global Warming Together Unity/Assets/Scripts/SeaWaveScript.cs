@@ -4,6 +4,75 @@ using UnityEngine;
 
 public class SeaWaveScript : MonoBehaviour
 {
+    public Transform startTransform;
+    public Transform endTransform;
+
+    public MultiTrashManager trashManager;
+    [Tooltip("Number of trash spawners to select and spawn trash from")]
+    public int trashSpawnNum;
+
+    public bool startWave;
+    private bool moveWave;
+    // Duration it takes to complete 1 oscillation
+    public float travelPeriod;
+
+    private Vector2 travelPath;
+    private float currentTravelTime;
+    private bool trashSpawned;
+
+    private void Start()
+    {
+        travelPath = endTransform.position - startTransform.position;
+    }
+
+    private void Update()
+    {
+        MoveWave();
+    }
+
+    // call this to start the wave
+    public void StartWave(int trashToSpawn)
+    {
+        if (!moveWave)
+        {
+            startWave = true;
+            trashSpawnNum = trashToSpawn;
+        }
+    }
+
+    public void MoveWave()
+    {
+        if (startWave)
+        {
+            moveWave = true;
+            startWave = false;
+            trashSpawned = false;
+        }
+
+        if (moveWave)
+        {
+            currentTravelTime += Time.deltaTime;
+            float t = Mathf.Sin(currentTravelTime * 2 / travelPeriod);
+
+            transform.position = startTransform.position + new Vector3(travelPath.x * t, travelPath.y * t, 0);
+
+            if (currentTravelTime >= travelPeriod * 2)
+            {
+                currentTravelTime = 0;
+                moveWave = false;
+            }
+            else if (currentTravelTime > travelPeriod)
+            {
+                if (!trashSpawned)
+                {
+                    trashManager.SpawnSomeTrash(trashSpawnNum);
+                    trashSpawned = true;
+                }
+            }
+        }
+    }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Kirb"))
