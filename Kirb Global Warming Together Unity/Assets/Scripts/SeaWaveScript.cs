@@ -6,6 +6,7 @@ public class SeaWaveScript : MonoBehaviour
 {
     public Transform startTransform;
     public Transform endTransform;
+    public GameObject waveSprite;
 
     public MultiTrashManager trashManager;
     [Tooltip("Number of trash spawners to select and spawn trash from")]
@@ -54,7 +55,7 @@ public class SeaWaveScript : MonoBehaviour
             currentTravelTime += Time.deltaTime;
             float t = Mathf.Sin(currentTravelTime * 2 / travelPeriod);
 
-            transform.position = startTransform.position + new Vector3(travelPath.x * t, travelPath.y * t, 0);
+            waveSprite.transform.position = startTransform.position + new Vector3(travelPath.x * t, travelPath.y * t, 0);
 
             if (currentTravelTime >= travelPeriod * 2)
             {

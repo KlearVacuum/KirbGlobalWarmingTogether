@@ -891,7 +891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5824838531169053872, guid: 4b939f1bfb69ace43804975ccb0c59f4, type: 3}
       propertyPath: m_Name
-      value: Depo (3)
+      value: Depo (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b939f1bfb69ace43804975ccb0c59f4, type: 3}

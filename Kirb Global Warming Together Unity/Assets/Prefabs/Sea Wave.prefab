@@ -40,6 +40,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3220076471069461874}
+  - component: {fileID: 8971099193696616853}
+  - component: {fileID: 3936644401009520416}
   m_Layer: 0
   m_Name: Sea Wave
   m_TagString: Untagged
@@ -66,6 +68,55 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8971099193696616853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667746884789023806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca797ad4b9b69964a8be4830a71c20ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTransform: {fileID: 1773305003489025158}
+  endTransform: {fileID: 2040433994660755635}
+  waveSprite: {fileID: 3436085554910734557}
+  trashManager: {fileID: 3936644401009520416}
+  trashSpawnNum: 3
+  startWave: 0
+  travelPeriod: 3
+--- !u!114 &3936644401009520416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667746884789023806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a05116a04379d604580945bb41b2fc43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trashSpawners:
+  - {fileID: 4668141634114234115}
+  - {fileID: 4668141633246016265}
+  - {fileID: 4668141634655077899}
+  - {fileID: 4668141633739611641}
+  - {fileID: 4668141634723077480}
+  - {fileID: 4668141633126623983}
+  - {fileID: 4668141633449200962}
+  - {fileID: 4668141634106230615}
+  - {fileID: 4668141633817291889}
+  - {fileID: 4668141632676574450}
+  - {fileID: 4668141633975771084}
+  trashToSpawn:
+  - {fileID: 7045076144644805235, guid: 9e47f9cf2c279684e91b2225792e071f, type: 3}
+  - {fileID: 7045076144644805235, guid: 9e47f9cf2c279684e91b2225792e071f, type: 3}
+  - {fileID: 2558371590487056003, guid: 40633c10d0baf7f48ac46048182a77bc, type: 3}
+  quantity: 5
+  allSameTrashSetup: 1
 --- !u!1 &3436085553304667201
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +170,6 @@ GameObject:
   - component: {fileID: 3436085554910734558}
   - component: {fileID: 3436085554910734559}
   - component: {fileID: 3436085554910734556}
-  - component: {fileID: 3436085554910734553}
   m_Layer: 0
   m_Name: Water
   m_TagString: Wave
@@ -220,35 +270,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &3436085554910734553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3436085554910734557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca797ad4b9b69964a8be4830a71c20ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTransform: {fileID: 1773305003489025158}
-  endTransform: {fileID: 2040433994660755635}
-  trashSpawners:
-  - {fileID: 4668141634114234115}
-  - {fileID: 4668141633246016265}
-  - {fileID: 4668141634655077899}
-  - {fileID: 4668141633739611641}
-  - {fileID: 4668141634723077480}
-  - {fileID: 4668141633126623983}
-  - {fileID: 4668141633449200962}
-  - {fileID: 4668141634106230615}
-  - {fileID: 4668141633817291889}
-  - {fileID: 4668141632676574450}
-  - {fileID: 4668141633975771084}
-  trashSpawnNum: 3
-  startWave: 0
-  travelPeriod: 3
 --- !u!1 &7746087212735670329
 GameObject:
   m_ObjectHideFlags: 0
