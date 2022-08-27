@@ -49,6 +49,8 @@ public class AIEntity : MonoBehaviour
     public string trashTag;
     public string depoTag;
 
+    public GameObject deadKirb;
+
     private TrashScript _heldTrash;
 
     public float maxTravelTime;
@@ -284,6 +286,8 @@ public class AIEntity : MonoBehaviour
             _heldTrash = null;
         }
         col.enabled = false;
+        GameObject deadGO = Instantiate(deadKirb, transform.position, Quaternion.identity);
+        deadGO.GetComponent<TrashScript>().randomRotate = false;
         GlobalGameData.RemoveAiEntity(this);
     }
 
