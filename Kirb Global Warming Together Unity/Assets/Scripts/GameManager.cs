@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager _instance;
     public GameObject kirb;
+    public int startingCash;
     public int kirbCost;
     public TextMeshProUGUI cashUI;
 
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
         _instance = this;
 
         GlobalGameData.ResetGameData();
+        GlobalGameData.cash = startingCash;
         cashUI.text = "$" + GlobalGameData.cash;
     }
 

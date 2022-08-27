@@ -153,6 +153,7 @@ MonoBehaviour:
   forwardDir: {fileID: 1019694501864213864}
   trashTag: Trash
   depoTag: Depo
+  deadKirb: {fileID: 7045076144644805235, guid: 05eef5b03b411fa409d680d841b38377, type: 3}
   maxTravelTime: 5
   moveToTarget: {fileID: 0}
   trashCash: 0

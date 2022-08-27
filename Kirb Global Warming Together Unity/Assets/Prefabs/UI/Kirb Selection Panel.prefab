@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &676575978170861793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 676575978170861792}
+  - component: {fileID: 676575978170861796}
+  - component: {fileID: 676575978170861797}
+  - component: {fileID: 676575978170861798}
+  - component: {fileID: 676575978170861799}
+  - component: {fileID: 676575978170861803}
+  m_Layer: 5
+  m_Name: Kirb Selection Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &676575978170861792
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676575978170861793}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -10}
+  m_SizeDelta: {x: 800, y: 100}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!222 &676575978170861796
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676575978170861793}
+  m_CullTransparentMesh: 1
+--- !u!114 &676575978170861797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676575978170861793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &676575978170861798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676575978170861793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eadeafa2df49be24587a73baccc68a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 10
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  mFitType: 5
+  mRows: 0
+  mColumns: 0
+  mCellSize: {x: 80, y: 80}
+  mSpacing: {x: Infinity, y: Infinity}
+  autoFitX: 1
+  autoFitY: 1
+--- !u!114 &676575978170861799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676575978170861793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef4595fba8fd524e919558c4f3bfba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTabButtonsList: []
+  mTabIdleColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
+  mTabHoverColor: {r: 1, g: 0.9731934, b: 0.6839622, a: 1}
+  mTabSelectedColor: {r: 0.764151, g: 0.6135353, b: 0.24150053, a: 1}
+--- !u!114 &676575978170861803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 676575978170861793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b6ad41cc40a0864aa16d1248759f63b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kirbTypes:
+  - name: Yum
+    kirb: {fileID: 3115804531108714309, guid: 030991c190b72a24ca31777a2bfc1a20, type: 3}
+    cost: 10
+    kirbSprite: {fileID: 0}
+  - name: Vroom
+    kirb: {fileID: 3115804531108714309, guid: de5176dcd0a431740b9e766c54a35d09, type: 3}
+    cost: 18
+    kirbSprite: {fileID: 0}
+  - name: Chum
+    kirb: {fileID: 3115804531108714309, guid: b3f9237af3bf546459737640f8676a7f, type: 3}
+    cost: 3
+    kirbSprite: {fileID: 0}
+  - name: Dum
+    kirb: {fileID: 3115804531108714309, guid: 59c234fad535cf844901f01441583e49, type: 3}
+    cost: 8
+    kirbSprite: {fileID: 0}
+  - name: Bum
+    kirb: {fileID: 3115804531108714309, guid: 63e2c1edc8d938b4a8edaa2992b14621, type: 3}
+    cost: 10
+    kirbSprite: {fileID: 0}
+  buttonPrefab: {fileID: 3856265709959399912, guid: 63a08ae3bb6ffc6458d2d74895feb61f, type: 3}
+  winButton: {fileID: 3856265709959399912, guid: 5906c288477ad464aa2dda9148d0817e, type: 3}
+  winButtonText: Win
+  weaknessSprites: []
