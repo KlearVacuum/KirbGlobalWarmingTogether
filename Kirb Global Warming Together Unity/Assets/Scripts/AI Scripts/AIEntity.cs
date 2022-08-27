@@ -290,8 +290,6 @@ public class AIEntity : MonoBehaviour
         {
             GameObject.Destroy(_heldTrash.gameObject);
             _heldTrash = null;
-
-            _animator.CrossFade("kirb_kaboom", 0, 0);
         }
         col.enabled = false;
         GameObject deadGO = Instantiate(deadKirb, transform.position, Quaternion.identity);
@@ -315,6 +313,7 @@ public class AIEntity : MonoBehaviour
         {
             forceStateTransition = true;
             deathType = eDeathType.DROWN;
+            _animator.CrossFade("kirb_drowned", 0, 0);
             dead = true;
         }
     }    
@@ -556,6 +555,7 @@ public class AIEntity : MonoBehaviour
                     {
                         forceStateTransition = true;
                         deathType = eDeathType.NASTYFOOD;
+                        _animator.CrossFade("kirb_kaboom", 0, 0);
                         dead = true;
                         break;
                     }
