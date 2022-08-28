@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TrashToSpawn:
   - {fileID: 7045076144644805235, guid: 9e47f9cf2c279684e91b2225792e071f, type: 3}
-  NumLevels: 20
+  NumLevels: 3
   Quantity: 20

@@ -20,5 +20,5 @@ MonoBehaviour:
   - {fileID: 7045076144644805235, guid: 9e47f9cf2c279684e91b2225792e071f, type: 3}
   - {fileID: 2558371590487056003, guid: cf97be2fb61b61342b322bcbc398276c, type: 3}
   - {fileID: 2558371590487056003, guid: d0f512e0f26151a4888ee6ae839550d6, type: 3}
-  NumLevels: 20
+  NumLevels: 3
   Quantity: 20
