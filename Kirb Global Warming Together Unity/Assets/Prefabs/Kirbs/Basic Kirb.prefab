@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 1311995916887444270}
   - component: {fileID: 1311995916887444269}
   - component: {fileID: -382291981547231935}
+  - component: {fileID: -2672060079670720323}
   m_Layer: 3
   m_Name: Basic Kirb
   m_TagString: Kirb
@@ -300,6 +301,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-2672060079670720323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3115804531108714309}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0362226558ee15943b1244d183c3705a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trashType: 0
+  trashCash: 2
+  sprites:
+  - {fileID: 1915945943, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
+  _isYumisTrash: 0
+  _isHeld: 0
+  randomRotate: 1
+  _target: {x: 0, y: 0, z: 0}
+  _dampRatio: 1
+  _angular: 0.3
 --- !u!1 &3423345966233687546
 GameObject:
   m_ObjectHideFlags: 0
