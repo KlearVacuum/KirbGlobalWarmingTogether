@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AlertSpeakerObject : MonoBehaviour
 {
+    [SerializeField] private int mNumWeeWoo = 5;
     public bool _testTheWeeWoo;
 
     void Start()
@@ -31,7 +32,7 @@ public class AlertSpeakerObject : MonoBehaviour
             .delayedCall(0.5f, () => {
                 LeanTween
                     .scaleY(gameObject, 0.225f, 0.25f)
-                    .setLoopPingPong(5)
+                    .setLoopPingPong(mNumWeeWoo)
                     .setOnComplete(() => {
                         LeanTween
                             .rotateX(gameObject, 90.0f, 0.5f)
