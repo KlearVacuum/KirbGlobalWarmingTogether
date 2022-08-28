@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector]
     public int selectedKirbButton;
+
+    public float panicTimer = 0.0f;
+    public float panicCooldown = 0.0f;
 
     private void Awake()
     {
@@ -40,14 +44,18 @@ public class GameManager : MonoBehaviour
 
         if (LevelManager.Instance.GameState != GameState.Playing) { return; }
 
+        if (panicTimer <= panicCooldown) {
+            panicTimer += Time.deltaTime;
+        } else {
+            panicTimer = panicCooldown;
+        }
+
         // temp panic key
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            foreach (var kirb in GlobalGameData.allAiEntities)
-            {
-                kirb.panic = true;
-            }
+            Panic();
         }
+
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             foreach (var kirb in GlobalGameData.allAiEntities)
@@ -69,6 +77,21 @@ public class GameManager : MonoBehaviour
         populationUI.text = GlobalGameData.allAiEntities.Count + " Alive";
     }
 
+    public void Panic()
+    {
+        if (panicTimer < panicCooldown) 
+        {
+            return;
+        }
+
+        foreach (var kirb in GlobalGameData.allAiEntities)
+        {
+            kirb.panic = true;
+        }
+
+        panicTimer = 0;
+    }
+
     public void SpawnKirb()
     {
         if (GlobalGameData.cash >= kirbCost)
@@ -78,5 +101,10 @@ public class GameManager : MonoBehaviour
             worldPos.z = 0;
             Instantiate(kirb, worldPos, Quaternion.identity);
         }
+    }
+
+    public static void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

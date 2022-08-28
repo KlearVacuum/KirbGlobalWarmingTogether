@@ -384,9 +384,9 @@ public class AIEntity : MonoBehaviour
         {
             // find new random destination
             float rangeDiff = minMaxMoveRange.y - minMaxMoveRange.x;
-            float randX = Random.Range(minMaxMoveRange.x, minMaxMoveRange.y) - rangeDiff;
-            float randY = Random.Range(minMaxMoveRange.x, minMaxMoveRange.y) - rangeDiff;
-            panicDestination = new Vector3(randX, randY) + transform.position;
+            // float randX = Random.Range(minMaxMoveRange.x, minMaxMoveRange.y) - rangeDiff;
+            // float randY = Random.Range(minMaxMoveRange.x, minMaxMoveRange.y) - rangeDiff;
+            panicDestination = new Vector3(0, -1) + transform.position;
             panicMoveTime = Random.Range(minMaxTime.x, minMaxTime.y);
         }
 
