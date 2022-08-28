@@ -133,14 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kirbTypes:
-  - name: Yum
-    kirb: {fileID: 3115804531108714309, guid: 030991c190b72a24ca31777a2bfc1a20, type: 3}
-    cost: 10
-    kirbSprite: {fileID: 0}
-  - name: Vroom
-    kirb: {fileID: 3115804531108714309, guid: de5176dcd0a431740b9e766c54a35d09, type: 3}
-    cost: 18
-    kirbSprite: {fileID: 0}
   - name: Chum
     kirb: {fileID: 3115804531108714309, guid: b3f9237af3bf546459737640f8676a7f, type: 3}
     cost: 3
@@ -149,11 +141,18 @@ MonoBehaviour:
     kirb: {fileID: 3115804531108714309, guid: 59c234fad535cf844901f01441583e49, type: 3}
     cost: 8
     kirbSprite: {fileID: 0}
+  - name: Yum
+    kirb: {fileID: 3115804531108714309, guid: 030991c190b72a24ca31777a2bfc1a20, type: 3}
+    cost: 10
+    kirbSprite: {fileID: 0}
   - name: Bum
     kirb: {fileID: 3115804531108714309, guid: 63e2c1edc8d938b4a8edaa2992b14621, type: 3}
     cost: 10
     kirbSprite: {fileID: 0}
+  - name: Vroom
+    kirb: {fileID: 3115804531108714309, guid: de5176dcd0a431740b9e766c54a35d09, type: 3}
+    cost: 18
+    kirbSprite: {fileID: 0}
   buttonPrefab: {fileID: 3856265709959399912, guid: 63a08ae3bb6ffc6458d2d74895feb61f, type: 3}
   winButton: {fileID: 3856265709959399912, guid: 5906c288477ad464aa2dda9148d0817e, type: 3}
   winButtonText: Win
-  weaknessSprites: []

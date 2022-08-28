@@ -257,8 +257,8 @@ MonoBehaviour:
   timeToDrown: 0.7
   trashTypeWeakness: 
   _asource: {fileID: 0}
-  _aclipEat: {fileID: 8300000, guid: 05679bd7852c64543b9a40c446ef7fbd, type: 3}
-  _aclipBweh: {fileID: 8300000, guid: 50b396e140da58941a66afd8bca186b6, type: 3}
+  _aclipEat: {fileID: 8300000, guid: aea1e01fe717fb44dbcf34a92b66c511, type: 3}
+  _aclipBweh: {fileID: 8300000, guid: bb06481f7e0286841b571fd1eaf34d89, type: 3}
 --- !u!114 &1311995916887444272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,7 +364,7 @@ Animator:
   m_GameObject: {fileID: 3115804531108714309}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1236085929e6a2f438c65140f4ca09dc, type: 2}
+  m_Controller: {fileID: 9100000, guid: 210444e06ffa1a74b810404866e035dc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
