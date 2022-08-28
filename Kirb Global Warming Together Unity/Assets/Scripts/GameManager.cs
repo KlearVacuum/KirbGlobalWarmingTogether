@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
         //     Instantiate(kirb, worldPos, Quaternion.identity);
         // }
 
+        if (LevelManager.Instance.GameState != GameState.Playing) { return; }
+
         // temp panic key
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -59,7 +61,7 @@ public class GameManager : MonoBehaviour
 
         // time is in seconds
         int minutes = (int)(gameplayTime / 60f);
-        int seconds = (int)gameplayTime - minutes;
+        int seconds = (int)(gameplayTime % 60f);
         string minuteText = minutes < 10 ? "0" + minutes.ToString() : minutes.ToString();
         string secondsText = seconds < 10 ? "0" + seconds.ToString() : seconds.ToString();
         timerUI.text = minuteText + ":" + secondsText;

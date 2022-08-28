@@ -51,6 +51,7 @@ public class LevelManager : Singleton<LevelManager>
     private GameObject mLastDead;
 
     public GameObject LastDead { get { return mLastDead; } }
+    public GameState GameState { get { return mGameState; } }
 
     public void NotifyLastDead(GameObject lastDead)
     {

@@ -345,11 +345,14 @@ public class AIEntity : MonoBehaviour
                 GetComponent<TrashScript>().enabled = true;
                 gameObject.tag = "Trash";
                 GlobalGameData.AddTrash(gameObject);
-                NotifyLastDead();
                 break;
             default:
                 col.enabled = false;
                 break;
+        }
+        if (GlobalGameData.allAiEntities.Contains(this)) 
+        {
+            NotifyLastDead();
         }
         GlobalGameData.RemoveAiEntity(this);
     }
@@ -690,7 +693,7 @@ public class AIEntity : MonoBehaviour
 
     private void NotifyLastDead() 
     {
-        if (LevelManager.Instance != null && !dead)
+        if (LevelManager.Instance != null)
         {
             LevelManager.Instance.NotifyLastDead(this.gameObject);
         }
