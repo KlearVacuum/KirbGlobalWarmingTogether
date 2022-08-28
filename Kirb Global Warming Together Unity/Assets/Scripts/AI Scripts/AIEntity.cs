@@ -345,6 +345,7 @@ public class AIEntity : MonoBehaviour
                 GetComponent<TrashScript>().enabled = true;
                 gameObject.tag = "Trash";
                 GlobalGameData.AddTrash(gameObject);
+                NotifyLastDead();
                 break;
             default:
                 col.enabled = false;
@@ -369,7 +370,6 @@ public class AIEntity : MonoBehaviour
         {
             forceStateTransition = true;
             deathType = eDeathType.DROWN;
-            OnDead();
             dead = true;
         }
     }    
@@ -654,7 +654,6 @@ public class AIEntity : MonoBehaviour
                     {
                         forceStateTransition = true;
                         deathType = eDeathType.NASTYFOOD;
-                        OnDead();
                         dead = true;
                         break;
                     }
@@ -689,7 +688,7 @@ public class AIEntity : MonoBehaviour
         }
     }
 
-    private void OnDead() 
+    private void NotifyLastDead() 
     {
         if (LevelManager.Instance != null && !dead)
         {
