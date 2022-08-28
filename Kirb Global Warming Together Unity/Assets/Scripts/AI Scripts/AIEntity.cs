@@ -369,8 +369,8 @@ public class AIEntity : MonoBehaviour
         {
             forceStateTransition = true;
             deathType = eDeathType.DROWN;
-            dead = true;
             OnDead();
+            dead = true;
         }
     }    
 
@@ -654,8 +654,8 @@ public class AIEntity : MonoBehaviour
                     {
                         forceStateTransition = true;
                         deathType = eDeathType.NASTYFOOD;
-                        dead = true;
                         OnDead();
+                        dead = true;
                         break;
                     }
                 }
@@ -691,7 +691,7 @@ public class AIEntity : MonoBehaviour
 
     private void OnDead() 
     {
-        if (LevelManager.Instance != null)
+        if (LevelManager.Instance != null && !dead)
         {
             LevelManager.Instance.NotifyLastDead(this.gameObject);
         }
