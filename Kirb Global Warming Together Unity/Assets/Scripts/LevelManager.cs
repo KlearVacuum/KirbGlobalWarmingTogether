@@ -62,6 +62,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         if (mGameState == GameState.Win) { return; }
         mGameState = GameState.Win;
+        Debug.Log("WIN");
         onWin.Invoke();
     }
 

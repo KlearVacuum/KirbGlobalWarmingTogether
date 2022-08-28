@@ -217,6 +217,11 @@ public class AIEntity : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
+        if (LevelManager.Instance != null && LevelManager.Instance.GameState != GameState.Playing) 
+        {
+            desiredVelocity = Vector3.zero;
+        }
+
         rb.AddForce(desiredVelocity * rb.mass);
         desiredVelocity = Vector3.zero;
         // mCurrentMoveForce = 0;
