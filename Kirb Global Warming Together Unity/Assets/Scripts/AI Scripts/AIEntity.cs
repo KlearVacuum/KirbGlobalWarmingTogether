@@ -149,7 +149,7 @@ public class AIEntity : MonoBehaviour
         ResetTravelTime();
         forceStateTransition = false;
 
-        _animator.Play("kirb_run");
+        _animator.Play("run");
 
         stopCollectTrashIndicator.SetActive(false);
         panicIndicator.SetActive(false);
@@ -313,8 +313,8 @@ public class AIEntity : MonoBehaviour
         _heldTrash.DoBeDeposited(moveToTarget.position);
         _heldTrash = null;
 
-        _animator.CrossFade("kirb_deposit", 0, 0);
-        StartCoroutine(SwitchAnimationAfterDelay("kirb_run", 0.5f));
+        _animator.CrossFade("deposit", 0, 0);
+        StartCoroutine(SwitchAnimationAfterDelay("run", 0.5f));
     }
 
     public void Die()
@@ -322,7 +322,7 @@ public class AIEntity : MonoBehaviour
         switch (deathType)
         {
             case eDeathType.NASTYFOOD:
-                _animator.CrossFade("kirb_kaboom", 0, 0);
+                _animator.CrossFade("kaboom", 0, 0);
                 if (_heldTrash != null)
                 {
                     Destroy(_heldTrash.gameObject);
@@ -330,7 +330,7 @@ public class AIEntity : MonoBehaviour
                 }
                 break;
             case eDeathType.DROWN:
-                _animator.CrossFade("kirb_drowned", 0, 0);
+                _animator.CrossFade("drown", 0, 0);
                 if (_heldTrash != null)
                 {
                     Destroy(_heldTrash.gameObject);
@@ -650,8 +650,8 @@ public class AIEntity : MonoBehaviour
                 }
             }
             
-            _animator.CrossFade("kirb_suck", 0, 0);
-            StartCoroutine(SwitchAnimationAfterDelay("kirb_suck_run", 1.0f));
+            _animator.CrossFade("suck", 0, 0);
+            StartCoroutine(SwitchAnimationAfterDelay("suck_run", 1.0f));
 
             _heldTrash = trash;
             trash.RemoveTrash(transform);
@@ -668,8 +668,8 @@ public class AIEntity : MonoBehaviour
             var trash = collision.gameObject.GetComponent<TrashScript>();
             trashCash = trash.trashCash;
 
-            _animator.CrossFade("kirb_suck", 0, 0);
-            StartCoroutine(SwitchAnimationAfterDelay("kirb_suck_run", 1.0f));
+            _animator.CrossFade("suck", 0, 0);
+            StartCoroutine(SwitchAnimationAfterDelay("suck_run", 1.0f));
 
             _heldTrash = trash;
             trash.RemoveTrash(transform);
