@@ -50,6 +50,8 @@ public class LevelManager : Singleton<LevelManager>
     private float mNextLevelDuration;
     private GameObject mLastDead;
 
+    public GameObject LastDead { get { return mLastDead; } }
+
     public void NotifyLastDead(GameObject lastDead)
     {
         mLastDead = lastDead;
