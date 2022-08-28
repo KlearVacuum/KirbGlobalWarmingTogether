@@ -124,6 +124,9 @@ public class AIEntity : MonoBehaviour
     }
 
     public List<eTrashType> trashTypeWeakness;
+    
+    public AudioSource _asource;
+    public AudioClip _aclipEat, _aclipBweh;
 
     protected virtual void Awake()
     {
@@ -132,6 +135,7 @@ public class AIEntity : MonoBehaviour
         mRB = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         mSpriteRenderer = GetComponent<SpriteRenderer>();
+        _asource = GetComponent<AudioSource>();
     }
 
     protected virtual void Start()
@@ -312,7 +316,8 @@ public class AIEntity : MonoBehaviour
 
         _heldTrash.DoBeDeposited(moveToTarget.position);
         _heldTrash = null;
-
+        
+        _asource.PlayOneShot(_aclipBweh);
         _animator.CrossFade("deposit", 0, 0);
         StartCoroutine(SwitchAnimationAfterDelay("run", 0.5f));
     }
@@ -656,6 +661,7 @@ public class AIEntity : MonoBehaviour
                 }
             }
             
+            _asource.PlayOneShot(_aclipEat);
             _animator.CrossFade("suck", 0, 0);
             StartCoroutine(SwitchAnimationAfterDelay("suck_run", 1.0f));
 
