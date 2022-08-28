@@ -26,6 +26,7 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private float mWaveWarning = 5.0f;
 
     [Header("Wave Control")]
+    [SerializeField] private WaveLooper mPassiveWave = null;
     [SerializeField] private Transform mStartPt = null;
     [SerializeField] private Transform mEndPt = null;
     [SerializeField] private Transform mMinWave = null;
@@ -63,6 +64,7 @@ public class LevelManager : Singleton<LevelManager>
         Debug.Assert(mEndPt != null, "mEndPt is not assigned!");
         Debug.Assert(mTrashSpawnInfoList != null && mTrashSpawnInfoList.Count > 0, "mTrashSpawnInfoList are not assigned!");
         Debug.Assert(mStarterSpawner != null, "mTrashManager is not assigned!");
+        Debug.Assert(mPassiveWave != null, "mPassiveWave is not assigned!");
     }
 
     private void Start() 
@@ -122,6 +124,7 @@ public class LevelManager : Singleton<LevelManager>
         if (!mIsWarningTriggered && mCurrentLevelTimer >= mNextLevelDuration - mWaveWarning) 
         {
             mIsWarningTriggered = true;
+            mPassiveWave.Loop(false);
             Debug.Log("Wave incoming!");
             onWaveWarning.Invoke();
         }
@@ -169,6 +172,7 @@ public class LevelManager : Singleton<LevelManager>
     private void OnWaveEnd()
     {
         if (!mIsWaitingWaveEnd) { return; }
+        mPassiveWave.Loop(true);
         AdvanceLevel();
     }
 

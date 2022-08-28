@@ -18,5 +18,6 @@ MonoBehaviour:
   - {fileID: 2558371590487056003, guid: 40633c10d0baf7f48ac46048182a77bc, type: 3}
   - {fileID: 7045076144644805235, guid: 9e47f9cf2c279684e91b2225792e071f, type: 3}
   - {fileID: 7045076144644805235, guid: 9e47f9cf2c279684e91b2225792e071f, type: 3}
+  - {fileID: 2558371590487056003, guid: cf97be2fb61b61342b322bcbc398276c, type: 3}
   NumLevels: 20
   Quantity: 20

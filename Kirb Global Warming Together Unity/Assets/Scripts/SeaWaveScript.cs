@@ -20,6 +20,8 @@ public class SeaWaveScript : MonoBehaviour
     // Duration it takes to complete 1 oscillation
     public float travelPeriod;
 
+    [SerializeField] private bool mIsKiller = true;
+
     private Vector2 travelPath;
     private float currentTravelTime;
     private bool trashSpawned;
@@ -29,6 +31,11 @@ public class SeaWaveScript : MonoBehaviour
     private void Start()
     {
         travelPath = endTransform.position - startTransform.position;
+
+        if (!mIsKiller)
+        {
+            waveSprite.GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
 
     private void Update()
