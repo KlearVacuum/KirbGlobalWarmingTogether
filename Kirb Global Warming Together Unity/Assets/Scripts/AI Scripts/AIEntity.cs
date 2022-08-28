@@ -365,6 +365,7 @@ public class AIEntity : MonoBehaviour
             forceStateTransition = true;
             deathType = eDeathType.DROWN;
             dead = true;
+            OnDead();
         }
     }    
 
@@ -649,6 +650,7 @@ public class AIEntity : MonoBehaviour
                         forceStateTransition = true;
                         deathType = eDeathType.NASTYFOOD;
                         dead = true;
+                        OnDead();
                         break;
                     }
                 }
@@ -678,6 +680,14 @@ public class AIEntity : MonoBehaviour
             _heldTrash = trash;
             trash.RemoveTrash(transform);
             returnToDepo = true;
+        }
+    }
+
+    private void OnDead() 
+    {
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.NotifyLastDead(this.gameObject);
         }
     }
 

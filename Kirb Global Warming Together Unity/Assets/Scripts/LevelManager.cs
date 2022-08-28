@@ -48,6 +48,12 @@ public class LevelManager : Singleton<LevelManager>
     private bool mIsWaitingWaveEnd = false;
     private bool mIsWarningTriggered = false;
     private float mNextLevelDuration;
+    private GameObject mLastDead;
+
+    public void NotifyLastDead(GameObject lastDead)
+    {
+        mLastDead = lastDead;
+    }
 
     public void NotifyWin()
     {
