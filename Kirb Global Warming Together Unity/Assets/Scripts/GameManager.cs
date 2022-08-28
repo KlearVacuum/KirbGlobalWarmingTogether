@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
         GlobalGameData.cash = startingCash;
         cashUI.text = "$" + GlobalGameData.cash;
         selectedKirbButton = 0;
+        panicTimer = panicCooldown;
     }
 
     private void Update()
