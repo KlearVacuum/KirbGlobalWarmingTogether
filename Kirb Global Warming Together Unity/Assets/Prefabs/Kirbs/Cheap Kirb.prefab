@@ -169,7 +169,7 @@ MonoBehaviour:
   deathType: 0
   waterOverlap: 0
   timeToDrown: 0.7
-  trashTypeWeakness: 01000000030000000200000000000000
+  trashTypeWeakness: 010000000300000002000000
 --- !u!114 &1311995916887444272
 MonoBehaviour:
   m_ObjectHideFlags: 0
