@@ -10,7 +10,18 @@ public class MultiTrashManager : MonoBehaviour
     public int quantity;
     public bool allSameTrashSetup;
 
+    public void SetTrashToSpawn(TrashSpawnInfo spawnInfo) 
+    {
+        trashToSpawn = spawnInfo.TrashToSpawn;
+        SetupAllTrashSpawners();
+    }
+
     private void Awake()
+    {
+        SetupAllTrashSpawners();
+    }
+
+    private void SetupAllTrashSpawners()
     {
         // Setup all trash Spawners
         if (allSameTrashSetup)

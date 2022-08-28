@@ -1919,7 +1919,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 040acd49356865c4892f0877fa9db5f9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.507
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2289,6 +2289,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1278242102}
   m_CullTransparentMesh: 1
+--- !u!114 &1295496364 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8027665847568490151, guid: c93849c881d5a954b9f7d273550552b2, type: 3}
+  m_PrefabInstance: {fileID: 8027665846687200959}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad04b3308beea27449acc14fa7895ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1466560991
 GameObject:
   m_ObjectHideFlags: 0
@@ -3319,6 +3330,7 @@ GameObject:
   - component: {fileID: 2022107812}
   - component: {fileID: 2022107811}
   - component: {fileID: 2022107810}
+  - component: {fileID: 2022107813}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3355,21 +3367,26 @@ MonoBehaviour:
       m_Calls: []
   mGameManager: {fileID: 2022107811}
   mSeaWave: {fileID: 0}
+  mStarterSpawner: {fileID: 2022107813}
+  mGameState: 0
   mLevelDurationSec: 20
   mLevelDurationDecreasePerWave: 0.5
   mMinLevelDurationSec: 15
   mDurationOffset: 5
-  mNextTrashToSpawn: 2
-  mTrashCountIncrement: 1
   mCurrentLevelTimer: 0
   mWaveWarning: 5
-  mGameState: 0
   mStartPt: {fileID: 126317210}
   mEndPt: {fileID: 1466560992}
   mMinWave: {fileID: 1056698083}
   mMaxWave: {fileID: 122619455}
   mWavePrefabs:
   - {fileID: 8971099193696616853, guid: 188aefe9dca5f8442b187f53b924abf9, type: 3}
+  mTrashSpawnInfoList:
+  - {fileID: 11400000, guid: 19aa58bdf01d97445b7d223df054ccaf, type: 2}
+  - {fileID: 11400000, guid: f90d4960abf863c4f922de1a680242b3, type: 2}
+  - {fileID: 11400000, guid: ab3f365e733bf124c9d432df76571163, type: 2}
+  mNextTrashToSpawn: 2
+  mTrashCountIncrement: 1
   mIsDebug: 1
 --- !u!114 &2022107811
 MonoBehaviour:
@@ -3406,6 +3423,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2022107813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022107809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a05116a04379d604580945bb41b2fc43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trashSpawners:
+  - {fileID: 1295496364}
+  trashToSpawn: []
+  quantity: 40
+  allSameTrashSetup: 1
 --- !u!1 &2029179793
 GameObject:
   m_ObjectHideFlags: 0
@@ -3996,7 +4030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8027665847568490151, guid: c93849c881d5a954b9f7d273550552b2, type: 3}
       propertyPath: spawnAtStart
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8027665847568490151, guid: c93849c881d5a954b9f7d273550552b2, type: 3}
       propertyPath: trashToSpawn.Array.size

@@ -7,7 +7,7 @@ public class TrashSpawnerScript : MonoBehaviour
     public List<GameObject> trashToSpawn;
     public int quantity;
     public bool spawnAtStart;
-
+    
     void Start()
     {
         if (spawnAtStart)

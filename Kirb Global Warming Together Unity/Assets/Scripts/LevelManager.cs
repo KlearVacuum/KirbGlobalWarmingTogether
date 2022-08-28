@@ -11,17 +11,19 @@ public class LevelManager : Singleton<LevelManager>
     public UnityEvent onLose;
     public UnityEvent onWin;
 
+    [Header("References")]
     [SerializeField] private GameManager mGameManager = null;
     [SerializeField] private SeaWaveScript mSeaWave = null;
+    [SerializeField] private MultiTrashManager mStarterSpawner = null;
+    [SerializeField] private GameState mGameState = GameState.Playing;
+
+    [Header("Level Timing")]
     [SerializeField] private float mLevelDurationSec = 30f;
     [SerializeField] private float mLevelDurationDecreasePerWave = 0.5f;
     [SerializeField] private float mMinLevelDurationSec = 15f;
     [SerializeField] private float mDurationOffset = 10f;
-    [SerializeField] private int mNextTrashToSpawn = 15;
-    [SerializeField] private int mTrashCountIncrement = 3;
     [SerializeField] private float mCurrentLevelTimer = 0f;
     [SerializeField] private float mWaveWarning = 5.0f;
-    [SerializeField] private GameState mGameState = GameState.Playing;
 
     [Header("Wave Control")]
     [SerializeField] private Transform mStartPt = null;
@@ -29,6 +31,14 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private Transform mMinWave = null;
     [SerializeField] private Transform mMaxWave = null;
     [SerializeField] private SeaWaveScript[] mWavePrefabs = null;
+
+    [Header("Trash Progression Control")]
+    [SerializeField] private List<TrashSpawnInfo> mTrashSpawnInfoList;
+    [SerializeField] private int mNextTrashToSpawn = 15;
+    [SerializeField] private int mTrashCountIncrement = 3;
+
+    private int mCurrentTrashPhaseCount = 0;
+    [SerializeField] private int mCurrentTrashPhaseIndex = 0;
 
     [Header("Debug")]
     [SerializeField] private bool mIsDebug = false;
@@ -45,15 +55,29 @@ public class LevelManager : Singleton<LevelManager>
         onWin.Invoke();
     }
 
-    private void Awake() 
+    protected override void Awake() 
     {
+        base.Awake();
+
         Debug.Assert(mGameManager != null, "mGameManager is not assigned!"); 
         Debug.Assert(mEndPt != null, "mEndPt is not assigned!");
+        Debug.Assert(mTrashSpawnInfoList != null && mTrashSpawnInfoList.Count > 0, "mTrashSpawnInfoList are not assigned!");
+        Debug.Assert(mStarterSpawner != null, "mTrashManager is not assigned!");
     }
 
     private void Start() 
     {
+        OnGameStart();
+    }
+
+    private void OnGameStart()
+    {
         mNextLevelDuration = mLevelDurationSec;
+
+        TrashSpawnInfo info = (mTrashSpawnInfoList[mCurrentTrashPhaseIndex]);
+        mStarterSpawner.SetTrashToSpawn(info);
+        mStarterSpawner.SpawnSomeTrash(info.Quantity);
+        IncrementTrashPhase();
     }
 
     // Update is called once per frame
@@ -135,6 +159,10 @@ public class LevelManager : Singleton<LevelManager>
         wave.startTransform = mStartPt;
         wave.onWaveEnd.AddListener(OnWaveEnd);
 
+        TrashSpawnInfo info = (mTrashSpawnInfoList[mCurrentTrashPhaseIndex]);
+        wave.trashManager.SetTrashToSpawn(info);
+        wave.trashSpawnNum = info.Quantity;
+
         return wave;
     }
 
@@ -149,7 +177,9 @@ public class LevelManager : Singleton<LevelManager>
         mIsWaitingWaveEnd = false;
         mCurrentLevelTimer = 0;
         mIsWarningTriggered = false;
+
         mNextTrashToSpawn += mTrashCountIncrement;
+
         onLevelAdvance.Invoke();
         mLevelCount++;
 
@@ -157,8 +187,21 @@ public class LevelManager : Singleton<LevelManager>
         mLevelDurationSec = Mathf.Max(mLevelDurationSec, mMinLevelDurationSec);
         mNextLevelDuration = mLevelDurationSec + Random.Range(-mDurationOffset, mDurationOffset);
 
+        IncrementTrashPhase();
+
         mSeaWave.onWaveEnd.RemoveListener(OnWaveEnd);
         Destroy(mSeaWave.gameObject);
+    }
+
+    private void IncrementTrashPhase()
+    {
+        mCurrentTrashPhaseCount++;
+
+        if (mCurrentTrashPhaseCount >= mTrashSpawnInfoList[mCurrentTrashPhaseIndex].NumLevels)
+        {
+            mCurrentTrashPhaseIndex = Mathf.Min(mTrashSpawnInfoList.Count - 1, mCurrentTrashPhaseIndex + 1);
+            mCurrentTrashPhaseCount = 0;
+        }
     }
 
     private void OnGUI() 
