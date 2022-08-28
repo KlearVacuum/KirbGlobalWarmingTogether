@@ -172,6 +172,9 @@ MonoBehaviour:
   waterOverlap: 0
   timeToDrown: 0.7
   trashTypeWeakness: 010000000300000002000000
+  _asource: {fileID: 0}
+  _aclipEat: {fileID: 8300000, guid: 05679bd7852c64543b9a40c446ef7fbd, type: 3}
+  _aclipBweh: {fileID: 8300000, guid: 50b396e140da58941a66afd8bca186b6, type: 3}
 --- !u!114 &1311995916887444272
 MonoBehaviour:
   m_ObjectHideFlags: 0
