@@ -55,6 +55,13 @@ public class TrashScript : MonoBehaviour
         _isHeld = true;
         _targetTransform = holder;
         _current = transform.position;
+
+        Animator animator = transform.GetComponent<Animator>();
+        if (animator != null)
+        {
+            animator.enabled = false;
+        }
+
         transform.localScale = Vector3.zero;
         // Destroy(gameObject);
     }
