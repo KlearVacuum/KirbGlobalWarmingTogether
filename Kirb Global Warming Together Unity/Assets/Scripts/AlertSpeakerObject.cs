@@ -29,7 +29,9 @@ public class AlertSpeakerObject : MonoBehaviour
             .setEaseOutBack();
         LeanTween
             .delayedCall(0.5f, () => {
-                LeanTween.scaleY(gameObject, 0.225f, 0.25f).setLoopPingPong(5)
+                LeanTween
+                    .scaleY(gameObject, 0.225f, 0.25f)
+                    .setLoopPingPong(5)
                     .setOnComplete(() => {
                         LeanTween
                             .rotateX(gameObject, 90.0f, 0.5f)
