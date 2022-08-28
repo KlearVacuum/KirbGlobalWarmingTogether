@@ -328,6 +328,7 @@ public class AIEntity : MonoBehaviour
                     Destroy(_heldTrash.gameObject);
                     _heldTrash = null;
                 }
+                col.enabled = false;
                 break;
             case eDeathType.DROWN:
                 _animator.CrossFade("drown", 0, 0);
@@ -336,11 +337,14 @@ public class AIEntity : MonoBehaviour
                     Destroy(_heldTrash.gameObject);
                     _heldTrash = null;
                 }
+                GetComponent<TrashScript>().enabled = true;
+                gameObject.tag = "Trash";
+                GlobalGameData.AddTrash(gameObject);
                 break;
             default:
+                col.enabled = false;
                 break;
         }
-        col.enabled = false;
         GlobalGameData.RemoveAiEntity(this);
     }
 
