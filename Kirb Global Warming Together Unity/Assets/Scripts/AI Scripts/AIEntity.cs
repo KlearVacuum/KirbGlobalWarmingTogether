@@ -25,6 +25,7 @@ public class AIEntity : MonoBehaviour
     public float mPanicMoveSpeed;
     public float mPanicRotateSpeed;
     public float mPanicDuration;
+    public float mPanicStrength;
     public float mStopCollectingTrashDuration;
 
     Vector3 desiredVelocity;
@@ -162,21 +163,17 @@ public class AIEntity : MonoBehaviour
     {
         currentTravelTime -= Time.deltaTime;
 
-        // TEMP: colors to show feedback on kirb's current state
-        //if (dead) GetComponent<SpriteRenderer>().color = Color.gray;
-        //else if (returnToDepo) GetComponent<SpriteRenderer>().color = Color.green;
-        //else GetComponent<SpriteRenderer>().color = Color.blue;
-
         if (!mPanicTriggered)
         {
             // panic button pressed!
             if (panic)
             {
-                mCurrentPanicDuration = mPanicDuration;
+                mCurrentPanicDuration = mPanicDuration + Random.Range(-1f, 1f);
                 mCurrentMoveSpeed = mPanicMoveSpeed;
                 mCurrentRotateSpeed = mPanicRotateSpeed;
                 panicIndicator.SetActive(true);
                 mPanicTriggered = true;
+                forceStateTransition = true;
             }
         }
         // timer for kirbs to panic
@@ -197,7 +194,7 @@ public class AIEntity : MonoBehaviour
         {
             if (!mStopCollectingTrashTriggered)
             {
-                mCurrentStopCollectingTrashDuration = mStopCollectingTrashDuration;
+                mCurrentStopCollectingTrashDuration = mStopCollectingTrashDuration + +Random.Range(-1f, 1f);
                 forceStateTransition = true;
                 mStopCollectingTrashTriggered = true;
                 stopCollectTrashIndicator.SetActive(true);
@@ -389,9 +386,11 @@ public class AIEntity : MonoBehaviour
         {
             // find new random destination
             float rangeDiff = minMaxMoveRange.y - minMaxMoveRange.x;
-            // float randX = Random.Range(minMaxMoveRange.x, minMaxMoveRange.y) - rangeDiff;
-            // float randY = Random.Range(minMaxMoveRange.x, minMaxMoveRange.y) - rangeDiff;
-            panicDestination = new Vector3(0, -1) + transform.position;
+            float randX = Random.Range(minMaxMoveRange.x, minMaxMoveRange.y) - rangeDiff;
+            float randY = Random.Range(minMaxMoveRange.x, minMaxMoveRange.y) - rangeDiff;
+
+            Vector3 randEffector = new Vector3(randX, randY).normalized;
+            panicDestination = new Vector3(0, -2) + transform.position + randEffector * mPanicStrength;
             panicMoveTime = Random.Range(minMaxTime.x, minMaxTime.y);
         }
 

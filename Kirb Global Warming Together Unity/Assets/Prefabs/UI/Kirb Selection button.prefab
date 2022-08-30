@@ -441,8 +441,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -593,7 +593,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 2
 --- !u!114 &3856265709959399927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,6 +681,7 @@ MonoBehaviour:
     kirb: {fileID: 0}
     cost: 0
     kirbSprite: {fileID: 0}
+    color: {r: 0, g: 0, b: 0, a: 0}
   selectedKirbButtonNum: 0
 --- !u!1 &4938468183109643026
 GameObject:

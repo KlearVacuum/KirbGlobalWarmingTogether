@@ -150,6 +150,7 @@ MonoBehaviour:
   mPanicMoveSpeed: 15
   mPanicRotateSpeed: 1000
   mPanicDuration: 10
+  mPanicStrength: 5
   mStopCollectingTrashDuration: 1
   velocityVariance: {x: 0, y: 0, z: 0}
   velocityVarStrength: {x: 1, y: 1}

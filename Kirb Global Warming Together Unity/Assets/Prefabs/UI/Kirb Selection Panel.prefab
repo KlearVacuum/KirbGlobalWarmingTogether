@@ -94,13 +94,13 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 10
+    m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
   mFitType: 5
   mRows: 0
   mColumns: 0
-  mCellSize: {x: 80, y: 80}
+  mCellSize: {x: 100, y: 100}
   mSpacing: {x: Infinity, y: Infinity}
   autoFitX: 1
   autoFitY: 1
@@ -118,8 +118,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mTabButtonsList: []
   mTabIdleColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
-  mTabHoverColor: {r: 1, g: 0.9731934, b: 0.6839622, a: 1}
+  mTabHoverColor: {r: 1, g: 0.98817843, b: 0.8632076, a: 1}
   mTabSelectedColor: {r: 0.764151, g: 0.6135353, b: 0.24150053, a: 1}
+  allSameColor: 0
+  mStartingOpacity: 0.2
+  mOpacityOnHover: 0.9
 --- !u!114 &676575978170861803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,23 +139,28 @@ MonoBehaviour:
   - name: Chum
     kirb: {fileID: 3115804531108714309, guid: b3f9237af3bf546459737640f8676a7f, type: 3}
     cost: 3
-    kirbSprite: {fileID: 0}
+    kirbSprite: {fileID: 903400657, guid: c66f74063e474b046be3eb2d3b624553, type: 3}
+    color: {r: 1, g: 0.76862746, b: 0.4862745, a: 1}
   - name: Dum
     kirb: {fileID: 3115804531108714309, guid: 59c234fad535cf844901f01441583e49, type: 3}
-    cost: 8
-    kirbSprite: {fileID: 0}
+    cost: 6
+    kirbSprite: {fileID: 903400657, guid: c66f74063e474b046be3eb2d3b624553, type: 3}
+    color: {r: 0.6431373, g: 0.47843137, b: 0.8, a: 1}
   - name: Yum
     kirb: {fileID: 3115804531108714309, guid: 030991c190b72a24ca31777a2bfc1a20, type: 3}
-    cost: 10
-    kirbSprite: {fileID: 0}
+    cost: 8
+    kirbSprite: {fileID: 903400657, guid: c66f74063e474b046be3eb2d3b624553, type: 3}
+    color: {r: 1, g: 0.92156863, b: 0.99215686, a: 1}
   - name: Bum
     kirb: {fileID: 3115804531108714309, guid: 63e2c1edc8d938b4a8edaa2992b14621, type: 3}
     cost: 10
-    kirbSprite: {fileID: 0}
+    kirbSprite: {fileID: 1127250729, guid: 996586d1003ef37409ad40612869837e, type: 3}
+    color: {r: 0.44313726, g: 0.6666667, b: 0.7176471, a: 1}
   - name: Vroom
     kirb: {fileID: 3115804531108714309, guid: de5176dcd0a431740b9e766c54a35d09, type: 3}
-    cost: 18
-    kirbSprite: {fileID: 0}
+    cost: 15
+    kirbSprite: {fileID: 903400657, guid: c66f74063e474b046be3eb2d3b624553, type: 3}
+    color: {r: 0.8117647, g: 0.50980395, b: 0.5647059, a: 1}
   buttonPrefab: {fileID: 3856265709959399912, guid: 63a08ae3bb6ffc6458d2d74895feb61f, type: 3}
   winButton: {fileID: 3856265709959399912, guid: 5906c288477ad464aa2dda9148d0817e, type: 3}
   winButtonText: Win

@@ -29,6 +29,13 @@ public class TabButtonScript : MonoBehaviour, IPointerClickHandler, IPointerEnte
     {
         mTabImageBackground = GetComponent<Image>();
         mTabGroup.SubscribeButton(this);
-        mTabImageBackground.color = mTabGroup.mTabIdleColor;
+        if (mTabGroup.allSameColor)
+        {
+            mTabImageBackground.color = mTabGroup.mTabIdleColor;
+        }
+        else
+        {
+            mTabImageBackground.color = mTabImageBackground.color * new Vector4(1, 1, 1, mTabGroup.mStartingOpacity);
+        }
     }
 }

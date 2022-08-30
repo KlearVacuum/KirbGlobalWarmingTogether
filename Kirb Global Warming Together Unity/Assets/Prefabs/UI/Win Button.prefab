@@ -312,7 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507f896ad86505e4ca8b11c0bbe1efc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winCost: 100
+  winCost: 50
   timesInvestedToWin: 4
   _fillImage: {fileID: 4532441298299087943}
   _finalBoi: {fileID: 6395329026251996434, guid: 02ef33177f7fea54fbd79cc2b6bb475f, type: 3}

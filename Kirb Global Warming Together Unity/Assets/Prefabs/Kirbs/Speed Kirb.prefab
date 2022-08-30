@@ -229,11 +229,12 @@ MonoBehaviour:
   returnToDepo: 0
   dead: 0
   _animator: {fileID: 0}
-  mMoveSpeed: 12
+  mMoveSpeed: 15
   mRotateSpeed: 500
   mPanicMoveSpeed: 18
   mPanicRotateSpeed: 1000
-  mPanicDuration: 5
+  mPanicDuration: 2.5
+  mPanicStrength: 0.5
   mStopCollectingTrashDuration: 3
   velocityVariance: {x: 0, y: 0, z: 0}
   velocityVarStrength: {x: 1, y: 1}
