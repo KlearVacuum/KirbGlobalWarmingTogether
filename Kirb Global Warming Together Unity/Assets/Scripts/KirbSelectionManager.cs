@@ -7,7 +7,6 @@ public class KirbSelectionManager : MonoBehaviour
     public List<KirbType> kirbTypes;
     public GameObject buttonPrefab;
     public GameObject winButton;
-    public string winButtonText;
 
     GameObject buttonParent;
     TabGroupScript tabGroup;
@@ -51,7 +50,6 @@ public class KirbSelectionManager : MonoBehaviour
 
         GameObject win = Instantiate(winButton, buttonParent.transform);
         win.GetComponent<TabButtonScript>().mTabGroup = tabGroup;
-        win.GetComponentInChildren<WriteTextUI>().WriteText(winButtonText + "\n" + "$" + win.GetComponent<WinScript>().winCost);
 
         gameObject.transform.GetChild(0).GetComponent<KirbSpawnScript>().SetKirbType();
     }

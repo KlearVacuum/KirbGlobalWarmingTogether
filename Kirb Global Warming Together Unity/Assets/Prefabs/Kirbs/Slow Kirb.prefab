@@ -208,6 +208,7 @@ Transform:
   - {fileID: 1019694501864213864}
   - {fileID: 5974470064712013779}
   - {fileID: 6636627908445697328}
+  - {fileID: 7423573938291343744}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -231,9 +232,10 @@ MonoBehaviour:
   _animator: {fileID: 0}
   mMoveSpeed: 5
   mRotateSpeed: 500
-  mPanicMoveSpeed: 8
-  mPanicRotateSpeed: 500
-  mPanicDuration: 2
+  mPanicMoveSpeed: 5.5
+  mPanicRotateSpeed: 600
+  mPanicDuration: 5
+  mPanicStrength: 0.1
   mStopCollectingTrashDuration: 8
   velocityVariance: {x: 0, y: 0, z: 0}
   velocityVarStrength: {x: 1, y: 1}
@@ -244,6 +246,8 @@ MonoBehaviour:
   forwardDir: {fileID: 1019694501864213864}
   stopCollectTrashIndicator: {fileID: 7265402482738817020}
   panicIndicator: {fileID: 2575673858767948241}
+  eatParticles: {fileID: 8645398140157590297}
+  eatParticlesDelay: 0.35
   trashTag: Trash
   depoTag: Depo
   deadKirb: {fileID: 7045076144644805235, guid: 05eef5b03b411fa409d680d841b38377, type: 3}
@@ -254,11 +258,14 @@ MonoBehaviour:
   foundDepoList: []
   deathType: 0
   waterOverlap: 0
-  timeToDrown: 0.7
+  timeToDrown: 1.5
   trashTypeWeakness: 
   _asource: {fileID: 0}
   _aclipEat: {fileID: 8300000, guid: aea1e01fe717fb44dbcf34a92b66c511, type: 3}
   _aclipBweh: {fileID: 8300000, guid: bb06481f7e0286841b571fd1eaf34d89, type: 3}
+  _aclipDrown: {fileID: 8300000, guid: c535330896e1bfc4db739f8992ef400e, type: 3}
+  _aclipPop: {fileID: 8300000, guid: 8230597a2dcd0234e9e49cce5fee86c5, type: 3}
+  description: Tough cookie. Needs a workout.
 --- !u!114 &1311995916887444272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,7 +305,7 @@ MonoBehaviour:
   - {fileID: 1915945943, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
   _isYumisTrash: 0
   _isHeld: 0
-  randomRotate: 1
+  randomRotate: 0
   _target: {x: 0, y: 0, z: 0}
   _dampRatio: 1
   _angular: 0.3
@@ -364,7 +371,7 @@ Animator:
   m_GameObject: {fileID: 3115804531108714309}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 210444e06ffa1a74b810404866e035dc, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1236085929e6a2f438c65140f4ca09dc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -622,3 +629,82 @@ Transform:
   m_Father: {fileID: 3711505208548092528}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &4294607672247413982
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3711505208548092528}
+    m_Modifications:
+    - target: {fileID: 5504275197350582215, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: ShapeModule.type
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5504275197350582215, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5504275197350582215, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7475709327206200339, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+      propertyPath: m_Name
+      value: Eat Particles
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+--- !u!4 &7423573938291343744 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6673305259299663198, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+  m_PrefabInstance: {fileID: 4294607672247413982}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8645398140157590297 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5504275197350582215, guid: 51dd9b477c6098c4db3ecb319a058b2f, type: 3}
+  m_PrefabInstance: {fileID: 4294607672247413982}
+  m_PrefabAsset: {fileID: 0}

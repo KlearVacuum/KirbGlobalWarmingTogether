@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trashType: 1
-  trashCash: 4
+  trashCash: 12
   sprites:
   - {fileID: -1968960145, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
   - {fileID: -781091027, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
@@ -101,8 +101,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.64760596, g: 0.9140418, b: 0.9339623, a: 1}
+  m_Sprite: {fileID: -781091027, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
+  m_Color: {r: 0.5990566, g: 0.8520819, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -149,8 +149,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1.37, y: 1.52}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

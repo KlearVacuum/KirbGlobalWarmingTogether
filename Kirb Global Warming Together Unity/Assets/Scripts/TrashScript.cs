@@ -17,10 +17,14 @@ public class TrashScript : MonoBehaviour
     private Vector3 _current, velocity;
     [SerializeField] private float _dampRatio = 0.5f, _angular = 0.5f;
 
+    private bool shrink;
+    private Vector3 startingScale;
+
     void Start()
     {
         GlobalGameData.AddTrash(gameObject);
         GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, 1000) % sprites.Count];
+        startingScale = transform.localScale;
 
         if (randomRotate)
         {
@@ -40,6 +44,16 @@ public class TrashScript : MonoBehaviour
             // _target = GameObject.FindObjectOfType<AIEntity>().transform.position;
             SpringMath.Lerp(ref _current, ref velocity, _target, _dampRatio, _angular, 0.1f);
             transform.position = _current;
+        }
+
+        if (shrink && transform.localScale.magnitude > 0)
+        {
+            transform.localScale -= new Vector3(Time.deltaTime, Time.deltaTime, 0);
+            if (transform.localScale.x <= 0 || transform.localScale.y <= 0)
+            {
+                transform.localScale = Vector3.zero;
+                shrink = false;
+            }
         }
     }
 
@@ -62,7 +76,8 @@ public class TrashScript : MonoBehaviour
             animator.enabled = false;
         }
 
-        transform.localScale = Vector3.zero;
+        // transform.localScale = Vector3.zero;
+        shrink = true;
         // Destroy(gameObject);
     }
 
@@ -71,8 +86,9 @@ public class TrashScript : MonoBehaviour
         _isHeld = false;
         _targetTransform = null;
         _target = newTarget;
-        _current = transform.position;
-        transform.localScale = Vector3.one;
+        shrink = false;
+        _current = transform.position - new Vector3(0,0.15f,0);
+        transform.localScale = startingScale;
     }
 }
 

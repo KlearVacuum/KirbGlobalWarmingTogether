@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trashType: 3
-  trashCash: 4
+  trashCash: 12
   sprites:
   - {fileID: 740509020, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
   - {fileID: -15595067, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
@@ -102,7 +102,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 740509020, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
-  m_Color: {r: 0.5955233, g: 0.8584906, b: 0.58717513, a: 1}
+  m_Color: {r: 0.41522786, g: 0.8773585, b: 0.4014329, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

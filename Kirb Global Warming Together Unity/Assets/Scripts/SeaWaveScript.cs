@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class SeaWaveScript : MonoBehaviour
 {
+    public bool passiveWave;
     public UnityEvent onWaveEnd;
 
     public Transform startTransform;
@@ -25,8 +26,16 @@ public class SeaWaveScript : MonoBehaviour
     private Vector2 travelPath;
     private float currentTravelTime;
     private bool trashSpawned;
+
+    private AudioSource _aSource;
+    public AudioClip _aClipBigWave;
     
     public bool IsWaveMoving { get { return moveWave; } }
+
+    private void Awake()
+    {
+        _aSource = gameObject.GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
@@ -57,6 +66,10 @@ public class SeaWaveScript : MonoBehaviour
     {
         if (startWave)
         {
+            if (!passiveWave)
+            {
+                _aSource.PlayOneShot(_aClipBigWave);
+            }
             moveWave = true;
             startWave = false;
             trashSpawned = false;

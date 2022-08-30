@@ -168,7 +168,7 @@ public class LevelManager : Singleton<LevelManager>
 
         waveIndexToSpawn = Mathf.Min(mLevelCount, mWavePrefabs.Length - 1);
 
-        SeaWaveScript wave = Instantiate<SeaWaveScript>(mWavePrefabs[waveIndexToSpawn]);
+        SeaWaveScript wave = Instantiate(mWavePrefabs[waveIndexToSpawn]);
         wave.startTransform = mStartPt;
         wave.onWaveEnd.AddListener(OnWaveEnd);
 

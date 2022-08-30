@@ -52,12 +52,12 @@ public class GameManager : MonoBehaviour
         }
 
         // temp panic key
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             Panic();
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             foreach (var kirb in GlobalGameData.allAiEntities)
             {

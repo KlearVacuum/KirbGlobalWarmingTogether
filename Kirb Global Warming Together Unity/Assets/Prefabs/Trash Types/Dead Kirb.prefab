@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trashType: 0
-  trashCash: 1
+  trashCash: 2
   sprites:
   - {fileID: 793647317, guid: c66f74063e474b046be3eb2d3b624553, type: 3}
   _isYumisTrash: 0

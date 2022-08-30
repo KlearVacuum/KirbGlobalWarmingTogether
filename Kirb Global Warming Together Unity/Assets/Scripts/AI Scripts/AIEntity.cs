@@ -54,6 +54,8 @@ public class AIEntity : MonoBehaviour
     public Transform forwardDir;
     public GameObject stopCollectTrashIndicator;
     public GameObject panicIndicator;
+    public ParticleSystem eatParticles;
+    public float eatParticlesDelay;
     public string trashTag;
     public string depoTag;
 
@@ -127,7 +129,9 @@ public class AIEntity : MonoBehaviour
     public List<eTrashType> trashTypeWeakness;
     
     public AudioSource _asource;
-    public AudioClip _aclipEat, _aclipBweh;
+    public AudioClip _aclipEat, _aclipBweh, _aclipDrown, _aclipPop;
+
+    public string description;
 
     protected virtual void Awake()
     {
@@ -326,6 +330,8 @@ public class AIEntity : MonoBehaviour
 
     public void Die()
     {
+        panicIndicator.SetActive(false);
+        stopCollectTrashIndicator.SetActive(false);
         switch (deathType)
         {
             case eDeathType.NASTYFOOD:
@@ -334,19 +340,25 @@ public class AIEntity : MonoBehaviour
                 {
                     Destroy(_heldTrash.gameObject);
                     _heldTrash = null;
+                    _asource.PlayOneShot(_aclipPop);
                 }
                 col.enabled = false;
                 break;
             case eDeathType.DROWN:
                 _animator.CrossFade("drown", 0, 0);
+                _asource.PlayOneShot(_aclipDrown);
                 if (_heldTrash != null)
                 {
                     Destroy(_heldTrash.gameObject);
                     _heldTrash = null;
                 }
+
                 GetComponent<TrashScript>().enabled = true;
+                mSpriteRenderer.color = mSpriteRenderer.color * new Vector4(0.7f, 0.7f, 0.7f, 1);
                 gameObject.tag = "Trash";
+                gameObject.transform.rotation = Quaternion.identity;
                 GlobalGameData.AddTrash(gameObject);
+                mSpriteRenderer.sortingOrder = -1;
                 break;
             default:
                 col.enabled = false;
@@ -667,7 +679,7 @@ public class AIEntity : MonoBehaviour
                 }
             }
             
-            _asource.PlayOneShot(_aclipEat);
+            StartCoroutine(EatFeedbackAfterDelay(collision.transform.position, eatParticlesDelay));
             _animator.CrossFade("suck", 0, 0);
             StartCoroutine(SwitchAnimationAfterDelay("suck_run", 1.0f));
 
@@ -709,6 +721,22 @@ public class AIEntity : MonoBehaviour
         if (!dead)
         {
             _animator.CrossFade(clipName, 0, 0);
+        }
+    }
+
+    IEnumerator EatFeedbackAfterDelay(Vector3 targetPos, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (!dead)
+        {
+            _asource.PlayOneShot(_aclipEat);
+            var particlesMain = eatParticles.main;
+            particlesMain.startColor = mSpriteRenderer.color;
+
+            Vector3 trashDir = (targetPos - transform.position).normalized;
+            eatParticles.transform.position = gameObject.transform.position + trashDir * 0.75f;
+
+            eatParticles.Play();
         }
     }
 }

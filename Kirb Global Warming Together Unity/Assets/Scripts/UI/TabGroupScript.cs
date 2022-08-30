@@ -11,6 +11,7 @@ public class TabGroupScript : MonoBehaviour
     public bool allSameColor = true;
 
     private Dictionary<TabButtonScript, Color> tabToStartingColor;
+
     [Range(0,1)]
     public float mStartingOpacity;
     [Range(0, 1)]
@@ -18,7 +19,8 @@ public class TabGroupScript : MonoBehaviour
 
     // public GameObject[] TabButtonPopups;
 
-    TabButtonScript mCurrentHoveredTab = null;
+
+    public TabButtonScript mCurrentHoveredTab = null;
     AudioSource mSoundSource;
 
     private void Awake()
@@ -58,6 +60,7 @@ public class TabGroupScript : MonoBehaviour
         {
             foundMap.Key.mTabImageBackground.color = foundMap.Value * new Vector4(1, 1, 1, 0) + new Color(0, 0, 0, mOpacityOnHover);
         }
+        button.ShowTooltip(true);
 
         // Show pop-up of hovered button
         //int index = button.transform.GetSiblingIndex();
@@ -75,6 +78,7 @@ public class TabGroupScript : MonoBehaviour
         //TabButtonPopups[index].SetActive(false);
 
         ResetTabs();
+        button.ShowTooltip(false);
     }
 
     public void OnTabSelected(TabButtonScript button)
@@ -92,13 +96,14 @@ public class TabGroupScript : MonoBehaviour
             foreach (TabButtonScript button in mTabButtonsList)
             {
                 button.mTabImageBackground.color = mTabIdleColor;
-
+                button.ShowTooltip(false);
             }
         }
         else
         {
             foreach (TabButtonScript button in mTabButtonsList)
             {
+                button.ShowTooltip(false);
                 foreach (var map in tabToStartingColor)
                 {
                     if (button == map.Key)
