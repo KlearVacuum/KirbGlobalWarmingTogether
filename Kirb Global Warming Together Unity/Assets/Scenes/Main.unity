@@ -483,7 +483,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7764227, y: 1}
+    m_SensorSize: {x: 1.7774687, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -3922,7 +3922,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "We Pick Up Trash \n<size=50%>Together!!"
+  m_text: "We Pick Up Trash \n<size=80%>Together!!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b0d58fc9e295230478bd3d00cdc6bb79, type: 2}
   m_sharedMaterial: {fileID: -8195173181851688108, guid: b0d58fc9e295230478bd3d00cdc6bb79, type: 2}
@@ -5793,7 +5793,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7764227, y: 1}
+    m_SensorSize: {x: 1.7774687, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
