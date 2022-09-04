@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: MoveToTrash State
   m_EditorClassIdentifier: 
   name: move to trash
-  canTransit: 1
-  searchRange: 25
+  canTransit: 0
+  restartOnEvaluate: 1
+  searchRange: 50

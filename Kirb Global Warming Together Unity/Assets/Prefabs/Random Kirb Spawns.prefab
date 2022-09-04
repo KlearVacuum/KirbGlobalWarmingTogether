@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a8b7dea6585e64195ab42c2fe4f4e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  qty: 1
   kirbs:
   - {fileID: 3115804531108714309, guid: 59c234fad535cf844901f01441583e49, type: 3}
   - {fileID: 3115804531108714309, guid: 030991c190b72a24ca31777a2bfc1a20, type: 3}

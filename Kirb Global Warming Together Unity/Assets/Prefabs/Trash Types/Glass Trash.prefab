@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trashType: 3
-  trashCash: 12
+  trashCash: 10
   sprites:
   - {fileID: 740509020, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}
   - {fileID: -15595067, guid: 8b92b0dd538bd214db5a48c1c177e4d0, type: 3}

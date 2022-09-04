@@ -11,6 +11,8 @@ public class SeaWaveScript : MonoBehaviour
     public Transform startTransform;
     public Transform endTransform;
     public GameObject waveSprite;
+    public GameObject waveShadowPrefab;
+    private WaveShadowScript waveShadowScript;
 
     public MultiTrashManager trashManager;
     [Tooltip("Number of trash spawners to select and spawn trash from")]
@@ -20,6 +22,7 @@ public class SeaWaveScript : MonoBehaviour
     private bool moveWave;
     // Duration it takes to complete 1 oscillation
     public float travelPeriod;
+    private float prevT;
 
     [SerializeField] private bool mIsKiller = true;
 
@@ -70,6 +73,7 @@ public class SeaWaveScript : MonoBehaviour
             {
                 _aSource.PlayOneShot(_aClipBigWave);
             }
+
             moveWave = true;
             startWave = false;
             trashSpawned = false;
@@ -82,6 +86,22 @@ public class SeaWaveScript : MonoBehaviour
 
             waveSprite.transform.position = startTransform.position + new Vector3(travelPath.x * t, travelPath.y * t, 0);
 
+            if (t < prevT)
+            {
+                if (!trashSpawned)
+                {
+                    GameObject waveShadow = Instantiate(waveShadowPrefab, waveSprite.transform.position + new Vector3(0, 0.05f, 0), Quaternion.identity);
+                    waveShadowScript = waveShadow.GetComponent<WaveShadowScript>();
+                    waveShadowScript.followTransform = waveSprite.transform;
+                    waveShadowScript.startFade = true;
+
+                    trashManager.SpawnSomeTrash(trashSpawnNum);
+                    trashSpawned = true;
+                }
+            }
+
+            prevT = t;
+
             if (currentTravelTime >= travelPeriod * 2)
             {
                 currentTravelTime = 0;
@@ -89,13 +109,8 @@ public class SeaWaveScript : MonoBehaviour
 
                 onWaveEnd.Invoke();
             }
-            else if (currentTravelTime > travelPeriod)
+            else if (currentTravelTime >= travelPeriod)
             {
-                if (!trashSpawned)
-                {
-                    trashManager.SpawnSomeTrash(trashSpawnNum);
-                    trashSpawned = true;
-                }
             }
         }
     }

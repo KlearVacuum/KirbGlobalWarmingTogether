@@ -19,6 +19,9 @@ public class AIEntity : MonoBehaviour
     public bool dead;
 
     public Animator _animator;
+    public FootstepsSpawnPool footstepSpawner;
+    public GameObject myShadowPrefab;
+    private GameObject myShadow;
 
     public float mMoveSpeed;
     public float mRotateSpeed;
@@ -27,6 +30,15 @@ public class AIEntity : MonoBehaviour
     public float mPanicDuration;
     public float mPanicStrength;
     public float mStopCollectingTrashDuration;
+
+    // When crowned, kirb gives more cash per trash
+    public GameObject crownGO;
+    public bool crowned;
+    public float mCrownThreshold;
+    public float mTrashCashMult;
+    public float crownByTimeWeightage;
+    public float crownByTrashCostWeightage;
+    private float mCurrCrownProgress;
 
     Vector3 desiredVelocity;
     [HideInInspector]
@@ -146,6 +158,14 @@ public class AIEntity : MonoBehaviour
     protected virtual void Start()
     {
         GlobalGameData.AddAiEntity(this);
+        crowned = false;
+        crownGO.SetActive(false);
+
+        myShadow = Instantiate(myShadowPrefab, transform.position, Quaternion.identity);
+        KirbShadowScript shadowScript = myShadow.GetComponent<KirbShadowScript>();
+        shadowScript.followTransform = transform;
+        shadowScript.offset = new Vector3(0, -0.75f, 0);
+
         mCurrentMoveSpeed = mMoveSpeed;
         mCurrentRotateSpeed = mRotateSpeed;
         visionAngleStep = maxSteerAngle / (float)visionLines * Mathf.Deg2Rad;
@@ -165,55 +185,76 @@ public class AIEntity : MonoBehaviour
     }
     protected virtual void Update()
     {
-        currentTravelTime -= Time.deltaTime;
-
-        if (!mPanicTriggered)
+        if (!dead)
         {
-            // panic button pressed!
+            currentTravelTime -= Time.deltaTime;
+
+            if (!mPanicTriggered)
+            {
+                // panic button pressed!
+                if (panic)
+                {
+                    mCurrentPanicDuration = mPanicDuration + Random.Range(-1f, 1f);
+                    mCurrentMoveSpeed = mPanicMoveSpeed;
+                    mCurrentRotateSpeed = mPanicRotateSpeed;
+                    panicIndicator.SetActive(true);
+                    mPanicTriggered = true;
+                    forceStateTransition = true;
+                }
+            }
+            // timer for kirbs to panic
             if (panic)
             {
-                mCurrentPanicDuration = mPanicDuration + Random.Range(-1f, 1f);
-                mCurrentMoveSpeed = mPanicMoveSpeed;
-                mCurrentRotateSpeed = mPanicRotateSpeed;
-                panicIndicator.SetActive(true);
-                mPanicTriggered = true;
-                forceStateTransition = true;
+                mCurrentPanicDuration -= Time.deltaTime;
+                if (mCurrentPanicDuration <= 0)
+                {
+                    panicIndicator.SetActive(false);
+                    mCurrentMoveSpeed = mMoveSpeed;
+                    mCurrentRotateSpeed = mRotateSpeed;
+                    panic = false;
+                    mPanicTriggered = false;
+                }
             }
-        }
-        // timer for kirbs to panic
-        if (panic)
-        {
-            mCurrentPanicDuration -= Time.deltaTime;
-            if (mCurrentPanicDuration <= 0)
-            {
-                panicIndicator.SetActive(false);
-                mCurrentMoveSpeed = mMoveSpeed;
-                mCurrentRotateSpeed = mRotateSpeed;
-                panic = false;
-                mPanicTriggered = false;
-            }
-        }
 
-        if (!collectTrash)
-        {
-            if (!mStopCollectingTrashTriggered)
+            if (!collectTrash)
             {
-                mCurrentStopCollectingTrashDuration = mStopCollectingTrashDuration + +Random.Range(-1f, 1f);
-                forceStateTransition = true;
-                mStopCollectingTrashTriggered = true;
-                stopCollectTrashIndicator.SetActive(true);
-            }
-            mCurrentStopCollectingTrashDuration -= Time.deltaTime;
+                if (!mStopCollectingTrashTriggered)
+                {
+                    mCurrentStopCollectingTrashDuration = mStopCollectingTrashDuration + Random.Range(-1f, 1f);
+                    returnToDepo = true;
+                    forceStateTransition = true;
+                    mStopCollectingTrashTriggered = true;
+                    stopCollectTrashIndicator.SetActive(true);
+                }
+                mCurrentStopCollectingTrashDuration -= Time.deltaTime;
 
-            if (mCurrentStopCollectingTrashDuration <= 0)
-            {
-                stopCollectTrashIndicator.SetActive(false);
-                mStopCollectingTrashTriggered = false;
-                collectTrash = true;
+                if (mCurrentStopCollectingTrashDuration <= 0)
+                {
+                    stopCollectTrashIndicator.SetActive(false);
+                    mStopCollectingTrashTriggered = false;
+                    collectTrash = true;
+                    if (_heldTrash == null)
+                    {
+                        returnToDepo = false;
+                    }
+                }
             }
+
+            if (!crowned)
+            {
+                if (mCurrCrownProgress < mCrownThreshold)
+                {
+                    mCurrCrownProgress += Time.deltaTime * crownByTimeWeightage;
+                }
+                else
+                {
+                    crownGO.SetActive(true);
+                    crowned = true;
+                }
+            }
+
+            DrownCheck();
         }
-
-        DrownCheck();
     }
 
     protected virtual void FixedUpdate()
@@ -318,20 +359,36 @@ public class AIEntity : MonoBehaviour
     public void Deposit()
     {
         returnToDepo = false;
-        GlobalGameData.cash += trashCash;
 
-        _heldTrash.DoBeDeposited(moveToTarget.position);
-        _heldTrash = null;
-        
-        _asource.PlayOneShot(_aclipBweh);
-        _animator.CrossFade("deposit", 0, 0);
-        StartCoroutine(SwitchAnimationAfterDelay("run", 0.5f));
+        if (_heldTrash != null)
+        {
+            // crowned give more monies
+            if (crowned)
+            {
+                GlobalGameData.cash += (int)((float)trashCash * mTrashCashMult);
+            }
+            else
+            {
+                GlobalGameData.cash += trashCash;
+                mCurrCrownProgress += (float)trashCash * crownByTrashCostWeightage;
+            }
+            _heldTrash.DoBeDeposited(moveToTarget.position);
+            _heldTrash = null;
+
+            _asource.PlayOneShot(_aclipBweh);
+            _animator.CrossFade("deposit", 0, 0);
+            StartCoroutine(SwitchAnimationAfterDelay("run", 0.5f));
+        }
     }
 
     public void Die()
     {
         panicIndicator.SetActive(false);
         stopCollectTrashIndicator.SetActive(false);
+        Destroy(myShadow);
+        footstepSpawner.ClearPool();
+        crownGO.SetActive(false);
+
         switch (deathType)
         {
             case eDeathType.NASTYFOOD:
@@ -352,7 +409,6 @@ public class AIEntity : MonoBehaviour
                     Destroy(_heldTrash.gameObject);
                     _heldTrash = null;
                 }
-
                 GetComponent<TrashScript>().enabled = true;
                 mSpriteRenderer.color = mSpriteRenderer.color * new Vector4(0.7f, 0.7f, 0.7f, 1);
                 gameObject.tag = "Trash";
@@ -738,5 +794,33 @@ public class AIEntity : MonoBehaviour
 
             eatParticles.Play();
         }
+    }
+
+    public void StopCollectingTrash()
+    {
+        if (dead) return;
+        if (collectTrash)
+        {
+            collectTrash = false;
+        }
+        else
+        {
+            mCurrentStopCollectingTrashDuration = mStopCollectingTrashDuration + Random.Range(-1f, 1f);
+            returnToDepo = true;
+            forceStateTransition = true;
+            mStopCollectingTrashTriggered = true;
+            stopCollectTrashIndicator.SetActive(true);
+        }
+    }
+
+    public void SpawnNextFootstep(float xOffset)
+    {
+        if (mSpriteRenderer.flipX) xOffset *= -1;
+        footstepSpawner.NextStep(xOffset, rb.velocity);
+    }
+
+    private void OnMouseDown()
+    {
+        StopCollectingTrash();
     }
 }

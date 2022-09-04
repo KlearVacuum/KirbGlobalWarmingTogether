@@ -60,13 +60,13 @@ public class GameManager : MonoBehaviour
             Panic();
         }
 
-        if (Input.GetKeyDown(stopWorkKey))
-        {
-            foreach (var kirb in GlobalGameData.allAiEntities)
-            {
-                kirb.collectTrash = false;
-            }
-        }
+        //if (Input.GetKeyDown(stopWorkKey))
+        //{
+        //    foreach (var kirb in GlobalGameData.allAiEntities)
+        //    {
+        //        kirb.StopCollectingTrash();
+        //    }
+        //}
 
         gameplayTime += Time.deltaTime;
 
