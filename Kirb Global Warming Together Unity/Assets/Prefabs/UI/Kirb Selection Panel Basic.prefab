@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 676575978170861799}
   - component: {fileID: 676575978170861803}
   m_Layer: 5
-  m_Name: Kirb Selection Panel
+  m_Name: Kirb Selection Panel Basic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -470,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winCost: 100
-  winMult: 1.5
+  winMult: 2
   timesInvestedToWin: 4
   _fillImage: {fileID: 4532441298299087943}
   _finalBoi: {fileID: 6395329026251996434, guid: 02ef33177f7fea54fbd79cc2b6bb475f, type: 3}

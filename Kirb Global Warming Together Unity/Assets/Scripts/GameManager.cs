@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager _instance;
+    public KeyCode panicKey;
+    public KeyCode stopWorkKey;
     public float gameplayTime;
     public GameObject kirb;
     public int startingCash;
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
         //     Instantiate(kirb, worldPos, Quaternion.identity);
         // }
 
+        cashUI.text = "$" + GlobalGameData.cash;
         if (LevelManager.Instance.GameState != GameState.Playing) { return; }
 
         if (panicTimer <= panicCooldown) {
@@ -52,12 +55,12 @@ public class GameManager : MonoBehaviour
         }
 
         // temp panic key
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(panicKey))
         {
             Panic();
         }
 
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(stopWorkKey))
         {
             foreach (var kirb in GlobalGameData.allAiEntities)
             {
@@ -65,7 +68,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        cashUI.text = "$" + GlobalGameData.cash;
         gameplayTime += Time.deltaTime;
 
         // time is in seconds

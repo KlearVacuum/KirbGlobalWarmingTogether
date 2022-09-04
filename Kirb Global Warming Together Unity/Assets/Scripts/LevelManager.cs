@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class LevelManager : Singleton<LevelManager>
 {
+    public bool spawnWaves = true;
     public UnityEvent onWaveWarning;
     public UnityEvent onWaveStart;
     public UnityEvent onLevelAdvance;
@@ -133,15 +134,21 @@ public class LevelManager : Singleton<LevelManager>
 
         if (!mIsWarningTriggered && mCurrentLevelTimer >= mNextLevelDuration - mWaveWarning) 
         {
-            mIsWarningTriggered = true;
-            mPassiveWave.Loop(false);
-            Debug.Log("Wave incoming!");
-            onWaveWarning.Invoke();
+            if (spawnWaves)
+            {
+                mIsWarningTriggered = true;
+                mPassiveWave.Loop(false);
+                Debug.Log("Wave incoming!");
+                onWaveWarning.Invoke();
+            }
         }
 
         if (mCurrentLevelTimer > mNextLevelDuration && !mIsWaitingWaveEnd)
         {
-            StartLevelEndSequence();
+            if (spawnWaves)
+            {
+                StartLevelEndSequence();
+            }
         }
     }
 
