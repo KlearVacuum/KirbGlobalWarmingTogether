@@ -69,13 +69,13 @@ public class TrashScript : MonoBehaviour
         else if (deposited)
         {
             currentFadeTimeWhenDeposited -= Time.deltaTime;
-            if (currentFadeTimeWhenDeposited < 0) currentFadeTimeWhenDeposited = 0;
+            if (currentFadeTimeWhenDeposited < 0.001f) currentFadeTimeWhenDeposited = 0.001f;
 
             float ratio = currentFadeTimeWhenDeposited / fadeTimeWhenDeposited;
             // spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, ratio);
             transform.localScale = startingScale * ratio;
 
-            if (currentFadeTimeWhenDeposited <= 0)
+            if (currentFadeTimeWhenDeposited <= 0.001f)
             {
                 Destroy(gameObject);
             }

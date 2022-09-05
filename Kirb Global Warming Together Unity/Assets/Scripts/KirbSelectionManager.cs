@@ -23,7 +23,7 @@ public class KirbSelectionManager : MonoBehaviour
                 var buttonScript = button.GetComponent<TabButtonScript>();
                 buttonScript.mTabGroup = tabGroup;
                 buttonScript.mTabImageBackground.sprite = kirbTypes[i].kirbSprite;
-                buttonScript.mTabImageBackground.color = kirbTypes[i].color;
+                buttonScript.mTabImageBackground.color = kirbTypes[i].menuColor;
                 button.GetComponentInChildren<WriteTextUI>().WriteText(kirbTypes[i].name + "\n" + "$" + kirbTypes[i].cost);
                 button.GetComponent<KirbSpawnScript>().selectedKirbButtonNum = i;
 
@@ -53,14 +53,4 @@ public class KirbSelectionManager : MonoBehaviour
 
         gameObject.transform.GetChild(0).GetComponent<KirbSpawnScript>().SetKirbType();
     }
-}
-
-[System.Serializable]
-public struct KirbType
-{
-    public string name;
-    public GameObject kirb;
-    public int cost;
-    public Sprite kirbSprite;
-    public Color color;
 }

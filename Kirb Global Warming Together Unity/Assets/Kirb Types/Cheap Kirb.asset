@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ac95499f78f784e8dcdeaaddb6fe85, type: 3}
+  m_Name: Cheap Kirb
+  m_EditorClassIdentifier: 
+  name: Chum
+  kirb: {fileID: 3115804531108714309, guid: b3f9237af3bf546459737640f8676a7f, type: 3}
+  cost: 12
+  kirbSprite: {fileID: 903400657, guid: c66f74063e474b046be3eb2d3b624553, type: 3}
+  menuColor: {r: 1, g: 0.76862746, b: 0.4862745, a: 1}
