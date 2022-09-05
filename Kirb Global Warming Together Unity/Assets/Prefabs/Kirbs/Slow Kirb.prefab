@@ -289,10 +289,10 @@ MonoBehaviour:
   mStopCollectingTrashDuration: 8
   crownGO: {fileID: 7179442692080031510}
   crowned: 0
-  mCrownThreshold: 75
-  mTrashCashMult: 2.5
-  crownByTimeWeightage: 1
-  crownByTrashCostWeightage: 1
+  mCrownThreshold: 150
+  mTrashCashMult: 3
+  crownByTimeWeightage: 0.5
+  crownByTrashCostWeightage: 0.5
   velocityVariance: {x: 0, y: 0, z: 0}
   velocityVarStrength: {x: 1, y: 1}
   velocityVarTimeRange: {x: 2, y: 5}
@@ -307,14 +307,14 @@ MonoBehaviour:
   trashTag: Trash
   depoTag: Depo
   deadKirb: {fileID: 7045076144644805235, guid: 05eef5b03b411fa409d680d841b38377, type: 3}
-  maxTravelTime: 1
+  maxTravelTime: 2
   moveToTarget: {fileID: 0}
   trashCash: 0
   foundTrashList: []
   foundDepoList: []
   deathType: 0
   waterOverlap: 0
-  timeToDrown: 1.5
+  timeToDrown: 1.2
   trashTypeWeakness: 
   _asource: {fileID: 0}
   _aclipEat: {fileID: 8300000, guid: aea1e01fe717fb44dbcf34a92b66c511, type: 3}

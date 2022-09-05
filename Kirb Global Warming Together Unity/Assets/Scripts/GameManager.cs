@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public int startingCash;
     public int kirbCost;
     public TextMeshProUGUI cashUI;
+    private Animator cashUIAnimator;
     public TextMeshProUGUI timerUI;
     public TextMeshProUGUI populationUI;
 
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour
         cashUI.text = "$" + GlobalGameData.cash;
         selectedKirbButton = 0;
         panicTimer = panicCooldown;
+
+        cashUIAnimator = cashUI.gameObject.GetComponent<Animator>();
     }
 
     private void Update()
@@ -104,6 +107,16 @@ public class GameManager : MonoBehaviour
             worldPos.z = 0;
             Instantiate(kirb, worldPos, Quaternion.identity);
         }
+        else
+        {
+            NoMoneyFeedback();
+        }
+    }
+
+    public void NoMoneyFeedback()
+    {
+        // play no money error sound
+        cashUIAnimator.Play("ErrorRedBlinkAnim");
     }
 
     public static void RestartGame()

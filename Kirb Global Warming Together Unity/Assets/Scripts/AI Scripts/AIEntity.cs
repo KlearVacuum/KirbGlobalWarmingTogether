@@ -9,6 +9,7 @@ public class AIEntity : MonoBehaviour
     [HideInInspector]
     public bool forceStateTransition;
 
+    [Header("Behaviour bools")]
     [Tooltip("When kirbs are conjested af, quick fix panic button doesn't hurt anyone... right?")]
     public bool panic;
     [Tooltip("Enables ai to continue looking for trash and bringing them to depo: if disabled, ai will not leave depo. Should be true until we start doing the recall horn thingy.")]
@@ -23,6 +24,7 @@ public class AIEntity : MonoBehaviour
     public GameObject myShadowPrefab;
     private GameObject myShadow;
 
+    [Header("Movement Info")]
     public float mMoveSpeed;
     public float mRotateSpeed;
     public float mPanicMoveSpeed;
@@ -32,6 +34,7 @@ public class AIEntity : MonoBehaviour
     public float mStopCollectingTrashDuration;
 
     // When crowned, kirb gives more cash per trash
+    [Header("Crown Info")]
     public GameObject crownGO;
     public bool crowned;
     public float mCrownThreshold;
@@ -40,6 +43,7 @@ public class AIEntity : MonoBehaviour
     public float crownByTrashCostWeightage;
     private float mCurrCrownProgress;
 
+    [Header("Velocity Variance Info")]
     Vector3 desiredVelocity;
     [HideInInspector]
     public Vector3 velocityVariance;
@@ -50,6 +54,7 @@ public class AIEntity : MonoBehaviour
     [HideInInspector]
     public int depoOverlap;
 
+    [Header("Avoidance Info")]
     [HideInInspector]
     public float mAvoidanceStrength;
     public float mVisionAvoidanceStrength;
@@ -63,6 +68,7 @@ public class AIEntity : MonoBehaviour
     private bool mStopCollectingTrashTriggered;
     private float mCurrentStopCollectingTrashDuration;
 
+    [Header("Dependencies")]
     public Transform forwardDir;
     public GameObject stopCollectTrashIndicator;
     public GameObject panicIndicator;

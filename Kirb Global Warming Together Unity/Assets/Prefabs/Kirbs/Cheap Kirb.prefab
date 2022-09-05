@@ -243,7 +243,7 @@ MonoBehaviour:
   mStopCollectingTrashDuration: 6.5
   crownGO: {fileID: 1183309521621679475}
   crowned: 0
-  mCrownThreshold: 100
+  mCrownThreshold: 150
   mTrashCashMult: 2
   crownByTimeWeightage: 0.5
   crownByTrashCostWeightage: 1

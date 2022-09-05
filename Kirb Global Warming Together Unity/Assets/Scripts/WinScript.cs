@@ -53,7 +53,7 @@ public class WinScript : MonoBehaviour
             _aSource.PlayOneShot(_aclipKaChing);
 
             _fillImage.fillAmount = (float)timesInvested / timesInvestedToWin;
-            Debug.Log(_fillImage.fillAmount);
+            // Debug.Log(_fillImage.fillAmount);
 
             if (timesInvested >= timesInvestedToWin)
             {
@@ -74,6 +74,7 @@ public class WinScript : MonoBehaviour
         else
         {
             // put error action here
+            GameManager._instance.NoMoneyFeedback();
             Debug.Log("CANNOT AFFORD WIN THING");
         }
     }

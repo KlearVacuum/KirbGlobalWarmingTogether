@@ -51,6 +51,10 @@ public class DepoScript : MonoBehaviour
             gameObject.tag = "Depo";
             locked = false;
         }
+        else
+        {
+            GameManager._instance.NoMoneyFeedback();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -77,10 +81,7 @@ public class DepoScript : MonoBehaviour
         }
         else
         {
-            if (GlobalGameData.cash >= unlockCost)
-            {
-                UnlockDepo();
-            }
+            UnlockDepo();
         }
     }
 

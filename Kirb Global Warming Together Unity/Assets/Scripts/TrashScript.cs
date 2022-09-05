@@ -11,6 +11,8 @@ public class TrashScript : MonoBehaviour
 
     public bool _isYumisTrash, _isHeld;
     public bool randomRotate = true;
+    public float fadeTimeWhenDeposited;
+    private float currentFadeTimeWhenDeposited;
 
     private Transform _targetTransform;
     public Vector3 _target;
@@ -18,12 +20,21 @@ public class TrashScript : MonoBehaviour
     [SerializeField] private float _dampRatio = 0.5f, _angular = 0.5f;
 
     private bool shrink;
+    private bool deposited;
     private Vector3 startingScale;
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     void Start()
     {
+        deposited = false;
+        currentFadeTimeWhenDeposited = fadeTimeWhenDeposited;
         GlobalGameData.AddTrash(gameObject);
-        GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, 1000) % sprites.Count];
+        spriteRenderer.sprite = sprites[Random.Range(0, 1000) % sprites.Count];
         startingScale = transform.localScale;
 
         if (randomRotate)
@@ -53,6 +64,20 @@ public class TrashScript : MonoBehaviour
             {
                 transform.localScale = Vector3.zero;
                 shrink = false;
+            }
+        }
+        else if (deposited)
+        {
+            currentFadeTimeWhenDeposited -= Time.deltaTime;
+            if (currentFadeTimeWhenDeposited < 0) currentFadeTimeWhenDeposited = 0;
+
+            float ratio = currentFadeTimeWhenDeposited / fadeTimeWhenDeposited;
+            // spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, ratio);
+            transform.localScale = startingScale * ratio;
+
+            if (currentFadeTimeWhenDeposited <= 0)
+            {
+                Destroy(gameObject);
             }
         }
     }
@@ -87,8 +112,9 @@ public class TrashScript : MonoBehaviour
         _targetTransform = null;
         _target = newTarget;
         shrink = false;
-        _current = transform.position - new Vector3(0,0.15f,0);
+        _current = transform.position - new Vector3(0,0.1f,0);
         transform.localScale = startingScale;
+        deposited = true;
     }
 }
 

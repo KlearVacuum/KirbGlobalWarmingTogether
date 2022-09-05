@@ -205,10 +205,10 @@ MonoBehaviour:
   mStopCollectingTrashDuration: 1
   crownGO: {fileID: 3421459683354606799}
   crowned: 0
-  mCrownThreshold: 100
-  mTrashCashMult: 1.5
+  mCrownThreshold: 150
+  mTrashCashMult: 2
   crownByTimeWeightage: 0.5
-  crownByTrashCostWeightage: 1
+  crownByTrashCostWeightage: 0.5
   velocityVariance: {x: 0, y: 0, z: 0}
   velocityVarStrength: {x: 1, y: 1}
   velocityVarTimeRange: {x: 2, y: 5}

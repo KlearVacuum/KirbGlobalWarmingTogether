@@ -54,6 +54,7 @@ MonoBehaviour:
   _isYumisTrash: 0
   _isHeld: 0
   randomRotate: 1
+  fadeTimeWhenDeposited: 10
   _target: {x: 0, y: 0, z: 0}
   _dampRatio: 1
   _angular: 0.3
