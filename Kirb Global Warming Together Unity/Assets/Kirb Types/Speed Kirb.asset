@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Vroom
   kirb: {fileID: 3115804531108714309, guid: de5176dcd0a431740b9e766c54a35d09, type: 3}
-  cost: 45
+  cost: 60
   kirbSprite: {fileID: 903400657, guid: c66f74063e474b046be3eb2d3b624553, type: 3}
   menuColor: {r: 0.7176471, g: 0.454902, b: 0.49803925, a: 1}

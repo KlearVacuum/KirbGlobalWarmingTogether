@@ -282,15 +282,17 @@ MonoBehaviour:
   myShadowPrefab: {fileID: 2718653087472521905, guid: c8c109383d5865c4ea903af55dfcdda4, type: 3}
   mMoveSpeed: 15
   mRotateSpeed: 500
-  mPanicMoveSpeed: 23
+  mPanicMoveSpeed: 20
   mPanicRotateSpeed: 1000
   mPanicDuration: 3.5
   mPanicStrength: 0.5
-  mStopCollectingTrashDuration: 1
+  mStopCollectingTrashDuration: 2.5
   crownGO: {fileID: 5345263675462674781}
+  myCrowns:
+  - {fileID: 11400000, guid: 09fdbc32c871a6a48bf6dcca879db650, type: 2}
   crowned: 0
   mCrownThreshold: 150
-  mTrashCashMult: 2
+  mTrashCashMult: 1
   crownByTimeWeightage: 0.75
   crownByTrashCostWeightage: 0.25
   velocityVariance: {x: 0, y: 0, z: 0}
@@ -299,6 +301,7 @@ MonoBehaviour:
   depoOverlap: 0
   mAvoidanceStrength: 0
   mVisionAvoidanceStrength: 1
+  mCurrentMoveSpeed: 0
   forwardDir: {fileID: 1019694501864213864}
   stopCollectTrashIndicator: {fileID: 3071244408877680564}
   panicIndicator: {fileID: 7675227958050140909}
@@ -307,6 +310,7 @@ MonoBehaviour:
   trashTag: Trash
   depoTag: Depo
   deadKirb: {fileID: 7045076144644805235, guid: 05eef5b03b411fa409d680d841b38377, type: 3}
+  _heldTrash: {fileID: 0}
   maxTravelTime: 2
   moveToTarget: {fileID: 0}
   trashCash: 0
@@ -322,6 +326,7 @@ MonoBehaviour:
   _aclipDrown: {fileID: 8300000, guid: 31bdada34344ff64ab6a4706256bba0a, type: 3}
   _aclipPop: {fileID: 8300000, guid: 8230597a2dcd0234e9e49cce5fee86c5, type: 3}
   description: Quick on their feet. Can't sit still.
+  superTimer: 0
 --- !u!114 &1311995916887444272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,6 +367,7 @@ MonoBehaviour:
   _isYumisTrash: 0
   _isHeld: 0
   randomRotate: 0
+  fadeTimeWhenDeposited: 10
   _target: {x: 0, y: 0, z: 0}
   _dampRatio: 1
   _angular: 0.3
@@ -449,7 +455,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
+  m_Mass: 10
   m_LinearDrag: 5
   m_AngularDrag: 0.05
   m_GravityScale: 0

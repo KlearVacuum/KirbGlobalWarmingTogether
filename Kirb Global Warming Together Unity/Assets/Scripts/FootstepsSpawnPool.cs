@@ -9,11 +9,8 @@ public class FootstepsSpawnPool : MonoBehaviour
     private Queue<GameObject> footstepsQueue = new Queue<GameObject>();
     private List<FootstepScript> footstepScripts = new List<FootstepScript>();
 
-    private float currentSpawnTimer;
-
     private void Start()
     {
-        currentSpawnTimer = 0;
         for (int i = 0; i < maxFootsteps; ++i)
         {
             GameObject footstep = Instantiate(footstepPrefab);

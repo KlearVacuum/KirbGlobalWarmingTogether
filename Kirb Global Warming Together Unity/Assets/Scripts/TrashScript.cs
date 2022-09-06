@@ -11,7 +11,7 @@ public class TrashScript : MonoBehaviour
 
     public bool _isYumisTrash, _isHeld;
     public bool randomRotate = true;
-    public float fadeTimeWhenDeposited;
+    public float fadeTimeWhenDeposited = 10f;
     private float currentFadeTimeWhenDeposited;
 
     private Transform _targetTransform;
@@ -32,6 +32,7 @@ public class TrashScript : MonoBehaviour
     void Start()
     {
         deposited = false;
+        if (fadeTimeWhenDeposited <= 0) fadeTimeWhenDeposited = 0.01f;
         currentFadeTimeWhenDeposited = fadeTimeWhenDeposited;
         GlobalGameData.AddTrash(gameObject);
         spriteRenderer.sprite = sprites[Random.Range(0, 1000) % sprites.Count];
@@ -59,11 +60,16 @@ public class TrashScript : MonoBehaviour
 
         if (shrink && transform.localScale.magnitude > 0)
         {
-            transform.localScale -= new Vector3(Time.deltaTime, Time.deltaTime, 0);
-            if (transform.localScale.x <= 0 || transform.localScale.y <= 0)
+            Vector3 newScale = transform.localScale - new Vector3(Time.deltaTime, Time.deltaTime, 0);
+            
+            if (newScale.x <= 0 || newScale.y <= 0)
             {
                 transform.localScale = Vector3.zero;
                 shrink = false;
+            }
+            else
+            {
+                transform.localScale = newScale;
             }
         }
         else if (deposited)

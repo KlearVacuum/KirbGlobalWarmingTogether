@@ -280,17 +280,20 @@ MonoBehaviour:
   _animator: {fileID: 0}
   footstepSpawner: {fileID: 1643835244912439692}
   myShadowPrefab: {fileID: 2718653087472521905, guid: c8c109383d5865c4ea903af55dfcdda4, type: 3}
-  mMoveSpeed: 8
+  mMoveSpeed: 7
   mRotateSpeed: 500
-  mPanicMoveSpeed: 6
+  mPanicMoveSpeed: 5
   mPanicRotateSpeed: 600
   mPanicDuration: 5
   mPanicStrength: 0.1
-  mStopCollectingTrashDuration: 8
+  mStopCollectingTrashDuration: 6
   crownGO: {fileID: 7179442692080031510}
+  myCrowns:
+  - {fileID: 11400000, guid: 62d6307af7a7415459453d4920c637a0, type: 2}
+  - {fileID: 11400000, guid: 3f06d474e07fafb4f9dcdb086f8fa191, type: 2}
   crowned: 0
   mCrownThreshold: 150
-  mTrashCashMult: 3
+  mTrashCashMult: 1
   crownByTimeWeightage: 0.5
   crownByTrashCostWeightage: 0.5
   velocityVariance: {x: 0, y: 0, z: 0}
@@ -299,6 +302,7 @@ MonoBehaviour:
   depoOverlap: 0
   mAvoidanceStrength: 0
   mVisionAvoidanceStrength: 1
+  mCurrentMoveSpeed: 0
   forwardDir: {fileID: 1019694501864213864}
   stopCollectTrashIndicator: {fileID: 7265402482738817020}
   panicIndicator: {fileID: 2575673858767948241}
@@ -307,6 +311,7 @@ MonoBehaviour:
   trashTag: Trash
   depoTag: Depo
   deadKirb: {fileID: 7045076144644805235, guid: 05eef5b03b411fa409d680d841b38377, type: 3}
+  _heldTrash: {fileID: 0}
   maxTravelTime: 2
   moveToTarget: {fileID: 0}
   trashCash: 0
@@ -322,6 +327,7 @@ MonoBehaviour:
   _aclipDrown: {fileID: 8300000, guid: c535330896e1bfc4db739f8992ef400e, type: 3}
   _aclipPop: {fileID: 8300000, guid: 8230597a2dcd0234e9e49cce5fee86c5, type: 3}
   description: Tough cookie. Needs a workout.
+  superTimer: 0
 --- !u!114 &1311995916887444272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,6 +368,7 @@ MonoBehaviour:
   _isYumisTrash: 0
   _isHeld: 0
   randomRotate: 0
+  fadeTimeWhenDeposited: 10
   _target: {x: 0, y: 0, z: 0}
   _dampRatio: 1
   _angular: 0.3
@@ -449,7 +456,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
+  m_Mass: 10
   m_LinearDrag: 5
   m_AngularDrag: 0.05
   m_GravityScale: 0

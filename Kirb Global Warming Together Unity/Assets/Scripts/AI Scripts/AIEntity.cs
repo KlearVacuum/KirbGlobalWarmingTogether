@@ -9,7 +9,7 @@ public class AIEntity : MonoBehaviour
     [HideInInspector]
     public bool forceStateTransition;
 
-    [Header("Behaviour bools")]
+    // [Header("Behaviour bools")]
     [Tooltip("When kirbs are conjested af, quick fix panic button doesn't hurt anyone... right?")]
     public bool panic;
     [Tooltip("Enables ai to continue looking for trash and bringing them to depo: if disabled, ai will not leave depo. Should be true until we start doing the recall horn thingy.")]
@@ -36,6 +36,7 @@ public class AIEntity : MonoBehaviour
     // When crowned, kirb gives more cash per trash
     [Header("Crown Info")]
     public GameObject crownGO;
+    public List<Crown> myCrowns = new List<Crown>();
     public bool crowned;
     public float mCrownThreshold;
     public float mTrashCashMult;
@@ -59,7 +60,8 @@ public class AIEntity : MonoBehaviour
     public float mAvoidanceStrength;
     public float mVisionAvoidanceStrength;
 
-    private float mCurrentMoveSpeed;
+    [HideInInspector]
+    public float mCurrentMoveSpeed;
     private float mCurrentRotateSpeed;
     private float mCurrentPanicDuration;
     private bool mPanicTriggered;
@@ -78,8 +80,8 @@ public class AIEntity : MonoBehaviour
     public string depoTag;
 
     public GameObject deadKirb;
-
-    private TrashScript _heldTrash;
+    [HideInInspector]
+    public TrashScript _heldTrash;
 
     public float maxTravelTime;
     private float currentTravelTime;
@@ -150,6 +152,9 @@ public class AIEntity : MonoBehaviour
     public AudioClip _aclipEat, _aclipBweh, _aclipDrown, _aclipPop;
 
     public string description;
+
+    public float superTimer;
+    // Create adaptive timer system, to test super crown
 
     protected virtual void Awake()
     {
@@ -248,15 +253,17 @@ public class AIEntity : MonoBehaviour
 
             if (!crowned)
             {
-                if (mCurrCrownProgress < mCrownThreshold)
-                {
-                    mCurrCrownProgress += Time.deltaTime * crownByTimeWeightage;
-                }
+                if (mCurrCrownProgress < mCrownThreshold) mCurrCrownProgress += Time.deltaTime * crownByTimeWeightage;
                 else
                 {
                     crownGO.SetActive(true);
                     crowned = true;
+                    foreach (Crown crown in myCrowns) crown.OnCrowned(this);
                 }
+            }
+            else
+            {
+                foreach (Crown crown in myCrowns) { crown.CrownedUpdate(this); }
             }
 
             DrownCheck();
@@ -368,17 +375,23 @@ public class AIEntity : MonoBehaviour
 
         if (_heldTrash != null)
         {
-            // crowned give more monies
-            if (crowned)
+            GlobalGameData.cash += (int)((float)trashCash * mTrashCashMult);
+            // crowned progress per deposit
+            if (!crowned)
             {
-                GlobalGameData.cash += (int)((float)trashCash * mTrashCashMult);
+                mCurrCrownProgress += (float)trashCash * crownByTrashCostWeightage;
+            }
+
+            // dont move to another depo if you're standing on one, or you'll spit it across the world
+            List<GameObject> nearbyDepos = GlobalGameData.NearbyDepos(transform.position, 1f);
+            if (nearbyDepos.Count > 0)
+            {
+                _heldTrash.DoBeDeposited(nearbyDepos[0].transform.position);
             }
             else
             {
-                GlobalGameData.cash += trashCash;
-                mCurrCrownProgress += (float)trashCash * crownByTrashCostWeightage;
+                _heldTrash.DoBeDeposited(moveToTarget.position);
             }
-            _heldTrash.DoBeDeposited(moveToTarget.position);
             _heldTrash = null;
 
             _asource.PlayOneShot(_aclipBweh);
@@ -415,6 +428,10 @@ public class AIEntity : MonoBehaviour
                     Destroy(_heldTrash.gameObject);
                     _heldTrash = null;
                 }
+
+                // Special kirb death
+                foreach (Crown crown in myCrowns) { crown.CrownedOnDeath(this); }
+
                 GetComponent<TrashScript>().enabled = true;
                 mSpriteRenderer.color = mSpriteRenderer.color * new Vector4(0.7f, 0.7f, 0.7f, 1);
                 gameObject.tag = "Trash";
@@ -552,6 +569,7 @@ public class AIEntity : MonoBehaviour
     public void MoveTowardTarget()
     {
         // RotateTowardTarget(desiredVelocity);
+        if (moveToTarget != null)
         MoveTowardPos(moveToTarget.position);
     }
 
@@ -743,11 +761,11 @@ public class AIEntity : MonoBehaviour
             
             StartCoroutine(EatFeedbackAfterDelay(collision.transform.position, eatParticlesDelay));
             _animator.CrossFade("suck", 0, 0);
-            StartCoroutine(SwitchAnimationAfterDelay("suck_run", 1.0f));
+            StartCoroutine(SwitchAnimationAfterDelay("suck_run", 0.5f));
 
             _heldTrash = trash;
             trash.RemoveTrash(transform);
-            returnToDepo = true;
+            StartCoroutine(ReturnToDepoAfterDelay(0.2f));
         }
     }
 
@@ -761,11 +779,11 @@ public class AIEntity : MonoBehaviour
             trashCash = trash.trashCash;
 
             _animator.CrossFade("suck", 0, 0);
-            StartCoroutine(SwitchAnimationAfterDelay("suck_run", 1.0f));
+            StartCoroutine(SwitchAnimationAfterDelay("suck_run", 0.5f));
 
             _heldTrash = trash;
             trash.RemoveTrash(transform);
-            returnToDepo = true;
+            StartCoroutine(ReturnToDepoAfterDelay(0.2f));
         }
     }
 
@@ -800,6 +818,13 @@ public class AIEntity : MonoBehaviour
 
             eatParticles.Play();
         }
+    }
+
+    IEnumerator ReturnToDepoAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        moveToTarget = null;
+        returnToDepo = true;
     }
 
     public void StopCollectingTrash()

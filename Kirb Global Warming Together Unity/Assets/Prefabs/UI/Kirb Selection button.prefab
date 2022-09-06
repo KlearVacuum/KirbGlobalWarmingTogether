@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -755,12 +755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e2d7cc7b7a874448b997b1cd61adeb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kirbType:
-    name: 
-    kirb: {fileID: 0}
-    cost: 0
-    kirbSprite: {fileID: 0}
-    color: {r: 0, g: 0, b: 0, a: 0}
+  kirbType: {fileID: 0}
   selectedKirbButtonNum: 0
   toolTip: {fileID: 337055951053387480}
 --- !u!1 &4938468183109643026

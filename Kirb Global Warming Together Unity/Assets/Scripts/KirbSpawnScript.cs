@@ -33,13 +33,13 @@ public class KirbSpawnScript : MonoBehaviour
                     switch (weakness)
                     {
                         case eTrashType.Plastic:
-                            toolTip.text += "<color=#54FB64>Plastics" + @"</color>";
+                            toolTip.text += "<color=#56E1FF>Plastics" + @"</color>";
                             break;
                         case eTrashType.Glass:
-                            toolTip.text += "<color=#56E1FF>Glass" + @"</color>";
+                            toolTip.text += "<color=#6AE066>Glass" + @"</color>";
                             break;
                         case eTrashType.Metal:
-                            toolTip.text += "<color=#000000>Metals" + @"</color>";
+                            toolTip.text += "<color=#BEBEBE>Metals" + @"</color>";
                             break;
                         case eTrashType.General:
                             toolTip.text += "<color=#B66200>Organics" + @"</color>";

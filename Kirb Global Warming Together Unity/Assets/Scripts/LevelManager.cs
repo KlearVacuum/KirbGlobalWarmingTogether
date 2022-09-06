@@ -138,7 +138,7 @@ public class LevelManager : Singleton<LevelManager>
             {
                 mIsWarningTriggered = true;
                 mPassiveWave.Loop(false);
-                Debug.Log("Wave incoming!");
+                // Debug.Log("Wave incoming!");
                 onWaveWarning.Invoke();
             }
         }

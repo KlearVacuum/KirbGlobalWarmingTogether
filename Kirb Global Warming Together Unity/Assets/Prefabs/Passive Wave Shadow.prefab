@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5361196327056515737}
   - component: {fileID: 8732688074893845843}
   m_Layer: 0
-  m_Name: Wave Shadow
+  m_Name: Passive Wave Shadow
   m_TagString: Wave
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,4 +99,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   followTransform: {fileID: 0}
   startFade: 0
-  fadeTime: 15
+  fadeTime: 9.5

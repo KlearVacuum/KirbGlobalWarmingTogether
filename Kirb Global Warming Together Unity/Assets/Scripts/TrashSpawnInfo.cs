@@ -6,6 +6,6 @@ using UnityEngine;
 public class TrashSpawnInfo : ScriptableObject
 {
     public List<GameObject> TrashToSpawn;
-    public int NumLevels = 1;
-    public int Quantity = 40;
+    public int NumLevels;
+    public int Quantity;
 }
