@@ -18,6 +18,7 @@ public class MoveToTrashState : MoveToState
     {
         if (!aiController.ai.collectTrash) return false;
         if (aiController.ai.returnToDepo) return false;
+        if (!aiController.ai.ActionReady()) return false;
 
         return FoundNearest(aiController);
     }

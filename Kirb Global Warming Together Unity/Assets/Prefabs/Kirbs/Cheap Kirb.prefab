@@ -241,6 +241,8 @@ MonoBehaviour:
   mPanicDuration: 3.5
   mPanicStrength: 1
   mStopCollectingTrashDuration: 6.5
+  depositActionDelayTime: 0.5
+  suckActionDelayTime: 0.7
   crownGO: {fileID: 1183309521621679475}
   myCrowns:
   - {fileID: 11400000, guid: 456754c78e0e3fd4f872a589a1217090, type: 2}
@@ -300,6 +302,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eb37aeb68329285438d37c75f9df882c, type: 2}
   - {fileID: 11400000, guid: 749ceaa93488a2e40904ca60339f7a3b, type: 2}
   - {fileID: 11400000, guid: 529f51ca01fc3e045bc41f8317619b33, type: 2}
+  - {fileID: 11400000, guid: 8196a9e5761e39841b40ed3b32ff8a5d, type: 2}
   - {fileID: 11400000, guid: 3c315d517ae623c41b507945385bde45, type: 2}
   - {fileID: 11400000, guid: 73a98c5d16562fb43b1d7a7562104682, type: 2}
   - {fileID: 11400000, guid: 9abb32e90c3acf64e8db2e1e04614eee, type: 2}

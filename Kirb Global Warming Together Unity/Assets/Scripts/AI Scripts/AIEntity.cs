@@ -33,6 +33,10 @@ public class AIEntity : MonoBehaviour
     public float mPanicStrength;
     public float mStopCollectingTrashDuration;
 
+    [Tooltip("Time kirb waits after executing an action before being able to do the next action")]
+    public float depositActionDelayTime;
+    public float suckActionDelayTime;
+
     // When crowned, kirb gives more cash per trash
     [Header("Crown Info")]
     public GameObject crownGO;
@@ -69,6 +73,7 @@ public class AIEntity : MonoBehaviour
     private Vector2 panicDestination;
     private bool mStopCollectingTrashTriggered;
     private float mCurrentStopCollectingTrashDuration;
+    private float mActionDelayTimer;
 
     [Header("Dependencies")]
     public Transform forwardDir;
@@ -266,6 +271,8 @@ public class AIEntity : MonoBehaviour
                 foreach (Crown crown in myCrowns) { crown.CrownedUpdate(this); }
             }
 
+            mActionDelayTimer -= Time.deltaTime;
+
             DrownCheck();
         }
     }
@@ -372,6 +379,7 @@ public class AIEntity : MonoBehaviour
     public void Deposit()
     {
         returnToDepo = false;
+        Vector2 depoPos = Vector2.zero;
 
         if (_heldTrash != null)
         {
@@ -386,18 +394,32 @@ public class AIEntity : MonoBehaviour
             List<GameObject> nearbyDepos = GlobalGameData.NearbyDepos(transform.position, 1f);
             if (nearbyDepos.Count > 0)
             {
-                _heldTrash.DoBeDeposited(nearbyDepos[0].transform.position);
+                depoPos = nearbyDepos[0].transform.position;
+                _heldTrash.DoBeDeposited(depoPos);
             }
             else
             {
+                depoPos = moveToTarget.position;
                 _heldTrash.DoBeDeposited(moveToTarget.position);
             }
-            _heldTrash = null;
 
+            FlipToLookAtTarget(depoPos);
+            _heldTrash = null;
+            ActionExecuted(depositActionDelayTime);
             _asource.PlayOneShot(_aclipBweh);
             _animator.CrossFade("deposit", 0, 0);
-            StartCoroutine(SwitchAnimationAfterDelay("run", 0.5f));
+            StartCoroutine(SwitchAnimationAfterDelay("run", depositActionDelayTime));
         }
+    }
+
+    private void FlipToLookAtTarget(Vector3 target)
+    {
+        Vector3 dir = (target - transform.position).normalized;
+        float dot = Vector3.Dot(dir, Vector2.right);
+
+        // flip sprite if target is to the left
+        mSpriteRenderer.flipX = dot < 0;
+        lookOtherWayTime = 0;
     }
 
     public void Die()
@@ -448,6 +470,16 @@ public class AIEntity : MonoBehaviour
             NotifyLastDead();
         }
         GlobalGameData.RemoveAiEntity(this);
+    }
+
+    public void ActionExecuted(float delayTime)
+    {
+        mActionDelayTimer = delayTime;
+    }
+
+    public bool ActionReady()
+    {
+        return mActionDelayTimer <= 0;
     }
 
     // Dampen velocity: must be less than 1
@@ -738,7 +770,8 @@ public class AIEntity : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (moveToTarget != null &&
+        if (ActionReady() && 
+            moveToTarget != null &&
             collision.transform == moveToTarget &&
             collision.gameObject.CompareTag(trashTag))
         {
@@ -758,10 +791,12 @@ public class AIEntity : MonoBehaviour
                     }
                 }
             }
-            
+
+            FlipToLookAtTarget(collision.transform.position);
+            ActionExecuted(suckActionDelayTime);
             StartCoroutine(EatFeedbackAfterDelay(collision.transform.position, eatParticlesDelay));
             _animator.CrossFade("suck", 0, 0);
-            StartCoroutine(SwitchAnimationAfterDelay("suck_run", 0.5f));
+            StartCoroutine(SwitchAnimationAfterDelay("suck_run", suckActionDelayTime));
 
             _heldTrash = trash;
             trash.RemoveTrash(transform);
@@ -771,15 +806,18 @@ public class AIEntity : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (moveToTarget != null &&
+        if (ActionReady() &&
+            moveToTarget != null &&
             collision.transform == moveToTarget &&
             collision.gameObject.CompareTag(trashTag))
         {
             var trash = collision.gameObject.GetComponent<TrashScript>();
             trashCash = trash.trashCash;
 
+            FlipToLookAtTarget(collision.transform.position);
+            ActionExecuted(suckActionDelayTime);
             _animator.CrossFade("suck", 0, 0);
-            StartCoroutine(SwitchAnimationAfterDelay("suck_run", 0.5f));
+            StartCoroutine(SwitchAnimationAfterDelay("suck_run", suckActionDelayTime));
 
             _heldTrash = trash;
             trash.RemoveTrash(transform);
