@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private Animator cashUIAnimator;
     public TextMeshProUGUI timerUI;
     public TextMeshProUGUI populationUI;
+    public GameObject PausePanel;
 
     [HideInInspector]
     public int selectedKirbButton;
@@ -70,6 +71,20 @@ public class GameManager : MonoBehaviour
         //        kirb.StopCollectingTrash();
         //    }
         //}
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (PausePanel.activeInHierarchy)
+            {
+                PausePanel.SetActive(false);
+                Time.timeScale = 1;
+            }
+            else
+            {
+                PausePanel.SetActive(true);
+                Time.timeScale = 0;
+            }
+        }
 
         gameplayTime += Time.deltaTime;
 

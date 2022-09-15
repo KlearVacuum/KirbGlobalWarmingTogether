@@ -13,4 +13,14 @@ public class LevelNavigator : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void ClosePausePanel()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void SetTimeScale(float timescale)
+    {
+        Time.timeScale = timescale;
+    }
 }

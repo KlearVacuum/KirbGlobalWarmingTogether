@@ -53,6 +53,7 @@ public class KirbSpawnScript : MonoBehaviour
                 }
             }
             toolTip.text += "\n" + kirb.description;
+            toolTip.text += "\n\n" + "Crowned: " + kirb.crownDescription;
             toolTipSet = true;
         }
     }

@@ -283,6 +283,7 @@ MonoBehaviour:
   _aclipDrown: {fileID: 8300000, guid: 31bdada34344ff64ab6a4706256bba0a, type: 3}
   _aclipPop: {fileID: 8300000, guid: 8230597a2dcd0234e9e49cce5fee86c5, type: 3}
   description: Snagged at a discount. Kinda fragile.
+  crownDescription: No more allergies, I'm invincible!! ...for a limited time.
   superTimer: 0
 --- !u!114 &1311995916887444272
 MonoBehaviour:

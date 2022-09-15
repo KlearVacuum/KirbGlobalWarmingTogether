@@ -157,7 +157,9 @@ public class AIEntity : MonoBehaviour
     public AudioClip _aclipEat, _aclipBweh, _aclipDrown, _aclipPop;
 
     public string description;
+    public string crownDescription;
 
+    [HideInInspector]
     public float superTimer;
     // Create adaptive timer system, to test super crown
 
@@ -391,7 +393,7 @@ public class AIEntity : MonoBehaviour
             }
 
             // dont move to another depo if you're standing on one, or you'll spit it across the world
-            List<GameObject> nearbyDepos = GlobalGameData.NearbyDepos(transform.position, 1f);
+            List<GameObject> nearbyDepos = GlobalGameData.NearbyDepos(transform.position, 3f);
             if (nearbyDepos.Count > 0)
             {
                 depoPos = nearbyDepos[0].transform.position;
