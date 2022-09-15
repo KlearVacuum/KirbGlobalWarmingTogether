@@ -247,6 +247,7 @@ MonoBehaviour:
   myCrowns:
   - {fileID: 11400000, guid: 456754c78e0e3fd4f872a589a1217090, type: 2}
   - {fileID: 11400000, guid: b1e41d614c68dae4385f0a498041ef20, type: 2}
+  - {fileID: 11400000, guid: f569808be241c454b93faea5a47b0cdb, type: 2}
   crowned: 0
   mCrownThreshold: 150
   mTrashCashMult: 0.5

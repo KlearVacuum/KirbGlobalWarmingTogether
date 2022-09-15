@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager _instance;
+    public int maxTrashQty;
     public KeyCode panicKey;
     public KeyCode stopWorkKey;
     public float gameplayTime;
@@ -17,7 +18,8 @@ public class GameManager : MonoBehaviour
     private Animator cashUIAnimator;
     public TextMeshProUGUI timerUI;
     public TextMeshProUGUI populationUI;
-    public GameObject PausePanel;
+    public GameObject pausePanel;
+    public GameObject winPanel;
 
     [HideInInspector]
     public int selectedKirbButton;
@@ -72,16 +74,16 @@ public class GameManager : MonoBehaviour
         //    }
         //}
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            if (PausePanel.activeInHierarchy)
+            if (pausePanel.activeInHierarchy)
             {
-                PausePanel.SetActive(false);
+                pausePanel.SetActive(false);
                 Time.timeScale = 1;
             }
             else
             {
-                PausePanel.SetActive(true);
+                pausePanel.SetActive(true);
                 Time.timeScale = 0;
             }
         }

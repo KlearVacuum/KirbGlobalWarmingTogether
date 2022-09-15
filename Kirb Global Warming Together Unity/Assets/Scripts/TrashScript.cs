@@ -11,6 +11,8 @@ public class TrashScript : MonoBehaviour
 
     public bool _isYumisTrash, _isHeld;
     public bool randomRotate = true;
+    public float suckedTrashTravelSpeed;
+    public float shrinkSpeedWhenSucked = 1;
     public float fadeTimeWhenDeposited = 10f;
     private float currentFadeTimeWhenDeposited;
 
@@ -54,13 +56,13 @@ public class TrashScript : MonoBehaviour
             }
             // _current = transform.position;
             // _target = GameObject.FindObjectOfType<AIEntity>().transform.position;
-            SpringMath.Lerp(ref _current, ref velocity, _target, _dampRatio, _angular, Time.deltaTime * 80f);
+            SpringMath.Lerp(ref _current, ref velocity, _target, _dampRatio, _angular, Time.deltaTime * suckedTrashTravelSpeed);
             transform.position = _current;
         }
 
         if (shrink && transform.localScale.magnitude > 0)
         {
-            Vector3 newScale = transform.localScale - new Vector3(Time.deltaTime, Time.deltaTime, 0);
+            Vector3 newScale = transform.localScale - new Vector3(Time.deltaTime * shrinkSpeedWhenSucked, Time.deltaTime * shrinkSpeedWhenSucked, 0);
             
             if (newScale.x <= 0 || newScale.y <= 0)
             {
@@ -86,6 +88,12 @@ public class TrashScript : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    public void DeleteTrashInstant()
+    {
+        GlobalGameData.RemoveTrash(gameObject);
+        Destroy(gameObject);
     }
 
     public void RemoveTrash(Transform holder)

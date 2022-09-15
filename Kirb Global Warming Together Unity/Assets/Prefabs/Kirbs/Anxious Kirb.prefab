@@ -200,7 +200,7 @@ MonoBehaviour:
   mRotateSpeed: 500
   mPanicMoveSpeed: 20
   mPanicRotateSpeed: 1000
-  mPanicDuration: 12
+  mPanicDuration: 10
   mPanicStrength: 6
   mStopCollectingTrashDuration: 2.5
   depositActionDelayTime: 0.5
@@ -287,6 +287,8 @@ MonoBehaviour:
   _isYumisTrash: 0
   _isHeld: 0
   randomRotate: 0
+  suckedTrashTravelSpeed: 0
+  shrinkSpeedWhenSucked: 0
   fadeTimeWhenDeposited: 10
   _target: {x: 0, y: 0, z: 0}
   _dampRatio: 1

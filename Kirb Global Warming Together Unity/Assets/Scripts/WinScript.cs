@@ -47,22 +47,28 @@ public class WinScript : MonoBehaviour
     {
         if (GlobalGameData.cash >= winCost)
         {
-            GlobalGameData.cash -= winCost;
-            timesInvested++;
-            winCost = (int)((float)winCost * winMult);
-            _aSource.PlayOneShot(_aclipKaChing);
-
-            _fillImage.fillAmount = (float)timesInvested / timesInvestedToWin;
-            // Debug.Log(_fillImage.fillAmount);
-
-            if (timesInvested >= timesInvestedToWin)
+            if (LevelManager.Instance.GameState != GameState.Win)
             {
-                // no more cost
-                winCostText.WriteText(winButtonText);
-                toolTip.text = winButtonText;
-                var go = Instantiate(_finalBoi);
-                go.GetComponent<Animator>().CrossFade("kirbIG_xtra", 0, 0);
-                LevelManager.Instance.NotifyWin();
+                GlobalGameData.cash -= winCost;
+                timesInvested++;
+                winCost = (int)((float)winCost * winMult);
+                _aSource.PlayOneShot(_aclipKaChing);
+
+                _fillImage.fillAmount = (float)timesInvested / timesInvestedToWin;
+                // Debug.Log(_fillImage.fillAmount);
+
+                if (timesInvested >= timesInvestedToWin)
+                {
+                    // no more cost
+                    winCostText.WriteText(winButtonText);
+                    toolTip.text = winButtonText;
+                    var go = Instantiate(_finalBoi);
+                    go.GetComponent<Animator>().CrossFade("kirbIG_xtra", 0, 0);
+
+                    StartCoroutine(AbsorbAllTrashAfterSeconds(5.1f, go.transform));
+                    StartCoroutine(ShowWinPanelAfterSeconds(10f));
+                    LevelManager.Instance.NotifyWin();
+                }
             }
             else
             {
@@ -77,5 +83,27 @@ public class WinScript : MonoBehaviour
             GameManager._instance.NoMoneyFeedback();
             Debug.Log("CANNOT AFFORD WIN THING");
         }
+    }
+
+    public IEnumerator AbsorbAllTrashAfterSeconds(float waitTime, Transform holder)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+
+        int i = GlobalGameData.allTrash.Count;
+        while (i > 0)
+        {
+            TrashScript trashScript = GlobalGameData.allTrash[0].GetComponent<TrashScript>();
+            trashScript.suckedTrashTravelSpeed = 4.5f;
+            trashScript.shrinkSpeedWhenSucked = 0.2f;
+            trashScript.RemoveTrash(holder);
+            i--;
+        }
+    }
+
+    public IEnumerator ShowWinPanelAfterSeconds(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        GameManager._instance.winPanel.SetActive(true);
     }
 }

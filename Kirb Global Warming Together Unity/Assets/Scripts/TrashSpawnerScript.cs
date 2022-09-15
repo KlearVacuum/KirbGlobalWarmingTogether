@@ -23,6 +23,8 @@ public class TrashSpawnerScript : MonoBehaviour
             // randomly scatter trash within spawn area
             for (int i = 0; i < quantity; ++i)
             {
+                if (GlobalGameData.allTrash.Count >= GameManager._instance.maxTrashQty) break;
+
                 int rand = Random.Range(0, 100);
                 GameObject trash = trashToSpawn[rand % trashToSpawn.Count];
                 float randX = Random.Range(0f, 100f) / 100f * transform.localScale.x - (transform.localScale.x / 2);

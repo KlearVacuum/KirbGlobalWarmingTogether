@@ -328,7 +328,7 @@ MonoBehaviour:
   _aclipBweh: {fileID: 8300000, guid: bb06481f7e0286841b571fd1eaf34d89, type: 3}
   _aclipDrown: {fileID: 8300000, guid: c535330896e1bfc4db739f8992ef400e, type: 3}
   _aclipPop: {fileID: 8300000, guid: 8230597a2dcd0234e9e49cce5fee86c5, type: 3}
-  description: Tough cookie. Needs a workout.
+  description: Tough cookie. Needs a workout. Real slow.
   crownDescription: 'Exercised paid off! '
   superTimer: 0
 --- !u!114 &1311995916887444272
@@ -372,6 +372,8 @@ MonoBehaviour:
   _isYumisTrash: 0
   _isHeld: 0
   randomRotate: 0
+  suckedTrashTravelSpeed: 0
+  shrinkSpeedWhenSucked: 0
   fadeTimeWhenDeposited: 10
   _target: {x: 0, y: 0, z: 0}
   _dampRatio: 1
