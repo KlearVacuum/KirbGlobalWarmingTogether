@@ -54,7 +54,7 @@ public class TrashScript : MonoBehaviour
             }
             // _current = transform.position;
             // _target = GameObject.FindObjectOfType<AIEntity>().transform.position;
-            SpringMath.Lerp(ref _current, ref velocity, _target, _dampRatio, _angular, 0.1f);
+            SpringMath.Lerp(ref _current, ref velocity, _target, _dampRatio, _angular, Time.deltaTime * 80f);
             transform.position = _current;
         }
 
