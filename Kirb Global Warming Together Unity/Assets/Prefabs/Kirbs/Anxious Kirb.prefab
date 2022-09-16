@@ -200,8 +200,8 @@ MonoBehaviour:
   mRotateSpeed: 500
   mPanicMoveSpeed: 20
   mPanicRotateSpeed: 1000
-  mPanicDuration: 10
-  mPanicStrength: 6
+  mPanicDuration: 12
+  mPanicStrength: 8
   mStopCollectingTrashDuration: 2.5
   depositActionDelayTime: 0.5
   suckActionDelayTime: 0.7

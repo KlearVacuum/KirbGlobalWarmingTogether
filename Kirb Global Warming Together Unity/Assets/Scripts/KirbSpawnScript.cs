@@ -7,24 +7,36 @@ public class KirbSpawnScript : MonoBehaviour
 {
     public KirbType kirbType;
     public int selectedKirbButtonNum;
-    public TextMeshProUGUI toolTip;
+
+    public GameObject TooltipPrefab;
+    GameObject myTooltip;
+
+    [HideInInspector]
+    public TextMeshProUGUI toolTipText;
 
     bool toolTipSet;
 
-    private void Start()
+    private void Awake()
     {
+        myTooltip = Instantiate(TooltipPrefab, GameManager._instance.toolTipParent.transform);
+        TabButtonScript tabButton = GetComponent<TabButtonScript>();
+        if (tabButton != null)
+        {
+            tabButton.toolTip = myTooltip;
+        }
+        toolTipText = myTooltip.GetComponentInChildren<TextMeshProUGUI>();
         toolTipSet = false;
     }
     private void Update()
     {
         if (!toolTipSet && kirbType.kirb != null)
         {
-            toolTip.text = kirbType.name + "\n$" + kirbType.cost + "\n" +
+            toolTipText.text = kirbType.name + "\n$" + kirbType.cost + "\n" +
                            "Allergic to: ";
             AIEntity kirb = kirbType.kirb.GetComponent<AIEntity>();
             if (kirb.trashTypeWeakness == null || kirb.trashTypeWeakness.Count == 0)
             {
-                toolTip.text += "Nothing!";
+                toolTipText.text += "Nothing!";
             }
             else
             {
@@ -33,28 +45,29 @@ public class KirbSpawnScript : MonoBehaviour
                     switch (weakness)
                     {
                         case eTrashType.Plastic:
-                            toolTip.text += "<color=#56E1FF>Plastics" + @"</color>";
+                            toolTipText.text += "<color=#56E1FF>Plastics" + @"</color>";
                             break;
                         case eTrashType.Glass:
-                            toolTip.text += "<color=#6AE066>Glass" + @"</color>";
+                            toolTipText.text += "<color=#6AE066>Glass" + @"</color>";
                             break;
                         case eTrashType.Metal:
-                            toolTip.text += "<color=#BEBEBE>Metals" + @"</color>";
+                            toolTipText.text += "<color=#BEBEBE>Metals" + @"</color>";
                             break;
                         case eTrashType.General:
-                            toolTip.text += "<color=#B66200>Organics" + @"</color>";
+                            toolTipText.text += "<color=#B66200>Organics" + @"</color>";
                             break;
 
                     }
                     if (weakness != kirb.trashTypeWeakness[kirb.trashTypeWeakness.Count - 1])
                     {
-                        toolTip.text += ", ";
+                        toolTipText.text += ", ";
                     }
                 }
             }
-            toolTip.text += "\n" + kirb.description;
-            toolTip.text += "\n\n" + "Crowned: " + kirb.crownDescription;
+            toolTipText.text += "\n" + kirb.description;
+            toolTipText.text += "\n\n" + "Crowned: " + kirb.crownDescription;
             toolTipSet = true;
+            myTooltip.SetActive(false);
         }
     }
 

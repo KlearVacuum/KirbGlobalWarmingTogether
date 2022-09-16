@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     private Animator cashUIAnimator;
     public TextMeshProUGUI timerUI;
     public TextMeshProUGUI populationUI;
+    public GameObject toolTipParent;
     public GameObject pausePanel;
     public GameObject winPanel;
 
@@ -76,16 +77,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (pausePanel.activeInHierarchy)
-            {
-                pausePanel.SetActive(false);
-                Time.timeScale = 1;
-            }
-            else
-            {
-                pausePanel.SetActive(true);
-                Time.timeScale = 0;
-            }
+            PauseGame();
         }
 
         gameplayTime += Time.deltaTime;
@@ -98,6 +90,20 @@ public class GameManager : MonoBehaviour
         timerUI.text = minuteText + ":" + secondsText;
 
         populationUI.text = GlobalGameData.allAiEntities.Count + " Alive";
+    }
+
+    public void PauseGame()
+    {
+        if (pausePanel.activeInHierarchy)
+        {
+            pausePanel.SetActive(false);
+            Time.timeScale = 1;
+        }
+        else
+        {
+            pausePanel.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
 
     public void Panic()

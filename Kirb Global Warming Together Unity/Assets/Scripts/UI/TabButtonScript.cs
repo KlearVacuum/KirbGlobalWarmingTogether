@@ -9,6 +9,8 @@ public class TabButtonScript : MonoBehaviour, IPointerClickHandler, IPointerEnte
 {
     public TabGroupScript mTabGroup;
     public Image mTabImageBackground;
+
+    [HideInInspector]
     public GameObject toolTip;
 
     public void OnPointerClick(PointerEventData eventData)
@@ -38,6 +40,14 @@ public class TabButtonScript : MonoBehaviour, IPointerClickHandler, IPointerEnte
         {
             mTabImageBackground.color = mTabImageBackground.color * new Vector4(1, 1, 1, mTabGroup.mStartingOpacity);
         }
+
+        var toolTipImage = toolTip.transform.GetChild(0).GetComponent<Image>();
+        toolTipImage.sprite = mTabImageBackground.sprite;
+        toolTipImage.color = new Color(
+            mTabImageBackground.color.r, 
+            mTabImageBackground.color.g, 
+            mTabImageBackground.color.b, 
+            1);
     }
 
     public void ShowTooltip(bool show)
