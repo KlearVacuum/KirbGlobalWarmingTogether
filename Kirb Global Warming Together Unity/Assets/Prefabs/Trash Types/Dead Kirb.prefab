@@ -53,7 +53,7 @@ MonoBehaviour:
   - {fileID: 793647317, guid: c66f74063e474b046be3eb2d3b624553, type: 3}
   _isYumisTrash: 0
   _isHeld: 0
-  randomRotate: 1
+  randomRotate: 0
   suckedTrashTravelSpeed: 80
   shrinkSpeedWhenSucked: 1
   fadeTimeWhenDeposited: 10

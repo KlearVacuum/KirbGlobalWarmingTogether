@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
 
     public float panicTimer = 0.0f;
     public float panicCooldown = 0.0f;
-
     private void Awake()
     {
         _instance = this;

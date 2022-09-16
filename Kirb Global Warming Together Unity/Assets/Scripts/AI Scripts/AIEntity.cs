@@ -22,6 +22,7 @@ public class AIEntity : MonoBehaviour
     public Animator _animator;
     public FootstepsSpawnPool footstepSpawner;
     public GameObject myShadowPrefab;
+    public TrashScript trashRef;
     private GameObject myShadow;
 
     [Header("Movement Info")]
@@ -183,6 +184,8 @@ public class AIEntity : MonoBehaviour
         KirbShadowScript shadowScript = myShadow.GetComponent<KirbShadowScript>();
         shadowScript.followTransform = transform;
         shadowScript.offset = new Vector3(0, -0.75f, 0);
+
+        GetComponent<TrashScript>().CopyAllValues(trashRef);
 
         mCurrentMoveSpeed = mMoveSpeed;
         mCurrentRotateSpeed = mRotateSpeed;

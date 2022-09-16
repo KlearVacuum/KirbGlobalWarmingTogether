@@ -55,6 +55,8 @@ public class WinScript : MonoBehaviour
                 _aSource.PlayOneShot(_aclipKaChing);
 
                 _fillImage.fillAmount = (float)timesInvested / timesInvestedToWin;
+                winCostText.WriteText(winButtonText + "\n" + "$" + winCost);
+                toolTipSet = false;
                 // Debug.Log(_fillImage.fillAmount);
 
                 if (timesInvested >= timesInvestedToWin)
@@ -69,12 +71,6 @@ public class WinScript : MonoBehaviour
                     StartCoroutine(ShowWinPanelAfterSeconds(10f));
                     LevelManager.Instance.NotifyWin();
                 }
-            }
-            else
-            {
-                // update new cost
-                winCostText.WriteText(winButtonText + "\n" + "$" + winCost);
-                toolTipSet = false;
             }
         }
         else

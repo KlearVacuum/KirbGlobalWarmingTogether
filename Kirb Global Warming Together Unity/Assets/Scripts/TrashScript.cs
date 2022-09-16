@@ -9,6 +9,7 @@ public class TrashScript : MonoBehaviour
 
     public List<Sprite> sprites = new List<Sprite>();
 
+    [HideInInspector]
     public bool _isYumisTrash, _isHeld;
     public bool randomRotate = true;
     public float suckedTrashTravelSpeed;
@@ -17,9 +18,10 @@ public class TrashScript : MonoBehaviour
     private float currentFadeTimeWhenDeposited;
 
     private Transform _targetTransform;
+    [HideInInspector]
     public Vector3 _target;
     private Vector3 _current, velocity;
-    [SerializeField] private float _dampRatio = 0.5f, _angular = 0.5f;
+    public float _dampRatio = 0.5f, _angular = 0.5f;
 
     private bool shrink;
     private bool deposited;
@@ -33,6 +35,7 @@ public class TrashScript : MonoBehaviour
 
     void Start()
     {
+        shrink = false;
         deposited = false;
         if (fadeTimeWhenDeposited <= 0) fadeTimeWhenDeposited = 0.01f;
         currentFadeTimeWhenDeposited = fadeTimeWhenDeposited;
@@ -129,6 +132,18 @@ public class TrashScript : MonoBehaviour
         _current = transform.position - new Vector3(0,0.1f,0);
         transform.localScale = startingScale;
         deposited = true;
+    }
+
+    public void CopyAllValues(TrashScript other)
+    {
+        trashType = other.trashType;
+        trashCash = other.trashCash;
+        randomRotate = other.randomRotate;
+        suckedTrashTravelSpeed = other.suckedTrashTravelSpeed;
+        shrinkSpeedWhenSucked = other.shrinkSpeedWhenSucked;
+        fadeTimeWhenDeposited = other.fadeTimeWhenDeposited;
+        _dampRatio = other._dampRatio;
+        _angular = other._angular;
     }
 }
 
